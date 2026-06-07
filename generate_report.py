@@ -139,8 +139,8 @@ def build(data):
                 p(f"Score: {score}/10", fontSize=11, textColor=score_color(score), fontName="Helvetica-Bold"),
             ],[
                 p(op.get("raison",""), fontSize=10, textColor=LIGHT, leading=14),
-                p("","e1"),
-                p("","e2"),
+                Paragraph("", st("e1x", fontSize=8, textColor=MUTED)),
+                Paragraph("", st("e2x", fontSize=8, textColor=MUTED)),
             ]], colWidths=["45%","20%","35%"])
             top.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),PANEL),("ROWPADDING",(0,0),(-1,-1),10),("LINELEFT",(0,0),(0,-1),4,dc),("SPAN",(0,1),(2,1))]))
             story.append(top)
@@ -231,7 +231,7 @@ def build(data):
                 p(str(op.get("evenement","")), fontSize=9, textColor=MUTED),
             ],[
                 p(str(op.get("strategie","")), fontSize=9, textColor=LIGHT, leading=13),
-                p("","ii1"), p("","ii2"), p("","ii3"),
+                Paragraph("", st("ii1x", fontSize=8, textColor=MUTED)), Paragraph("", st("ii2x", fontSize=8, textColor=MUTED)), Paragraph("", st("ii3x", fontSize=8, textColor=MUTED)),
             ]], colWidths=["18%","22%","15%","45%"])
             intra.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),PANEL),("ROWPADDING",(0,0),(-1,-1),9),("LINELEFT",(0,0),(0,-1),3,GOLD),("SPAN",(0,1),(3,1))]))
             story.append(intra)
