@@ -1,0 +1,42 @@
+name: Sozo Trade Daily Report
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 7h CET (6h UTC)
+    - cron: '0 6 * * 0'  # Dimanche aussi
+  workflow_dispatch:      # Permet de lancer manuellement
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install anthropic reportlab
+
+    - name: Generate report
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: python generate_report.py
+
+    - name: Send email with PDF
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USER }}
+        password: ${{ secrets.EMAIL_PASS }}
+        subject: "📊 Sozo Trade — Rapport du jour"
+        body: "Bonjour ! Ton rapport quotidien Sozo Trade est en pièce jointe."
+        to: ${{ secrets.EMAIL_TO }}
+        from: Sozo Trade
+        attachments: /tmp/rapport-*.pdf
