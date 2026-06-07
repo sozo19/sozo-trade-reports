@@ -21,113 +21,49 @@ def st(name, **kw):
     base = getSampleStyleSheet()["Normal"]
     return ParagraphStyle(name, parent=base, **kw)
 
+def p(text, **kw):
+    name = f"s{abs(hash(str(text)+str(kw)))%999999}"
+    return Paragraph(str(text) if text else "", st(name, **kw))
+
 def fetch(api_key):
     today = datetime.now().strftime("%A %d %B %Y")
     hour = datetime.now().strftime("%H:%M")
-    print(f"Analyse complete du {today} a {hour}...")
+    print(f"Analyse du {today} a {hour}...")
     client = anthropic.Anthropic(api_key=api_key)
-
-    prompt = f"""Tu es analyste financier senior pour Capital.com avec acces aux donnees en temps reel.
-Aujourd hui: {today} a {hour} CET.
-
-Fais une recherche web COMPLETE et FIABLE sur:
-1. Toutes les actualites macro-economiques importantes du jour
-2. Les prix ACTUELS de tous ces instruments
-3. Les evenements qui peuvent creer des opportunites intraday
-
-INSTRUMENTS FAVORIS a analyser en priorite:
-- US 500 (S&P500)
-- USD/JPY
-- Brent Oil Spot
-- Gold (XAU/USD)
-- Germany 40 (DAX)
-
-AUTRES MARCHES a surveiller pour opportunites:
-- EUR/USD, GBP/USD, EUR/GBP
-- Nasdaq 100, Dow Jones
-- Silver (XAG/USD), Natural Gas
-- USD/CHF, AUD/USD
-- France 40 (CAC40), Japan 225
-
-Pour chaque opportunite identifiee (favoris ET autres marches), fournis:
-- Prix exact actuel
-- Signal clair (ACHETER/VENDRE/ATTENDRE)
-- Score de fiabilite de 1 a 10
-- Entree precise, Stop Loss, Take Profit
-- Taille de position pour 100 CHF avec risque de 1 CHF
-- Horizon temporel (intraday/court terme/moyen terme)
-- Catalyseur principal
-
-Reponds UNIQUEMENT en JSON valide sans markdown:
+    prompt = f"""Tu es analyste financier senior pour Capital.com. Aujourd hui: {today} a {hour} CET.
+Fais une recherche web complete et fiable. Reponds UNIQUEMENT en JSON valide:
 {{
   "date": "{today}",
   "heure": "{hour}",
-  "sentiment_global": "HAUSSIER ou NEUTRE ou BAISSIER",
-  "resume_executif": "analyse complete et fiable en 4-5 phrases avec chiffres reels",
-  "actualites_cles": ["news importante 1 avec impact", "news 2", "news 3", "news 4"],
-  "calendrier_economique": "evenements du jour et de la semaine avec heures CET",
+  "sentiment_global": "BAISSIER",
+  "resume_executif": "analyse complete avec chiffres reels",
+  "actualites_cles": ["news 1", "news 2", "news 3"],
+  "calendrier_economique": "evenements importants avec heures CET",
   "instruments_favoris": [
-    {{
-      "nom": "US 500",
-      "prix": 7383.74,
-      "variation_jour": "-2.64%",
-      "variation_semaine": "-3.1%",
-      "tendance": "BAISSIER",
-      "signal": "VENDRE",
-      "score_fiabilite": 8,
-      "conviction": "FORTE",
-      "entree": 7383.74,
-      "sl": 7450.00,
-      "tp": 7250.00,
-      "rr": "1:2",
-      "taille_100chf": "0.015 CFD = risque 1 CHF",
-      "horizon": "Court terme 2-3 jours",
-      "catalyseur": "raison principale du signal",
-      "support": 7200.0,
-      "resistance": 7500.0,
-      "analyse": "analyse technique et fondamentale detaillee en 3-4 phrases"
-    }}
+    {{"nom":"US 500","prix":7383.74,"variation_jour":"-2.64%","signal":"VENDRE","score_fiabilite":8,"conviction":"FORTE","entree":7383.74,"sl":7450.00,"tp":7250.00,"rr":"1:2","taille_100chf":"0.015 CFD risque 1 CHF","horizon":"Court terme","catalyseur":"raison","support":7200.0,"resistance":7500.0,"analyse":"analyse detaillee"}},
+    {{"nom":"USD/JPY","prix":160.29,"variation_jour":"+0.21%","signal":"ATTENDRE","score_fiabilite":6,"conviction":"FAIBLE","entree":160.29,"sl":159.50,"tp":161.50,"rr":"1:2","taille_100chf":"micro lot risque 1 CHF","horizon":"Intraday","catalyseur":"raison","support":159.0,"resistance":162.0,"analyse":"analyse"}},
+    {{"nom":"Brent Oil","prix":94.66,"variation_jour":"-2.80%","signal":"VENDRE","score_fiabilite":7,"conviction":"MOYENNE","entree":94.66,"sl":96.00,"tp":92.00,"rr":"1:2","taille_100chf":"0.003 lot risque 1 CHF","horizon":"Court terme","catalyseur":"raison","support":90.0,"resistance":97.0,"analyse":"analyse"}},
+    {{"nom":"Gold","prix":4331.0,"variation_jour":"-3.22%","signal":"VENDRE","score_fiabilite":8,"conviction":"FORTE","entree":4331.0,"sl":4380.0,"tp":4230.0,"rr":"1:2","taille_100chf":"micro oz risque 1 CHF","horizon":"Court terme","catalyseur":"raison","support":4200.0,"resistance":4450.0,"analyse":"analyse"}},
+    {{"nom":"Germany 40","prix":24759.05,"variation_jour":"-0.75%","signal":"ATTENDRE","score_fiabilite":5,"conviction":"FAIBLE","entree":24759.05,"sl":25000.0,"tp":24200.0,"rr":"1:2","taille_100chf":"0.003 CFD risque 1 CHF","horizon":"Intraday","catalyseur":"raison","support":24000.0,"resistance":25200.0,"analyse":"analyse"}}
   ],
   "opportunites_autres_marches": [
-    {{
-      "nom": "EUR/USD",
-      "prix": 1.0850,
-      "variation_jour": "+0.15%",
-      "signal": "ACHETER",
-      "score_fiabilite": 7,
-      "conviction": "MOYENNE",
-      "entree": 1.0850,
-      "sl": 1.0800,
-      "tp": 1.0950,
-      "rr": "1:2",
-      "taille_100chf": "0.02 lot micro = risque 1 CHF",
-      "horizon": "Intraday",
-      "catalyseur": "raison du signal",
-      "analyse": "pourquoi cette opportunite maintenant"
-    }}
+    {{"nom":"EUR/USD","prix":1.0850,"variation_jour":"+0.15%","signal":"ACHETER","score_fiabilite":7,"conviction":"MOYENNE","entree":1.0850,"sl":1.0800,"tp":1.0950,"rr":"1:2","taille_100chf":"micro lot risque 1 CHF","horizon":"Intraday","catalyseur":"raison","analyse":"analyse"}},
+    {{"nom":"Nasdaq 100","prix":19200.0,"variation_jour":"-1.5%","signal":"ATTENDRE","score_fiabilite":6,"conviction":"FAIBLE","entree":19200.0,"sl":19500.0,"tp":18800.0,"rr":"1:1.5","taille_100chf":"micro CFD risque 1 CHF","horizon":"Court terme","catalyseur":"raison","analyse":"analyse"}}
   ],
   "top3_opportunites_du_jour": [
-    {{
-      "rang": 1,
-      "instrument": "nom",
-      "direction": "LONG ou SHORT",
-      "score": 9,
-      "raison": "pourquoi cest la meilleure opportunite"
-    }}
+    {{"rang":1,"instrument":"meilleur instrument","direction":"LONG ou SHORT","score":9,"raison":"pourquoi top 1"}},
+    {{"rang":2,"instrument":"2eme","direction":"LONG","score":8,"raison":"pourquoi top 2"}},
+    {{"rang":3,"instrument":"3eme","direction":"SHORT","score":7,"raison":"pourquoi top 3"}}
   ],
   "opportunites_intraday": [
-    {{
-      "heure_cible": "14:30 CET",
-      "instrument": "US 500",
-      "evenement": "ouverture Wall Street",
-      "strategie": "ce quil faut faire et pourquoi",
-      "direction": "LONG ou SHORT"
-    }}
+    {{"heure_cible":"14:30 CET","instrument":"US 500","evenement":"ouverture Wall Street","strategie":"ce quil faut faire","direction":"LONG"}},
+    {{"heure_cible":"08:00 CET","instrument":"EUR/USD","evenement":"ouverture Londres","strategie":"strategie","direction":"SHORT"}}
   ],
   "risques_majeurs": ["risque 1 avec detail", "risque 2", "risque 3"],
-  "conseil_100chf": "plan detaille pour trader aujourd hui avec 100 CHF, quoi faire exactement",
-  "marches_eviter": ["instrument a eviter avec raison"]
-}}"""
+  "conseil_100chf": "plan detaille pour trader avec 100 CHF aujourd hui",
+  "marches_eviter": ["marche a eviter avec raison"]
+}}
+Remplace TOUTES les valeurs par les vraies donnees du marche avec tes recherches web."""
 
     response = client.messages.create(
         model="claude-opus-4-5",
@@ -138,18 +74,13 @@ Reponds UNIQUEMENT en JSON valide sans markdown:
     text = "".join(b.text for b in response.content if hasattr(b, "text"))
     text = text.replace("```json","").replace("```","").strip()
     data = json.loads(text[text.find("{"):text.rfind("}")+1])
-    print(f"Sentiment: {data.get('sentiment_global')} | {len(data.get('instruments_favoris',[]))} favoris | {len(data.get('opportunites_autres_marches',[]))} autres opportunites")
+    print(f"Sentiment: {data.get('sentiment_global')}")
     return data
 
 def score_color(score):
     if score >= 8: return GREEN
     if score >= 6: return GOLD
     return RED
-
-def score_text(score):
-    if score >= 8: return "EXCELLENT"
-    if score >= 6: return "BON"
-    return "FAIBLE"
 
 def build(data):
     date_str = datetime.now().strftime("%Y-%m-%d")
@@ -158,234 +89,178 @@ def build(data):
     out = REPORTS_DIR / f"rapport-{date_str}.pdf"
     doc = SimpleDocTemplate(str(out), pagesize=A4, leftMargin=15*mm, rightMargin=15*mm, topMargin=12*mm, bottomMargin=12*mm)
     story = []
-    W = 180*mm
 
-    # ── HEADER ──────────────────────────────────────────────────────────────
-    header = Table([[
-        Paragraph("SOZO TRADE", st("logo", fontSize=18, textColor=GREEN, fontName="Helvetica-Bold")),
-        Paragraph(f"Rapport du {data.get('date','')} a {data.get('heure','')}", st("date", fontSize=9, textColor=MUTED, alignment=2)),
-    ]], colWidths=["60%","40%"])
-    header.setStyle(TableStyle([
-        ("BACKGROUND",(0,0),(-1,-1),PANEL),
-        ("ROWPADDING",(0,0),(-1,-1),12),
-        ("LINEBELOW",(0,0),(-1,-1),2,GREEN),
-    ]))
-    story.append(header)
+    # HEADER
+    story.append(p("SOZO TRADE — Rapport Quotidien des Marches", fontSize=16, textColor=GREEN, fontName="Helvetica-Bold"))
+    story.append(p(f"{data.get('date','')} a {data.get('heure','')} CET | Capital.com", fontSize=9, textColor=MUTED))
+    story.append(HRFlowable(width="100%", thickness=2, color=GREEN))
     story.append(Spacer(1,4*mm))
 
-    # ── SENTIMENT + RESUME ───────────────────────────────────────────────────
-    sent_table = Table([[
-        [Paragraph("SENTIMENT GLOBAL", st("sl1", fontSize=8, textColor=MUTED)),
-         Paragraph(sent, st("sv1", fontSize=16, textColor=sc, fontName="Helvetica-Bold"))],
-        [Paragraph("CAPITAL", st("sl2", fontSize=8, textColor=MUTED)),
-         Paragraph("100 CHF", st("sv2", fontSize=16, textColor=WHITE, fontName="Helvetica-Bold"))],
-        [Paragraph("RISQUE/TRADE", st("sl3", fontSize=8, textColor=MUTED)),
-         Paragraph("1 CHF (1%)", st("sv3", fontSize=16, textColor=GOLD, fontName="Helvetica-Bold"))],
-    ]], colWidths=["33%","33%","34%"])
-    sent_table.setStyle(TableStyle([
-        ("BACKGROUND",(0,0),(-1,-1),PANEL),
-        ("ROWPADDING",(0,0),(-1,-1),10),
-        ("GRID",(0,0),(-1,-1),0.3,colors.HexColor("#1a2535")),
-    ]))
-    story.append(sent_table)
+    # SENTIMENT
+    sent_t = Table([[
+        p(f"Sentiment: {sent}", fontSize=14, textColor=sc, fontName="Helvetica-Bold"),
+        p("Capital: 100 CHF", fontSize=12, textColor=WHITE, fontName="Helvetica-Bold"),
+        p("Risque max: 1 CHF/trade", fontSize=12, textColor=GOLD, fontName="Helvetica-Bold"),
+    ]], colWidths=["34%","33%","33%"])
+    sent_t.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),PANEL),("ROWPADDING",(0,0),(-1,-1),10),("GRID",(0,0),(-1,-1),0.3,colors.HexColor("#1a2535"))]))
+    story.append(sent_t)
     story.append(Spacer(1,4*mm))
 
-    story.append(Paragraph("RESUME EXECUTIF", st("rl", fontSize=8, textColor=MUTED)))
-    story.append(Paragraph(data.get("resume_executif",""), st("rb", fontSize=10, textColor=LIGHT, leading=16)))
+    # RESUME
+    story.append(p("RESUME EXECUTIF", fontSize=8, textColor=MUTED))
+    story.append(p(data.get("resume_executif",""), fontSize=10, textColor=LIGHT, leading=16))
     story.append(Spacer(1,3*mm))
 
-    # ── ACTUALITES CLES ──────────────────────────────────────────────────────
+    # ACTUALITES
     if data.get("actualites_cles"):
-        story.append(Paragraph("ACTUALITES CLES DU JOUR", st("al", fontSize=8, textColor=MUTED)))
+        story.append(p("ACTUALITES CLES", fontSize=8, textColor=MUTED))
         for news in data["actualites_cles"]:
-            story.append(Paragraph(f"► {news}", st(f"ni{hash(news)%9999}", fontSize=9, textColor=LIGHT, leading=14, leftIndent=5)))
+            story.append(p(f"► {news}", fontSize=9, textColor=LIGHT, leading=14, leftIndent=5))
         story.append(Spacer(1,3*mm))
 
-    # ── CALENDRIER ───────────────────────────────────────────────────────────
+    # CALENDRIER
     if data.get("calendrier_economique"):
-        cal_box = Table([[Paragraph(f"CALENDRIER: {data['calendrier_economique']}", st("cal", fontSize=9, textColor=GOLD, leading=14))]])
-        cal_box.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#1a1400")),("ROWPADDING",(0,0),(-1,-1),8),("LINELEFT",(0,0),(0,-1),3,GOLD)]))
-        story.append(cal_box)
+        cal = Table([[p(f"CALENDRIER: {data['calendrier_economique']}", fontSize=9, textColor=GOLD, leading=14)]])
+        cal.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#1a1400")),("ROWPADDING",(0,0),(-1,-1),8),("LINELEFT",(0,0),(0,-1),3,GOLD)]))
+        story.append(cal)
         story.append(Spacer(1,4*mm))
 
-    # ── TOP 3 OPPORTUNITES ───────────────────────────────────────────────────
+    # TOP 3
     if data.get("top3_opportunites_du_jour"):
         story.append(PageBreak())
-        story.append(Paragraph("TOP 3 MEILLEURES OPPORTUNITES DU JOUR", st("top_h", fontSize=12, textColor=GREEN, fontName="Helvetica-Bold")))
+        story.append(p("TOP 3 MEILLEURES OPPORTUNITES DU JOUR", fontSize=12, textColor=GREEN, fontName="Helvetica-Bold"))
         story.append(Spacer(1,3*mm))
         for op in data["top3_opportunites_du_jour"]:
             dc = GREEN if op.get("direction")=="LONG" else RED
             score = op.get("score",0)
-            top_row = Table([[
-                Paragraph(f"#{op.get('rang','')} {op.get('instrument','')}", st(f"tr{op.get('rang',0)}", fontSize=14, textColor=WHITE, fontName="Helvetica-Bold")),
-                Paragraph(op.get("direction",""), st(f"td{op.get('rang',0)}", fontSize=14, textColor=dc, fontName="Helvetica-Bold")),
-                Paragraph(f"Score: {score}/10 — {score_text(score)}", st(f"ts{op.get('rang',0)}", fontSize=11, textColor=score_color(score), fontName="Helvetica-Bold")),
+            top = Table([[
+                p(f"#{op.get('rang','')} {op.get('instrument','')}", fontSize=13, textColor=WHITE, fontName="Helvetica-Bold"),
+                p(str(op.get("direction","")), fontSize=13, textColor=dc, fontName="Helvetica-Bold"),
+                p(f"Score: {score}/10", fontSize=11, textColor=score_color(score), fontName="Helvetica-Bold"),
             ],[
-                Paragraph(op.get("raison",""), st(f"tra{op.get('rang',0)}", fontSize=10, textColor=LIGHT, leading=14)),
-                Paragraph("","e1"),
-                Paragraph("","e2"),
-            ]], colWidths=["40%","20%","40%"])
-            top_row.setStyle(TableStyle([
-                ("BACKGROUND",(0,0),(-1,-1),PANEL),
-                ("ROWPADDING",(0,0),(-1,-1),10),
-                ("LINELEFT",(0,0),(0,-1),4,dc),
-                ("SPAN",(0,1),(2,1)),
-            ]))
-            story.append(top_row)
+                p(op.get("raison",""), fontSize=10, textColor=LIGHT, leading=14),
+                p("","e1"),
+                p("","e2"),
+            ]], colWidths=["45%","20%","35%"])
+            top.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),PANEL),("ROWPADDING",(0,0),(-1,-1),10),("LINELEFT",(0,0),(0,-1),4,dc),("SPAN",(0,1),(2,1))]))
+            story.append(top)
             story.append(Spacer(1,4*mm))
 
-    # ── INSTRUMENTS FAVORIS ──────────────────────────────────────────────────
-    story.append(Paragraph("VOS 5 INSTRUMENTS FAVORIS", st("fav_h", fontSize=12, textColor=GREEN, fontName="Helvetica-Bold")))
+    # INSTRUMENTS FAVORIS
+    story.append(p("VOS 5 INSTRUMENTS FAVORIS", fontSize=12, textColor=GREEN, fontName="Helvetica-Bold"))
     story.append(Spacer(1,3*mm))
 
     for i, inst in enumerate(data.get("instruments_favoris",[])):
         signal = str(inst.get("signal","ATTENDRE"))
         conviction = str(inst.get("conviction","MOYENNE"))
-        score = inst.get("score_fiabilite", 5)
+        score = int(inst.get("score_fiabilite",5))
         sc2 = GREEN if signal=="ACHETER" else (RED if signal=="VENDRE" else GOLD)
-        cc = GREEN if conviction=="FORTE" else (GOLD if conviction=="MOYENNE" else MUTED)
         vc = GREEN if "+" in str(inst.get("variation_jour","")) else RED
 
         story.append(Spacer(1,4*mm))
 
-        # Ligne 1 — Nom + Prix + Signal
         t1 = Table([[
-            Paragraph(str(inst.get("nom","")), st(f"fn{i}", fontSize=14, textColor=WHITE, fontName="Helvetica-Bold")),
-            [Paragraph(str(inst.get("prix","")), st(f"fp{i}", fontSize=14, textColor=WHITE, fontName="Helvetica-Bold")),
-             Paragraph(str(inst.get("variation_jour","")), st(f"fv{i}", fontSize=10, textColor=vc))],
-            Paragraph(f"SIGNAL: {signal}", st(f"fs{i}", fontSize=13, textColor=sc2, fontName="Helvetica-Bold")),
-            Paragraph(f"Score: {score}/10", st(f"fsc{i}", fontSize=11, textColor=score_color(score), fontName="Helvetica-Bold")),
-        ]], colWidths=["28%","22%","28%","22%"])
-        t1.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),PANEL),("ROWPADDING",(0,0),(-1,-1),10),("LINELEFT",(0,0),(0,-1),4,sc2),("VALIGN",(0,0),(-1,-1),"MIDDLE")]))
+            p(str(inst.get("nom","")), fontSize=13, textColor=WHITE, fontName="Helvetica-Bold"),
+            p(str(inst.get("prix","")), fontSize=13, textColor=WHITE, fontName="Helvetica-Bold"),
+            p(str(inst.get("variation_jour","")), fontSize=11, textColor=vc, fontName="Helvetica-Bold"),
+            p(f"SIGNAL: {signal}", fontSize=12, textColor=sc2, fontName="Helvetica-Bold"),
+            p(f"Score: {score}/10", fontSize=10, textColor=score_color(score), fontName="Helvetica-Bold"),
+        ]], colWidths=["24%","17%","14%","28%","17%"])
+        t1.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),PANEL),("ROWPADDING",(0,0),(-1,-1),10),("LINELEFT",(0,0),(0,-1),4,sc2)]))
         story.append(t1)
 
-        # Ligne 2 — Niveaux
         t2 = Table([[
-            Paragraph(f"ENTREE\n{inst.get('entree','')}", st(f"fe{i}", fontSize=11, textColor=WHITE, fontName="Helvetica-Bold", leading=15)),
-            Paragraph(f"STOP LOSS\n{inst.get('sl','')}", st(f"fsl{i}", fontSize=11, textColor=RED, fontName="Helvetica-Bold", leading=15)),
-            Paragraph(f"TAKE PROFIT\n{inst.get('tp','')}", st(f"ftp{i}", fontSize=11, textColor=GREEN, fontName="Helvetica-Bold", leading=15)),
-            Paragraph(f"R/R\n{inst.get('rr','')}", st(f"frr{i}", fontSize=11, textColor=GOLD, fontName="Helvetica-Bold", leading=15)),
-            Paragraph(f"HORIZON\n{inst.get('horizon','')}", st(f"fh{i}", fontSize=9, textColor=BLUE, leading=13)),
-        ]], colWidths=["18%","18%","20%","12%","32%"])
-        t2.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#070b10")),("ROWPADDING",(0,0),(-1,-1),9),("GRID",(0,0),(-1,-1),0.3,PANEL)]))
+            p(f"ENTREE: {inst.get('entree','')}", fontSize=11, textColor=WHITE, fontName="Helvetica-Bold"),
+            p(f"STOP LOSS: {inst.get('sl','')}", fontSize=11, textColor=RED, fontName="Helvetica-Bold"),
+            p(f"TAKE PROFIT: {inst.get('tp','')}", fontSize=11, textColor=GREEN, fontName="Helvetica-Bold"),
+            p(f"R/R: {inst.get('rr','')}", fontSize=11, textColor=GOLD, fontName="Helvetica-Bold"),
+        ]], colWidths=["22%","25%","28%","25%"])
+        t2.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#070b10")),("ROWPADDING",(0,0),(-1,-1),10),("GRID",(0,0),(-1,-1),0.3,PANEL)]))
         story.append(t2)
 
-        # Ligne 3 — Analyse + Taille + Support/Resistance
         t3 = Table([[
-            [Paragraph(str(inst.get("analyse","")), st(f"fa{i}", fontSize=9, textColor=LIGHT, leading=14)),
-             Paragraph(f"Catalyseur: {inst.get('catalyseur','')}", st(f"fcat{i}", fontSize=9, textColor=GOLD, leading=13))],
-            [Paragraph(f"Position: {inst.get('taille_100chf','')}", st(f"fsz{i}", fontSize=9, textColor=GOLD)),
-             Spacer(1,2*mm),
-             Paragraph(f"Support: {inst.get('support','')} | Resistance: {inst.get('resistance','')}", st(f"fsr{i}", fontSize=9, textColor=MUTED)),
-             Spacer(1,2*mm),
-             Paragraph(f"Conviction: {conviction}", st(f"fcv{i}", fontSize=9, textColor=cc, fontName="Helvetica-Bold"))],
-        ]], colWidths=["65%","35%"])
-        t3.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),PANEL),("ROWPADDING",(0,0),(-1,-1),10),("VALIGN",(0,0),(-1,-1),"TOP")]))
+            p(f"Taille: {inst.get('taille_100chf','')} | Horizon: {inst.get('horizon','')} | Conviction: {conviction}", fontSize=9, textColor=GOLD),
+            p(f"Support: {inst.get('support','')} | Resistance: {inst.get('resistance','')}", fontSize=9, textColor=MUTED),
+        ]], colWidths=["55%","45%"])
+        t3.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#050a10")),("ROWPADDING",(0,0),(-1,-1),7)]))
         story.append(t3)
 
-    # ── AUTRES MARCHES ───────────────────────────────────────────────────────
+        story.append(p(f"Catalyseur: {inst.get('catalyseur','')} — {inst.get('analyse','')}", fontSize=9, textColor=LIGHT, leading=14))
+
+    # AUTRES MARCHES
     if data.get("opportunites_autres_marches"):
         story.append(PageBreak())
-        story.append(Paragraph("AUTRES OPPORTUNITES DE MARCHE", st("autres_h", fontSize=12, textColor=BLUE, fontName="Helvetica-Bold")))
-        story.append(Paragraph("Instruments hors favoris avec potentiel aujourd'hui", st("autres_sub", fontSize=9, textColor=MUTED)))
+        story.append(p("AUTRES OPPORTUNITES DE MARCHE", fontSize=12, textColor=BLUE, fontName="Helvetica-Bold"))
+        story.append(p("Instruments supplementaires avec potentiel aujourd hui", fontSize=9, textColor=MUTED))
         story.append(Spacer(1,4*mm))
 
         for i, inst in enumerate(data.get("opportunites_autres_marches",[])):
             signal = str(inst.get("signal","ATTENDRE"))
-            score = inst.get("score_fiabilite", 5)
+            score = int(inst.get("score_fiabilite",5))
             sc2 = GREEN if signal=="ACHETER" else (RED if signal=="VENDRE" else GOLD)
-            vc = GREEN if "+" in str(inst.get("variation_jour","")) else RED
 
             story.append(Spacer(1,3*mm))
             t1 = Table([[
-                Paragraph(str(inst.get("nom","")), st(f"an{i}", fontSize=13, textColor=WHITE, fontName="Helvetica-Bold")),
-                Paragraph(str(inst.get("prix","")), st(f"ap{i}", fontSize=13, textColor=WHITE, fontName="Helvetica-Bold")),
-                Paragraph(f"{signal}", st(f"as{i}", fontSize=12, textColor=sc2, fontName="Helvetica-Bold")),
-                Paragraph(f"Score: {score}/10", st(f"asc{i}", fontSize=10, textColor=score_color(score), fontName="Helvetica-Bold")),
-            ]], colWidths=["28%","20%","26%","26%"])
+                p(str(inst.get("nom","")), fontSize=13, textColor=WHITE, fontName="Helvetica-Bold"),
+                p(str(inst.get("prix","")), fontSize=12, textColor=WHITE),
+                p(f"SIGNAL: {signal}", fontSize=12, textColor=sc2, fontName="Helvetica-Bold"),
+                p(f"Score: {score}/10", fontSize=10, textColor=score_color(score), fontName="Helvetica-Bold"),
+            ]], colWidths=["28%","20%","30%","22%"])
             t1.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),PANEL),("ROWPADDING",(0,0),(-1,-1),9),("LINELEFT",(0,0),(0,-1),3,sc2)]))
             story.append(t1)
 
             t2 = Table([[
-                Paragraph(f"Entree: {inst.get('entree','')} | SL: {inst.get('sl','')} | TP: {inst.get('tp','')} | R/R: {inst.get('rr','')}", st(f"al{i}", fontSize=10, textColor=LIGHT)),
-                Paragraph(inst.get("taille_100chf",""), st(f"asz{i}", fontSize=9, textColor=GOLD)),
-            ]], colWidths=["65%","35%"])
+                p(f"Entree: {inst.get('entree','')} | SL: {inst.get('sl','')} | TP: {inst.get('tp','')} | R/R: {inst.get('rr','')} | Taille: {inst.get('taille_100chf','')}", fontSize=9, textColor=LIGHT),
+            ]])
             t2.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#070b10")),("ROWPADDING",(0,0),(-1,-1),8)]))
             story.append(t2)
 
-            story.append(Table([[
-                Paragraph(f"{inst.get('catalyseur','')} — {inst.get('analyse','')}", st(f"acat{i}", fontSize=9, textColor=LIGHT, leading=14)),
-                Paragraph(f"Horizon: {inst.get('horizon','')}", st(f"ah{i}", fontSize=9, textColor=BLUE)),
-            ]], colWidths=["75%","25%"]))
+            story.append(p(f"Catalyseur: {inst.get('catalyseur','')} | Horizon: {inst.get('horizon','')} — {inst.get('analyse','')}", fontSize=9, textColor=LIGHT, leading=14))
 
-    # ── OPPORTUNITES INTRADAY ────────────────────────────────────────────────
+    # INTRADAY
     if data.get("opportunites_intraday"):
         story.append(Spacer(1,6*mm))
-        story.append(Paragraph("OPPORTUNITES INTRADAY — A SURVEILLER AUJOURD'HUI", st("intra_h", fontSize=12, textColor=GOLD, fontName="Helvetica-Bold")))
+        story.append(p("OPPORTUNITES INTRADAY — A SURVEILLER AUJOURD HUI", fontSize=12, textColor=GOLD, fontName="Helvetica-Bold"))
         story.append(Spacer(1,3*mm))
         for op in data.get("opportunites_intraday",[]):
             dc = GREEN if op.get("direction")=="LONG" else (RED if op.get("direction")=="SHORT" else GOLD)
             intra = Table([[
-                Paragraph(op.get("heure_cible",""), st(f"ih{hash(str(op))%9999}", fontSize=12, textColor=GOLD, fontName="Helvetica-Bold")),
-                Paragraph(op.get("instrument",""), st(f"ii{hash(str(op))%9999}", fontSize=12, textColor=WHITE, fontName="Helvetica-Bold")),
-                Paragraph(op.get("direction",""), st(f"id{hash(str(op))%9999}", fontSize=11, textColor=dc, fontName="Helvetica-Bold")),
+                p(str(op.get("heure_cible","")), fontSize=12, textColor=GOLD, fontName="Helvetica-Bold"),
+                p(str(op.get("instrument","")), fontSize=12, textColor=WHITE, fontName="Helvetica-Bold"),
+                p(str(op.get("direction","")), fontSize=11, textColor=dc, fontName="Helvetica-Bold"),
+                p(str(op.get("evenement","")), fontSize=9, textColor=MUTED),
             ],[
-                Paragraph(op.get("evenement",""), st(f"ie{hash(str(op))%9999}", fontSize=9, textColor=MUTED)),
-                Paragraph(op.get("strategie",""), st(f"is{hash(str(op))%9999}", fontSize=9, textColor=LIGHT, leading=13)),
-                Paragraph("","ie2"),
-            ]], colWidths=["20%","25%","55%"])
-            intra.setStyle(TableStyle([
-                ("BACKGROUND",(0,0),(-1,-1),PANEL),
-                ("ROWPADDING",(0,0),(-1,-1),9),
-                ("LINELEFT",(0,0),(0,-1),3,GOLD),
-                ("SPAN",(1,1),(2,1)),
-            ]))
+                p(str(op.get("strategie","")), fontSize=9, textColor=LIGHT, leading=13),
+                p("","ii1"), p("","ii2"), p("","ii3"),
+            ]], colWidths=["18%","22%","15%","45%"])
+            intra.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),PANEL),("ROWPADDING",(0,0),(-1,-1),9),("LINELEFT",(0,0),(0,-1),3,GOLD),("SPAN",(0,1),(3,1))]))
             story.append(intra)
             story.append(Spacer(1,3*mm))
 
-    # ── PAGE FINALE ──────────────────────────────────────────────────────────
+    # PAGE FINALE
     story.append(PageBreak())
-
-    # Risques
-    story.append(Paragraph("RISQUES MAJEURS A SURVEILLER", st("rh", fontSize=11, textColor=RED, fontName="Helvetica-Bold")))
+    story.append(p("RISQUES MAJEURS A SURVEILLER", fontSize=11, textColor=RED, fontName="Helvetica-Bold"))
     story.append(Spacer(1,3*mm))
     for r in data.get("risques_majeurs",[]):
-        story.append(Paragraph(f"⚠ {r}", st(f"ri{abs(hash(r))%99999}", fontSize=10, textColor=LIGHT, leading=16)))
+        story.append(p(f"⚠ {r}", fontSize=10, textColor=LIGHT, leading=16))
 
-    # Marches a eviter
     if data.get("marches_eviter"):
         story.append(Spacer(1,4*mm))
-        story.append(Paragraph("MARCHES A EVITER AUJOURD'HUI", st("ev_h", fontSize=11, textColor=RED, fontName="Helvetica-Bold")))
-        story.append(Spacer(1,2*mm))
+        story.append(p("MARCHES A EVITER AUJOURD HUI", fontSize=11, textColor=RED, fontName="Helvetica-Bold"))
         for m in data["marches_eviter"]:
-            story.append(Paragraph(f"✗ {m}", st(f"ev{abs(hash(m))%99999}", fontSize=10, textColor=RED, leading=16)))
+            story.append(p(f"✗ {m}", fontSize=10, textColor=RED, leading=16))
 
-    # Conseil 100 CHF
     story.append(Spacer(1,5*mm))
-    conseil_box = Table([[
-        [Paragraph("PLAN DE TRADING — 100 CHF", st("ch_label", fontSize=9, textColor=GOLD, fontName="Helvetica-Bold", spaceAfter=4)),
-         Paragraph(data.get("conseil_100chf",""), st("ch_val", fontSize=10, textColor=LIGHT, leading=16))]
-    ]])
-    conseil_box.setStyle(TableStyle([
-        ("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#1a1400")),
-        ("ROWPADDING",(0,0),(-1,-1),14),
-        ("LINELEFT",(0,0),(0,-1),4,GOLD),
-    ]))
-    story.append(conseil_box)
+    conseil = Table([[p(f"PLAN DE TRADING 100 CHF: {data.get('conseil_100chf','')}", fontSize=10, textColor=LIGHT, leading=16)]])
+    conseil.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#1a1400")),("ROWPADDING",(0,0),(-1,-1),14),("LINELEFT",(0,0),(0,-1),4,GOLD)]))
+    story.append(conseil)
 
-    # Footer
     story.append(Spacer(1,5*mm))
     story.append(HRFlowable(width="100%", thickness=1, color=GREEN))
-    story.append(Spacer(1,2*mm))
-    story.append(Paragraph(
-        f"SOZO TRADE — Genere le {datetime.now().strftime('%d/%m/%Y a %H:%M')} par Claude AI (Anthropic) | "
-        f"Sources: Investing.com, Bloomberg, Reuters, FXStreet | "
-        f"A titre informatif uniquement — Pas un conseil financier — Le trading comporte des risques de perte en capital",
-        st("ft", fontSize=7, textColor=MUTED, alignment=1)
-    ))
+    story.append(p(f"SOZO TRADE | Genere le {datetime.now().strftime('%d/%m/%Y a %H:%M')} par Claude AI | Sources: Investing.com, Bloomberg, Reuters | A titre informatif — Pas un conseil financier", fontSize=7, textColor=MUTED, alignment=1))
 
     doc.build(story)
-    print(f"PDF genere: {out}")
+    print(f"PDF OK: {out}")
     return str(out)
 
 def main():
