@@ -69,6 +69,24 @@ bascule proprement sur des polices système.
 
 ---
 
+## Partager la démo
+
+Un workflow GitHub Actions (`.github/workflows/deploy-demo.yml`) publie ce dossier sur
+GitHub Pages à chaque push sur `main`.
+
+Activation, une seule fois : **Settings → Pages → Source : « GitHub Actions »**.
+L'adresse publique devient ensuite :
+
+```
+https://sozo19.github.io/sozo-trade-reports/
+```
+
+La page porte une balise `noindex, nofollow` pour ne pas être référencée par Google et
+passer pour le site officiel du salon. **À retirer** le jour de la mise en ligne
+définitive (ligne 11 de `index.html`).
+
+---
+
 ## Arguments pour la présentation au patron
 
 **1. L'image de marque.** Aujourd'hui, au moment le plus important — celui où le client
