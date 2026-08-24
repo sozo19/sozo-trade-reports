@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Barbershop Mont-Blanc — L'art du barbier, à Genève</title>
+<meta name="description" content="Barbershop Mont-Blanc — Coupe, barbe et rasage traditionnel au cœur de Genève. Réservez votre rendez-vous en ligne en 30 secondes." />
+<meta name="theme-color" content="#0A0A0B" />
+<!-- Démo : empêche l'indexation par Google, pour qu'elle ne soit pas prise
+     pour le site officiel du salon. À SUPPRIMER lors de la mise en ligne définitive. -->
+<meta name="robots" content="noindex, nofollow" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A0A0B'/><text y='72' x='50' text-anchor='middle' font-size='58' font-family='Georgia,serif' fill='%23C8A264'>M</text></svg>">
+
+<style>
+/* ============================================================
+   BARBERSHOP MONT-BLANC — Feuille de style
+   ------------------------------------------------------------
+   ► PHOTOS DU CLIENT : tout se règle ici, en une ligne.
+     Remplacez `none` par url("photos/votre-image.jpg")
+     et le site s'adapte automatiquement (filtres + voiles inclus).
+   ============================================================ */
+:root{
+  /* --- Photos (optionnelles) --- */
+  --photo-hero:   none;   /* ex: url("photos/salon.jpg") */
+  --photo-atelier:none;   /* ex: url("photos/atelier.jpg") */
+
+  /* --- Palette --- */
+  --noir:        #0A0A0B;
+  --anthracite:  #121214;
+  --anthracite-2:#17171A;
+  --carbone:     #1E1E22;
+  --ligne:       rgba(255,255,255,.075);
+  --ligne-forte: rgba(200,162,100,.32);
+
+  --or:          #C8A264;
+  --or-clair:    #E7CE9B;
+  --cuivre:      #B0703C;
+  --blanc-casse: #F1ECE3;
+  --texte:       #DCD6CC;
+  --texte-doux:  #948F86;
+
+  /* --- Typo --- */
+  --serif: "Playfair Display", "Times New Roman", serif;
+  --sans:  "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* --- Rythme --- */
+  --r-s: 4px;
+  --r-m: 10px;
+  --r-l: 18px;
+  --gouttiere: clamp(20px, 5vw, 64px);
+  --transition: cubic-bezier(.22,1,.36,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+
+body{
+  margin:0;
+  background:var(--noir);
+  color:var(--texte);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:16px;
+  line-height:1.75;
+  letter-spacing:.01em;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; border:0; background:none; cursor:pointer; }
+input,textarea,select{ font:inherit; color:inherit; }
+::selection{ background:var(--or); color:var(--noir); }
+
+/* Focus visible — accessibilité */
+:focus-visible{ outline:2px solid var(--or); outline-offset:3px; border-radius:2px; }
+
+/* ---------- Typographie ---------- */
+h1,h2,h3,h4{ font-family:var(--serif); font-weight:400; color:var(--blanc-casse); margin:0; line-height:1.12; letter-spacing:-.015em; }
+.h-xl{ font-size:clamp(2.9rem, 7.4vw, 6.1rem); }
+.h-l { font-size:clamp(2.1rem, 4.6vw, 3.6rem); }
+.h-m { font-size:clamp(1.35rem, 2.2vw, 1.75rem); }
+p{ margin:0; }
+
+.surtitre{
+  font-family:var(--sans);
+  font-size:.7rem;
+  font-weight:500;
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  color:var(--or);
+  display:flex; align-items:center; gap:14px;
+}
+.surtitre::before{ content:""; width:34px; height:1px; background:linear-gradient(90deg,transparent,var(--or)); }
+.surtitre--centre{ justify-content:center; }
+.surtitre--centre::after{ content:""; width:34px; height:1px; background:linear-gradient(90deg,var(--or),transparent); }
+
+.texte-doux{ color:var(--texte-doux); font-weight:300; }
+
+/* ---------- Layout ---------- */
+.enveloppe{ width:min(1240px, 100% - 2*var(--gouttiere)); margin-inline:auto; }
+section{ position:relative; }
+/* Les ancres ne doivent jamais passer sous le header fixe. */
+section[id], .module{ scroll-margin-top:104px; }
+.section{ padding:clamp(80px, 11vw, 150px) 0; }
+.entete-section{ max-width:640px; margin-bottom:clamp(44px,5vw,72px); }
+.entete-section--centre{ margin-inline:auto; text-align:center; }
+.entete-section h2{ margin:22px 0 20px; }
+
+/* ============================================================
+   BOUTONS
+   ============================================================ */
+.btn{
+  --fond:var(--or);
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:12px;
+  padding:17px 34px;
+  font-size:.74rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+  border-radius:var(--r-s);
+  overflow:hidden;
+  isolation:isolate;
+  transition:transform .45s var(--transition), box-shadow .45s var(--transition), color .35s ease, border-color .35s ease, background .35s ease;
+  white-space:nowrap;
+}
+.btn::after{ /* balayage lumineux */
+  content:"";
+  position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.42) 50%,transparent 75%);
+  transform:translateX(-130%);
+  transition:transform .85s var(--transition);
+}
+.btn:hover::after{ transform:translateX(130%); }
+
+.btn--or{
+  background:linear-gradient(150deg,var(--or-clair),var(--or) 45%,var(--cuivre));
+  color:#161208;
+  box-shadow:0 12px 34px -16px rgba(200,162,100,.85);
+}
+.btn--or:hover{ transform:translateY(-3px); box-shadow:0 22px 48px -18px rgba(200,162,100,.95); }
+
+.btn--fantome{
+  border:1px solid rgba(241,236,227,.22);
+  color:var(--blanc-casse);
+  backdrop-filter:blur(6px);
+}
+.btn--fantome:hover{ border-color:var(--or); color:var(--or); transform:translateY(-3px); }
+
+.btn--mini{ padding:13px 24px; font-size:.66rem; }
+.btn:disabled{ opacity:.35; cursor:not-allowed; transform:none !important; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.entete{
+  position:fixed; inset:0 0 auto 0; z-index:100;
+  padding:22px 0;
+  transition:padding .5s var(--transition), background .5s ease, box-shadow .5s ease, border-color .5s ease;
+  border-bottom:1px solid transparent;
+}
+.entete.est-fixe{
+  padding:12px 0;
+  background:rgba(10,10,11,.82);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border-bottom-color:var(--ligne);
+  box-shadow:0 18px 50px -32px rgba(0,0,0,.9);
+}
+.entete__inner{ display:flex; align-items:center; justify-content:space-between; gap:24px; }
+
+.logo{ display:flex; align-items:center; gap:13px; }
+.logo__marque{
+  width:42px; height:42px; flex:none;
+  display:grid; place-items:center;
+  border:1px solid var(--ligne-forte);
+  border-radius:50%;
+  font-family:var(--serif); font-size:1.05rem; color:var(--or);
+  background:radial-gradient(circle at 30% 25%, rgba(200,162,100,.20), transparent 70%);
+  transition:transform .6s var(--transition);
+}
+.logo:hover .logo__marque{ transform:rotate(-12deg) scale(1.06); }
+.logo__texte{ display:flex; flex-direction:column; line-height:1.15; }
+.logo__nom{ font-family:var(--serif); font-size:1.06rem; color:var(--blanc-casse); letter-spacing:.03em; }
+.logo__ville{ font-size:.56rem; letter-spacing:.36em; text-transform:uppercase; color:var(--texte-doux); }
+
+.nav{ display:flex; align-items:center; gap:38px; }
+.nav a{
+  position:relative;
+  font-size:.72rem; letter-spacing:.17em; text-transform:uppercase; font-weight:400;
+  color:var(--texte); padding:6px 0;
+  transition:color .35s ease;
+}
+.nav a::after{
+  content:""; position:absolute; left:0; bottom:0; height:1px; width:100%;
+  background:var(--or); transform:scaleX(0); transform-origin:right;
+  transition:transform .5s var(--transition);
+}
+.nav a:hover{ color:var(--or-clair); }
+.nav a:hover::after{ transform:scaleX(1); transform-origin:left; }
+
+.entete__actions{ display:flex; align-items:center; gap:18px; }
+.tel-entete{ font-size:.75rem; letter-spacing:.09em; color:var(--texte-doux); transition:color .3s; }
+.tel-entete:hover{ color:var(--or); }
+
+.burger{ display:none; width:44px; height:44px; place-items:center; }
+.burger span{ display:block; width:24px; height:1.5px; background:var(--blanc-casse); position:relative; transition:background .3s; }
+.burger span::before,.burger span::after{ content:""; position:absolute; left:0; width:24px; height:1.5px; background:var(--blanc-casse); transition:transform .45s var(--transition); }
+.burger span::before{ top:-7px; }
+.burger span::after{ top:7px; }
+.menu-ouvert .burger span{ background:transparent; }
+.menu-ouvert .burger span::before{ transform:translateY(7px) rotate(45deg); }
+.menu-ouvert .burger span::after{ transform:translateY(-7px) rotate(-45deg); }
+
+@media (max-width:960px){
+  .burger{ display:grid; }
+  .tel-entete{ display:none; }
+  .entete__actions .btn{ display:none; }
+  .nav{
+    position:fixed; inset:0; z-index:-1;
+    flex-direction:column; justify-content:center; gap:30px;
+    background:rgba(10,10,11,.97);
+    backdrop-filter:blur(20px);
+    opacity:0; visibility:hidden;
+    transition:opacity .5s ease, visibility .5s;
+  }
+  .nav a{ font-size:1.05rem; letter-spacing:.24em; }
+  .menu-ouvert .nav{ opacity:1; visibility:visible; }
+  body.menu-ouvert{ overflow:hidden; }
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex; align-items:center;
+  padding:150px 0 90px;
+  overflow:hidden;
+}
+.hero__fond{ position:absolute; inset:0; z-index:0; }
+.hero__photo{
+  position:absolute; inset:0;
+  background-image:var(--photo-hero);
+  background-size:cover; background-position:center 35%;
+  filter:grayscale(.55) contrast(1.08) brightness(.42);
+  transform:scale(1.06);
+  animation:zoomLent 26s ease-in-out infinite alternate;
+}
+@keyframes zoomLent{ to{ transform:scale(1.16); } }
+
+/* Décor génératif : fonctionne même sans photo */
+.hero__voile{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(120% 85% at 78% 18%, rgba(176,112,60,.24), transparent 58%),
+    radial-gradient(95% 70% at 12% 92%, rgba(200,162,100,.13), transparent 62%),
+    linear-gradient(180deg, rgba(10,10,11,.72) 0%, rgba(10,10,11,.55) 42%, var(--noir) 97%);
+}
+.hero__grain{
+  position:absolute; inset:0; opacity:.055; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.hero__rayures{
+  position:absolute; inset:0; opacity:.16;
+  background-image:repeating-linear-gradient(115deg, transparent 0 38px, rgba(200,162,100,.16) 38px 39px);
+  -webkit-mask-image:radial-gradient(70% 60% at 70% 40%, #000, transparent 72%);
+  mask-image:radial-gradient(70% 60% at 70% 40%, #000, transparent 72%);
+}
+.hero__monogramme{
+  position:absolute; right:-4vw; top:44%; transform:translateY(-50%);
+  font-family:var(--serif); font-size:min(46vw,660px); line-height:.8;
+  color:rgba(241,236,227,.022);
+  user-select:none; pointer-events:none;
+}
+
+.hero__contenu{ position:relative; z-index:2; max-width:860px; }
+.hero h1{ margin:26px 0 0; }
+.hero h1 .ligne{ display:block; overflow:hidden; }
+.hero h1 .ligne > span{
+  display:block;
+  animation:monteeLigne 1.25s var(--transition) both;
+}
+.hero h1 .ligne:nth-child(2) > span{ animation-delay:.13s; }
+.hero h1 .ligne:nth-child(3) > span{ animation-delay:.26s; }
+@keyframes monteeLigne{ from{ transform:translateY(105%); opacity:0; } to{ transform:translateY(0); opacity:1; } }
+
+.hero__accent{
+  font-style:italic;
+  background:linear-gradient(100deg,var(--or-clair),var(--or) 40%,var(--cuivre));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero__sous-titre{
+  max-width:520px; margin-top:30px; font-size:1.03rem; color:var(--texte-doux);
+  animation:apparition 1.1s .5s var(--transition) both;
+}
+.hero__ctas{ display:flex; flex-wrap:wrap; gap:16px; margin-top:44px; animation:apparition 1.1s .68s var(--transition) both; }
+@keyframes apparition{ from{ opacity:0; transform:translateY(24px); } to{ opacity:1; transform:none; } }
+
+.hero__preuves{
+  display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,54px);
+  margin-top:clamp(34px,5vh,64px); padding-top:clamp(20px,3vh,32px); border-top:1px solid var(--ligne);
+  animation:apparition 1.1s .86s var(--transition) both;
+}
+.preuve__valeur{ font-family:var(--serif); font-size:1.85rem; color:var(--or); line-height:1; }
+.preuve__label{ font-size:.63rem; letter-spacing:.24em; text-transform:uppercase; color:var(--texte-doux); margin-top:9px; }
+
+.hero__scroll{
+  position:absolute; left:50%; bottom:30px; transform:translateX(-50%);
+  z-index:2; display:flex; flex-direction:column; align-items:center; gap:12px;
+  font-size:.58rem; letter-spacing:.3em; text-transform:uppercase; color:var(--texte-doux);
+}
+.hero__scroll i{ display:block; width:1px; height:52px; background:linear-gradient(var(--or),transparent); }
+.hero__scroll i::after{
+  content:""; display:block; width:1px; height:16px; background:var(--or-clair);
+  animation:descente 2.1s ease-in-out infinite;
+}
+@keyframes descente{ 0%{ transform:translateY(-16px); opacity:0; } 40%{ opacity:1; } 100%{ transform:translateY(52px); opacity:0; } }
+/* Le repère de défilement ne doit jamais chevaucher les chiffres clés. */
+@media (max-width:760px), (max-height:980px){ .hero__scroll{ display:none; } }
+
+/* ---------- Bandeau défilant ---------- */
+.bandeau{
+  border-block:1px solid var(--ligne);
+  background:var(--anthracite);
+  overflow:hidden; padding:19px 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+.bandeau__piste{ display:flex; width:max-content; animation:defile 42s linear infinite; }
+.bandeau:hover .bandeau__piste{ animation-play-state:paused; }
+@keyframes defile{ to{ transform:translateX(-50%); } }
+.bandeau__groupe{ display:flex; align-items:center; gap:52px; padding-right:52px; }
+.bandeau span{ font-size:.68rem; letter-spacing:.34em; text-transform:uppercase; color:var(--texte-doux); white-space:nowrap; }
+.bandeau b{ color:var(--or); font-weight:400; }
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+.grille-services{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(310px,1fr));
+  gap:20px;
+}
+.carte-service{
+  position:relative;
+  display:flex; flex-direction:column;
+  padding:38px 34px 32px;
+  background:linear-gradient(165deg,var(--anthracite-2),var(--anthracite));
+  border:1px solid var(--ligne);
+  border-radius:var(--r-l);
+  overflow:hidden;
+  transition:transform .6s var(--transition), border-color .5s ease, box-shadow .6s var(--transition);
+}
+.carte-service::before{ /* halo au survol */
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(85% 60% at 50% -10%, rgba(200,162,100,.16), transparent 68%);
+  opacity:0; transition:opacity .6s ease;
+}
+.carte-service:hover{
+  transform:translateY(-8px);
+  border-color:var(--ligne-forte);
+  box-shadow:0 34px 60px -38px rgba(0,0,0,.95);
+}
+.carte-service:hover::before{ opacity:1; }
+.carte-service > *{ position:relative; }
+
+.carte-service__haut{ display:flex; align-items:flex-start; justify-content:space-between; gap:18px; }
+.carte-service__icone{
+  width:52px; height:52px; flex:none; display:grid; place-items:center;
+  border:1px solid var(--ligne-forte); border-radius:50%;
+  color:var(--or);
+  transition:background .5s ease, transform .6s var(--transition);
+}
+.carte-service:hover .carte-service__icone{ background:rgba(200,162,100,.1); transform:rotate(-8deg); }
+.carte-service__prix{ font-family:var(--serif); font-size:1.9rem; color:var(--or-clair); line-height:1; }
+.carte-service__prix small{ font-family:var(--sans); font-size:.62rem; letter-spacing:.2em; color:var(--texte-doux); display:block; margin-top:8px; text-transform:uppercase; }
+.carte-service h3{ margin:26px 0 12px; font-size:1.42rem; }
+.carte-service p{ color:var(--texte-doux); font-size:.9rem; min-height:52px; }
+.carte-service__pied{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  margin-top:26px; padding-top:22px; border-top:1px solid var(--ligne);
+}
+.duree{ font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--texte-doux); display:flex; align-items:center; gap:8px; }
+.lien-choisir{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:.68rem; font-weight:500; letter-spacing:.19em; text-transform:uppercase; color:var(--or);
+  transition:gap .4s var(--transition), color .3s;
+}
+.lien-choisir svg{ transition:transform .45s var(--transition); }
+.lien-choisir:hover{ color:var(--or-clair); gap:16px; }
+.lien-choisir:hover svg{ transform:translateX(4px); }
+
+.etiquette{
+  position:absolute; top:20px; right:-38px;
+  transform:rotate(38deg);
+  background:linear-gradient(90deg,var(--cuivre),var(--or));
+  color:#17130a; font-size:.55rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  padding:6px 42px;
+}
+
+/* ============================================================
+   EXPÉRIENCE (bloc double)
+   ============================================================ */
+.experience{ background:var(--anthracite); border-block:1px solid var(--ligne); }
+.experience__grille{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(36px,6vw,84px); align-items:center; }
+@media (max-width:900px){ .experience__grille{ grid-template-columns:1fr; } }
+
+.experience__visuel{
+  position:relative; aspect-ratio:4/5; border-radius:var(--r-l); overflow:hidden;
+  border:1px solid var(--ligne);
+  background:
+    var(--photo-atelier),
+    radial-gradient(75% 55% at 30% 20%, rgba(176,112,60,.28), transparent 62%),
+    linear-gradient(160deg,var(--carbone),#0d0d0f);
+  background-size:cover; background-position:center;
+}
+.experience__visuel::after{
+  content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(60deg, transparent 0 56px, rgba(200,162,100,.055) 56px 58px);
+}
+.experience__badge{
+  position:absolute; left:26px; bottom:26px; z-index:2;
+  display:flex; align-items:center; gap:16px;
+  padding:18px 24px;
+  background:rgba(10,10,11,.72); backdrop-filter:blur(14px);
+  border:1px solid var(--ligne-forte); border-radius:var(--r-m);
+}
+.experience__badge strong{ font-family:var(--serif); font-size:1.55rem; color:var(--or); font-weight:400; }
+.experience__badge span{ font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--texte-doux); }
+
+.liste-atouts{ list-style:none; margin:34px 0 0; padding:0; display:grid; gap:2px; }
+.liste-atouts li{
+  display:flex; gap:20px; align-items:flex-start;
+  padding:22px 4px; border-top:1px solid var(--ligne);
+  transition:padding-left .5s var(--transition), border-color .4s;
+}
+.liste-atouts li:last-child{ border-bottom:1px solid var(--ligne); }
+.liste-atouts li:hover{ padding-left:14px; border-color:var(--ligne-forte); }
+.liste-atouts .num{ font-family:var(--serif); font-size:.9rem; color:var(--or); padding-top:4px; min-width:26px; }
+.liste-atouts h4{ font-size:1.08rem; margin-bottom:6px; }
+.liste-atouts p{ font-size:.88rem; color:var(--texte-doux); }
+
+/* ============================================================
+   RÉSERVATION — LE CŒUR DU SITE
+   ============================================================ */
+.reservation{ position:relative; overflow:hidden; }
+.reservation::before{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(58% 44% at 50% 0%, rgba(200,162,100,.09), transparent 62%);
+  pointer-events:none;
+}
+
+.module{
+  position:relative;
+  display:grid; grid-template-columns:355px 1fr;
+  background:linear-gradient(170deg,var(--anthracite-2),var(--anthracite));
+  border:1px solid var(--ligne);
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 60px 120px -60px rgba(0,0,0,1);
+}
+@media (max-width:980px){ .module{ grid-template-columns:1fr; } }
+
+/* --- Colonne récapitulatif --- */
+.recap{
+  min-width:0;                 /* empêche l'élargissement de la colonne (grid blowout) */
+  padding:44px 36px;
+  background:linear-gradient(200deg, rgba(200,162,100,.07), transparent 55%), #0E0E10;
+  border-right:1px solid var(--ligne);
+  display:flex; flex-direction:column;
+}
+/* Sur mobile, le formulaire passe devant : le récapitulatif suit. */
+@media (max-width:980px){
+  .recap{ order:2; border-right:0; border-top:1px solid var(--ligne); padding:32px 26px; }
+  .parcours{ order:1; }
+}
+
+.recap__titre{ font-size:.64rem; letter-spacing:.32em; text-transform:uppercase; color:var(--or); margin-bottom:30px; }
+.recap__lignes{ display:grid; gap:2px; align-content:start; flex:1; }
+.recap__ligne{
+  display:flex; align-items:flex-start; gap:14px;
+  padding:15px 0; border-bottom:1px dashed rgba(255,255,255,.07);
+}
+.recap__ligne:last-child{ border-bottom:0; }
+.recap__ligne i{
+  width:26px; height:26px; flex:none; display:grid; place-items:center;
+  border-radius:50%; border:1px solid var(--ligne);
+  color:var(--texte-doux); transition:all .45s var(--transition);
+}
+.recap__ligne.est-rempli i{ border-color:var(--or); color:var(--or); background:rgba(200,162,100,.1); }
+.recap__ligne dt{ font-size:.58rem; letter-spacing:.22em; text-transform:uppercase; color:var(--texte-doux); }
+.recap__ligne dd{ margin:4px 0 0; font-family:var(--serif); font-size:1.02rem; color:rgba(241,236,227,.35); transition:color .4s ease; }
+.recap__ligne.est-rempli dd{ color:var(--blanc-casse); }
+
+.recap__total{
+  margin-top:26px; padding-top:22px; border-top:1px solid var(--ligne-forte);
+  display:flex; align-items:baseline; justify-content:space-between;
+}
+.recap__total span{ font-size:.62rem; letter-spacing:.24em; text-transform:uppercase; color:var(--texte-doux); }
+.recap__total strong{ font-family:var(--serif); font-size:2rem; font-weight:400; color:var(--or); }
+.recap__note{ margin-top:20px; font-size:.72rem; color:var(--texte-doux); line-height:1.6; display:flex; gap:10px; }
+.recap__note svg{ flex:none; margin-top:3px; color:var(--or); }
+
+/* --- Colonne étapes --- */
+.parcours{ min-width:0; padding:44px clamp(24px,3.4vw,48px); display:flex; flex-direction:column; }
+
+.jauge{ display:flex; align-items:center; margin-bottom:38px; }
+.jauge__etape{ display:flex; align-items:center; gap:12px; }
+.jauge__pastille{
+  width:34px; height:34px; flex:none; display:grid; place-items:center;
+  border-radius:50%; border:1px solid var(--ligne);
+  font-size:.74rem; color:var(--texte-doux);
+  background:var(--anthracite);
+  transition:all .5s var(--transition);
+}
+.jauge__libelle{ font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--texte-doux); transition:color .4s; }
+@media (max-width:720px){ .jauge__libelle{ display:none; } }
+.jauge__trait{ flex:1; height:1px; background:var(--ligne); margin:0 14px; position:relative; overflow:hidden; }
+.jauge__trait::after{
+  content:""; position:absolute; inset:0; background:linear-gradient(90deg,var(--or),var(--cuivre));
+  transform:scaleX(0); transform-origin:left; transition:transform .7s var(--transition);
+}
+.jauge__etape.est-active .jauge__pastille{ border-color:var(--or); color:var(--or); box-shadow:0 0 0 4px rgba(200,162,100,.11); }
+.jauge__etape.est-active .jauge__libelle{ color:var(--blanc-casse); }
+.jauge__etape.est-faite .jauge__pastille{ background:linear-gradient(150deg,var(--or-clair),var(--or)); border-color:var(--or); color:#161208; }
+.jauge__etape.est-faite + .jauge__trait::after{ transform:scaleX(1); }
+
+.etapes{ position:relative; flex:1; }
+.etape{ display:none; }
+.etape.est-active{ display:block; }
+.etape.entre-droite{ animation:glisseDroite .58s var(--transition) both; }
+.etape.entre-gauche{ animation:glisseGauche .58s var(--transition) both; }
+@keyframes glisseDroite{ from{ opacity:0; transform:translateX(46px); } to{ opacity:1; transform:none; } }
+@keyframes glisseGauche{ from{ opacity:0; transform:translateX(-46px); } to{ opacity:1; transform:none; } }
+
+.etape__titre{ font-size:1.6rem; margin-bottom:8px; }
+.etape__intro{ color:var(--texte-doux); font-size:.88rem; margin-bottom:30px; }
+
+/* Cases sélectionnables — services */
+.choix-services{ display:grid; grid-template-columns:repeat(auto-fit,minmax(232px,1fr)); gap:12px; }
+.case-choix{
+  position:relative; text-align:left;
+  /* Un <button> centre son contenu verticalement : on force l'alignement haut. */
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding:20px 20px 18px; border-radius:var(--r-m);
+  border:1px solid var(--ligne);
+  background:rgba(255,255,255,.014);
+  transition:all .45s var(--transition);
+  overflow:hidden;
+}
+.case-choix::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(200,162,100,.12), transparent 62%);
+  opacity:0; transition:opacity .45s ease;
+}
+.case-choix:hover{ border-color:rgba(200,162,100,.4); transform:translateY(-3px); background:rgba(255,255,255,.03); }
+.case-choix.est-choisi{ border-color:var(--or); background:rgba(200,162,100,.07); }
+.case-choix.est-choisi::after{ opacity:1; }
+.case-choix > *{ position:relative; }
+.case-choix__coche{
+  position:absolute; top:14px; right:14px; z-index:2;
+  width:22px; height:22px; border-radius:50%;
+  border:1px solid var(--ligne); display:grid; place-items:center;
+  color:transparent; transition:all .4s var(--transition);
+}
+.case-choix.est-choisi .case-choix__coche{ background:var(--or); border-color:var(--or); color:#161208; transform:scale(1.06); }
+.case-choix__nom{ display:block; font-family:var(--serif); font-size:1.1rem; line-height:1.3; color:var(--blanc-casse); padding-right:30px; }
+.case-choix__desc{ display:block; font-size:.78rem; line-height:1.55; color:var(--texte-doux); margin-top:6px; }
+.case-choix__meta{ display:flex; align-items:baseline; gap:14px; margin-top:auto; padding-top:16px; }
+.case-choix__prix{ font-family:var(--serif); font-size:1.15rem; color:var(--or); }
+.case-choix__duree{ font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--texte-doux); }
+
+/* Coiffeurs */
+.choix-coiffeurs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(178px,1fr)); gap:12px; }
+.carte-coiffeur{ text-align:center; align-items:center; padding:26px 16px 22px; }
+.avatar{
+  width:82px; height:82px; margin:0 auto 16px; border-radius:50%;
+  display:grid; place-items:center;
+  font-family:var(--serif); font-size:1.7rem; color:var(--noir);
+  background:linear-gradient(150deg,var(--or-clair),var(--or) 55%,var(--cuivre));
+  box-shadow:0 0 0 1px rgba(200,162,100,.35), 0 0 0 7px rgba(200,162,100,.07);
+  position:relative; overflow:hidden;
+  transition:transform .55s var(--transition), box-shadow .55s var(--transition);
+}
+.avatar img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.carte-coiffeur:hover .avatar{ transform:scale(1.06); box-shadow:0 0 0 1px var(--or), 0 0 0 10px rgba(200,162,100,.11); }
+.carte-coiffeur.est-choisi .avatar{ box-shadow:0 0 0 2px var(--or), 0 0 0 10px rgba(200,162,100,.16); }
+.avatar--neutre{ background:linear-gradient(150deg,#2A2A2F,#17171A); color:var(--or); border:1px dashed var(--ligne-forte); }
+.carte-coiffeur__nom{ display:block; font-family:var(--serif); font-size:1.06rem; color:var(--blanc-casse); }
+.carte-coiffeur__role{ display:block; font-size:.63rem; letter-spacing:.17em; text-transform:uppercase; color:var(--texte-doux); margin-top:6px; }
+.carte-coiffeur__note{ display:block; margin-top:auto; padding-top:12px; font-size:.72rem; color:var(--or); letter-spacing:.08em; }
+
+/* Calendrier */
+.bloc-agenda{ display:grid; grid-template-columns:1.15fr .85fr; gap:26px; }
+@media (max-width:820px){ .bloc-agenda{ grid-template-columns:1fr; } }
+
+.calendrier{ border:1px solid var(--ligne); border-radius:var(--r-m); padding:22px; background:rgba(255,255,255,.012); }
+.calendrier__entete{ display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.calendrier__mois{ font-family:var(--serif); font-size:1.12rem; color:var(--blanc-casse); text-transform:capitalize; }
+.calendrier__nav{ display:flex; gap:8px; }
+.calendrier__nav button{
+  width:34px; height:34px; display:grid; place-items:center;
+  border:1px solid var(--ligne); border-radius:var(--r-s); color:var(--texte-doux);
+  transition:all .35s var(--transition);
+}
+.calendrier__nav button:hover:not(:disabled){ border-color:var(--or); color:var(--or); }
+.calendrier__nav button:disabled{ opacity:.25; cursor:not-allowed; }
+
+.calendrier__jours,.calendrier__grille{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
+.calendrier__jours span{ text-align:center; font-size:.58rem; letter-spacing:.14em; text-transform:uppercase; color:var(--texte-doux); padding-bottom:10px; }
+.jour{
+  aspect-ratio:1; display:grid; place-items:center;
+  border-radius:var(--r-s); font-size:.84rem; color:var(--texte);
+  border:1px solid transparent;
+  transition:all .3s var(--transition);
+  position:relative;
+}
+.jour:hover:not(:disabled):not(.est-vide){ border-color:var(--ligne-forte); color:var(--or-clair); background:rgba(200,162,100,.06); }
+.jour:disabled{ color:rgba(148,143,134,.32); cursor:not-allowed; }
+.jour.est-vide{ pointer-events:none; }
+.jour.est-choisi{ background:linear-gradient(150deg,var(--or-clair),var(--or)); color:#161208; font-weight:600; border-color:var(--or); }
+.jour.est-aujourdhui::after{ content:""; position:absolute; bottom:6px; width:3px; height:3px; border-radius:50%; background:var(--or); }
+.jour.est-choisi.est-aujourdhui::after{ background:#161208; }
+
+.creneaux{ display:flex; flex-direction:column; min-height:0; }
+.creneaux__titre{ font-size:.62rem; letter-spacing:.24em; text-transform:uppercase; color:var(--texte-doux); margin-bottom:16px; }
+/* La liste épouse la hauteur du calendrier : aucune ligne coupée. */
+.creneaux__liste{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(78px,1fr));
+  gap:8px; align-content:start;
+  flex:1; min-height:0; overflow-y:auto; padding-right:6px;
+}
+@media (max-width:820px){ .creneaux__liste{ max-height:262px; } }
+.creneaux__liste::-webkit-scrollbar{ width:4px; }
+.creneaux__liste::-webkit-scrollbar-thumb{ background:var(--ligne-forte); border-radius:4px; }
+.creneau{
+  padding:11px 6px; border-radius:var(--r-s); border:1px solid var(--ligne);
+  font-size:.8rem; text-align:center; color:var(--texte);
+  transition:all .32s var(--transition);
+}
+.creneau:hover:not(:disabled){ border-color:var(--or); color:var(--or-clair); transform:translateY(-2px); }
+.creneau.est-choisi{ background:linear-gradient(150deg,var(--or-clair),var(--or)); color:#161208; border-color:var(--or); font-weight:600; }
+.creneau:disabled{ opacity:.26; cursor:not-allowed; text-decoration:line-through; }
+.creneaux__vide{ font-size:.82rem; color:var(--texte-doux); font-style:italic; padding:20px 0; }
+
+/* Formulaire final */
+.champs{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:620px){ .champs{ grid-template-columns:1fr; } }
+.champ{ position:relative; }
+.champ--large{ grid-column:1/-1; }
+.champ label{ display:block; font-size:.6rem; letter-spacing:.22em; text-transform:uppercase; color:var(--texte-doux); margin-bottom:9px; }
+.champ input,.champ textarea{
+  width:100%; padding:15px 16px;
+  background:rgba(255,255,255,.02); border:1px solid var(--ligne); border-radius:var(--r-s);
+  font-size:.92rem; font-weight:300; color:var(--blanc-casse);
+  transition:border-color .35s ease, background .35s ease, box-shadow .35s ease;
+}
+.champ textarea{ resize:vertical; min-height:92px; }
+.champ input::placeholder,.champ textarea::placeholder{ color:rgba(148,143,134,.55); }
+.champ input:focus,.champ textarea:focus{
+  outline:none; border-color:var(--or); background:rgba(200,162,100,.045);
+  box-shadow:0 0 0 3px rgba(200,162,100,.09);
+}
+.champ.est-invalide input,.champ.est-invalide textarea{ border-color:#8E4B3C; background:rgba(142,75,60,.07); }
+.champ__erreur{ font-size:.68rem; color:#D08A76; margin-top:7px; display:none; }
+.champ.est-invalide .champ__erreur{ display:block; }
+
+.case-cgu{ display:flex; gap:12px; align-items:flex-start; margin-top:22px; font-size:.76rem; color:var(--texte-doux); }
+.case-cgu input{ appearance:none; width:18px; height:18px; flex:none; margin-top:2px; border:1px solid var(--ligne-forte); border-radius:3px; cursor:pointer; display:grid; place-items:center; transition:all .3s; }
+.case-cgu input:checked{ background:var(--or); border-color:var(--or); }
+.case-cgu input:checked::after{ content:"✓"; color:#161208; font-size:.7rem; font-weight:700; }
+
+/* Navigation du parcours */
+.parcours__pied{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  margin-top:34px; padding-top:26px; border-top:1px solid var(--ligne);
+}
+.btn-retour{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:.68rem; letter-spacing:.19em; text-transform:uppercase; color:var(--texte-doux);
+  transition:color .3s, gap .4s var(--transition);
+}
+.btn-retour:hover{ color:var(--or); gap:15px; }
+.btn-retour[hidden]{ display:none; }
+
+/* Sur petit écran, le bouton principal passe pleine largeur. */
+@media (max-width:560px){
+  .parcours__pied{ flex-wrap:wrap; row-gap:20px; }
+  .parcours__pied .btn{ order:3; flex:1 0 100%; padding:16px 20px; }
+  .btn-retour{ order:1; }
+  #indice-etape{ order:2; margin-left:auto; }
+  .jauge__trait{ margin:0 8px; }
+}
+
+/* Confirmation */
+.confirmation{ display:none; text-align:center; padding:26px 0 12px; }
+.confirmation.est-active{ display:block; animation:apparition .7s var(--transition) both; }
+.sceau{ width:98px; height:98px; margin:0 auto 30px; }
+.sceau circle{ fill:none; stroke:var(--or); stroke-width:1.5; stroke-dasharray:302; stroke-dashoffset:302; animation:trace 1s var(--transition) .1s forwards; }
+.sceau path{ fill:none; stroke:var(--or-clair); stroke-width:4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:60; stroke-dashoffset:60; animation:trace .5s var(--transition) .8s forwards; }
+@keyframes trace{ to{ stroke-dashoffset:0; } }
+.confirmation h3{ font-size:2rem; margin-bottom:12px; }
+.confirmation > p{ color:var(--texte-doux); max-width:430px; margin-inline:auto; font-size:.92rem; }
+.ticket{
+  max-width:460px; margin:34px auto 0; padding:26px 28px;
+  border:1px solid var(--ligne-forte); border-radius:var(--r-m);
+  background:linear-gradient(160deg, rgba(200,162,100,.08), transparent 60%), rgba(255,255,255,.015);
+  text-align:left;
+}
+.ticket__ref{ display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; margin-bottom:16px; border-bottom:1px dashed var(--ligne-forte); }
+.ticket__ref span{ font-size:.58rem; letter-spacing:.22em; text-transform:uppercase; color:var(--texte-doux); }
+.ticket__ref strong{ font-family:var(--serif); color:var(--or); font-weight:400; letter-spacing:.08em; }
+.ticket__ligne{ display:flex; justify-content:space-between; gap:16px; padding:8px 0; font-size:.88rem; }
+.ticket__ligne span{ color:var(--texte-doux); }
+.ticket__ligne b{ font-weight:400; color:var(--blanc-casse); text-align:right; }
+.confirmation__actions{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:32px; }
+
+/* Toast */
+.toast{
+  position:fixed; left:50%; bottom:34px; z-index:200;
+  transform:translate(-50%, 26px);
+  opacity:0; visibility:hidden;
+  display:flex; align-items:center; gap:12px;
+  padding:15px 24px;
+  background:rgba(20,20,23,.96); backdrop-filter:blur(12px);
+  border:1px solid var(--ligne-forte); border-radius:var(--r-s);
+  font-size:.82rem; color:var(--blanc-casse);
+  box-shadow:0 24px 50px -24px rgba(0,0,0,.9);
+  transition:transform .6s var(--transition), opacity .45s ease, visibility .6s;
+  max-width:calc(100% - 40px);
+  pointer-events:none;
+}
+.toast.est-visible{ transform:translate(-50%,0); opacity:1; visibility:visible; }
+.toast svg{ color:var(--or); flex:none; }
+
+/* ============================================================
+   AVIS
+   ============================================================ */
+.avis{ background:var(--anthracite); border-block:1px solid var(--ligne); }
+.grille-avis{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:20px; }
+.carte-avis{
+  padding:34px 30px; border:1px solid var(--ligne); border-radius:var(--r-l);
+  background:linear-gradient(165deg,var(--anthracite-2),transparent);
+  transition:transform .55s var(--transition), border-color .45s;
+}
+.carte-avis:hover{ transform:translateY(-6px); border-color:var(--ligne-forte); }
+.etoiles{ color:var(--or); letter-spacing:.28em; font-size:.8rem; }
+.carte-avis blockquote{ margin:20px 0 24px; font-family:var(--serif); font-size:1.08rem; line-height:1.62; color:var(--blanc-casse); font-style:italic; }
+.carte-avis footer{ display:flex; align-items:center; gap:13px; }
+.carte-avis .avatar{ width:40px; height:40px; margin:0; font-size:.85rem; box-shadow:none; }
+.carte-avis cite{ font-style:normal; font-size:.86rem; color:var(--texte); }
+.carte-avis small{ display:block; font-size:.63rem; letter-spacing:.15em; text-transform:uppercase; color:var(--texte-doux); margin-top:3px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.pied{ padding:clamp(70px,8vw,110px) 0 0; background:var(--noir); }
+.pied__grille{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1.1fr; gap:clamp(28px,4vw,54px); padding-bottom:60px; }
+@media (max-width:920px){ .pied__grille{ grid-template-columns:1fr 1fr; } }
+@media (max-width:560px){ .pied__grille{ grid-template-columns:1fr; } }
+.pied h4{ font-family:var(--sans); font-size:.63rem; font-weight:500; letter-spacing:.28em; text-transform:uppercase; color:var(--or); margin-bottom:22px; }
+.pied p,.pied li{ font-size:.88rem; color:var(--texte-doux); }
+.pied ul{ list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+.pied a:hover{ color:var(--or); }
+.horaire{ display:flex; justify-content:space-between; gap:18px; }
+.horaire b{ font-weight:400; color:var(--texte); }
+.horaire.est-ferme b{ color:rgba(148,143,134,.6); }
+.pied__intro{ max-width:300px; margin-top:22px; }
+
+.reseaux{ display:flex; gap:10px; margin-top:26px; }
+.reseaux a{
+  width:40px; height:40px; display:grid; place-items:center;
+  border:1px solid var(--ligne); border-radius:50%; color:var(--texte-doux);
+  transition:all .45s var(--transition);
+}
+.reseaux a:hover{ border-color:var(--or); color:var(--or); transform:translateY(-4px); background:rgba(200,162,100,.07); }
+
+.pastille-statut{
+  display:inline-flex; align-items:center; gap:9px; margin-top:20px;
+  padding:8px 15px; border:1px solid var(--ligne); border-radius:100px;
+  font-size:.7rem; letter-spacing:.09em; color:var(--texte);
+}
+.pastille-statut i{ width:7px; height:7px; border-radius:50%; background:#5FA36B; box-shadow:0 0 0 3px rgba(95,163,107,.18); }
+.pastille-statut.est-ferme i{ background:#A35F5F; box-shadow:0 0 0 3px rgba(163,95,95,.18); }
+
+.pied__bas{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;
+  padding:26px 0; border-top:1px solid var(--ligne);
+  font-size:.72rem; color:var(--texte-doux);
+}
+.pied__bas nav{ display:flex; gap:24px; }
+
+/* ---------- Révélations au scroll ---------- */
+[data-reveal]{ opacity:0; transform:translateY(34px); transition:opacity .95s var(--transition), transform .95s var(--transition); }
+[data-reveal].est-visible{ opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce){ [data-reveal]{ opacity:1; transform:none; } }
+</style>
+</head>
+
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header class="entete" id="entete">
+  <div class="enveloppe entete__inner">
+    <a href="#top" class="logo" aria-label="Barbershop Mont-Blanc, retour en haut">
+      <span class="logo__marque">M</span>
+      <span class="logo__texte">
+        <span class="logo__nom">Mont-Blanc</span>
+        <span class="logo__ville">Barbershop · Genève</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#services">Services</a>
+      <a href="#experience">La Maison</a>
+      <a href="#reservation">Réservation</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="entete__actions">
+      <a href="tel:+41223100120" class="tel-entete">+41 22 310 01 20</a>
+      <a href="#reservation" class="btn btn--or btn--mini">Réserver</a>
+      <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero" id="top">
+  <div class="hero__fond" aria-hidden="true">
+    <div class="hero__photo"></div>
+    <div class="hero__rayures"></div>
+    <div class="hero__voile"></div>
+    <div class="hero__grain"></div>
+    <div class="hero__monogramme">M</div>
+  </div>
+
+  <div class="enveloppe hero__contenu">
+    <p class="surtitre">Depuis 1998 · Rue du Mont-Blanc, Genève</p>
+
+    <h1 class="h-xl">
+      <span class="ligne"><span>L'art du</span></span>
+      <span class="ligne"><span class="hero__accent">barbier</span></span>
+      <span class="ligne"><span>redéfini.</span></span>
+    </h1>
+
+    <p class="hero__sous-titre">
+      Coupes sur mesure, rasage à l'ancienne et soins d'exception.
+      Une parenthèse de précision au cœur de Genève — sans file d'attente,
+      sans appel téléphonique.
+    </p>
+
+    <div class="hero__ctas">
+      <a href="#reservation" class="btn btn--or">Prendre rendez-vous</a>
+      <a href="#services" class="btn btn--fantome">Découvrir la carte</a>
+    </div>
+
+    <div class="hero__preuves">
+      <div><div class="preuve__valeur">4,9<span style="font-size:1rem">/5</span></div><div class="preuve__label">412 avis Google</div></div>
+      <div><div class="preuve__valeur">27&nbsp;ans</div><div class="preuve__label">De savoir-faire</div></div>
+      <div><div class="preuve__valeur">30&nbsp;s</div><div class="preuve__label">Pour réserver</div></div>
+      <div><div class="preuve__valeur">6&nbsp;j/7</div><div class="preuve__label">Ouvert Lun–Sam</div></div>
+    </div>
+  </div>
+
+  <div class="hero__scroll"><span>Défiler</span><i></i></div>
+</section>
+
+<!-- ══════════════════ BANDEAU ══════════════════ -->
+<div class="bandeau" aria-hidden="true">
+  <div class="bandeau__piste">
+    <div class="bandeau__groupe">
+      <span>Coupe <b>·</b> Signature</span><span>Rasage <b>·</b> Traditionnel</span><span>Barbe <b>·</b> Sculptée</span>
+      <span>Soin <b>·</b> Visage</span><span>Produits <b>·</b> Premium</span><span>Café <b>·</b> Offert</span>
+    </div>
+    <div class="bandeau__groupe">
+      <span>Coupe <b>·</b> Signature</span><span>Rasage <b>·</b> Traditionnel</span><span>Barbe <b>·</b> Sculptée</span>
+      <span>Soin <b>·</b> Visage</span><span>Produits <b>·</b> Premium</span><span>Café <b>·</b> Offert</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ SERVICES ══════════════════ -->
+<section class="section" id="services">
+  <div class="enveloppe">
+    <div class="entete-section entete-section--centre" data-reveal>
+      <p class="surtitre surtitre--centre">Nos prestations</p>
+      <h2 class="h-l">Une carte pensée<br>comme un rituel</h2>
+      <p class="texte-doux">Chaque prestation inclut le diagnostic, la serviette chaude et un café.
+        Choisissez, l'agenda se remplit tout seul.</p>
+    </div>
+
+    <div class="grille-services" id="grille-services" data-reveal>
+      <!-- injecté par JS depuis la source unique de vérité PRESTATIONS -->
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ EXPÉRIENCE ══════════════════ -->
+<section class="section experience" id="experience">
+  <div class="enveloppe experience__grille">
+    <div data-reveal>
+      <p class="surtitre">La Maison</p>
+      <h2 class="h-l" style="margin:22px 0 22px">Un salon,<br>pas une chaîne.</h2>
+      <p class="texte-doux">
+        Trois fauteuils, du cuir patiné, des rasoirs affûtés à la main et une règle simple :
+        personne ne repart sans être satisfait. Ici, on prend le temps — mais jamais le vôtre.
+      </p>
+
+      <ul class="liste-atouts">
+        <li>
+          <span class="num">01</span>
+          <div><h4>Diagnostic personnalisé</h4><p>Forme du visage, implantation, mode de vie : la coupe est construite avec vous, jamais sur catalogue.</p></div>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <div><h4>Gestes traditionnels</h4><p>Rasoir droit, serviette chaude, huile pré-rasage et baume apaisant. Le rituel complet, sans raccourci.</p></div>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <div><h4>Zéro attente</h4><p>Votre créneau est réservé en 30 secondes sur cette page. Vous arrivez, le fauteuil est prêt.</p></div>
+        </li>
+      </ul>
+
+      <a href="#reservation" class="btn btn--or" style="margin-top:38px">Réserver mon fauteuil</a>
+    </div>
+
+    <div class="experience__visuel" data-reveal aria-hidden="true">
+      <div class="experience__badge">
+        <strong>27</strong>
+        <span>Années<br>de métier</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ RÉSERVATION ══════════════════ -->
+<section class="section reservation" id="reservation">
+  <div class="enveloppe">
+    <div class="entete-section entete-section--centre" data-reveal>
+      <p class="surtitre surtitre--centre">Réservation en direct</p>
+      <h2 class="h-l">Votre rendez-vous,<br>en 4 étapes</h2>
+      <p class="texte-doux">Aucune redirection, aucun compte à créer. Vous restez ici, du premier clic à la confirmation.</p>
+    </div>
+
+    <div class="module" data-reveal>
+
+      <!-- ---------- Récapitulatif ---------- -->
+      <aside class="recap">
+        <p class="recap__titre">Votre réservation</p>
+        <dl class="recap__lignes">
+          <div class="recap__ligne" id="recap-service">
+            <i aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+            </i>
+            <div><dt>Prestation</dt><dd data-recap="service">À définir</dd></div>
+          </div>
+          <div class="recap__ligne" id="recap-coiffeur">
+            <i aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </i>
+            <div><dt>Barbier</dt><dd data-recap="coiffeur">À définir</dd></div>
+          </div>
+          <div class="recap__ligne" id="recap-date">
+            <i aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            </i>
+            <div><dt>Date &amp; heure</dt><dd data-recap="date">À définir</dd></div>
+          </div>
+          <div class="recap__ligne" id="recap-duree">
+            <i aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </i>
+            <div><dt>Durée estimée</dt><dd data-recap="duree">À définir</dd></div>
+          </div>
+        </dl>
+
+        <div class="recap__total">
+          <span>Total</span>
+          <strong data-recap="total">—</strong>
+        </div>
+
+        <p class="recap__note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z"/></svg>
+          Paiement sur place. Annulation gratuite jusqu'à 2 h avant le rendez-vous.
+        </p>
+      </aside>
+
+      <!-- ---------- Parcours ---------- -->
+      <div class="parcours">
+        <!-- Jauge de progression -->
+        <div class="jauge" id="jauge" role="list" aria-label="Progression de la réservation">
+          <div class="jauge__etape est-active" data-jauge="1" role="listitem"><span class="jauge__pastille">1</span><span class="jauge__libelle">Service</span></div>
+          <div class="jauge__trait"></div>
+          <div class="jauge__etape" data-jauge="2" role="listitem"><span class="jauge__pastille">2</span><span class="jauge__libelle">Barbier</span></div>
+          <div class="jauge__trait"></div>
+          <div class="jauge__etape" data-jauge="3" role="listitem"><span class="jauge__pastille">3</span><span class="jauge__libelle">Créneau</span></div>
+          <div class="jauge__trait"></div>
+          <div class="jauge__etape" data-jauge="4" role="listitem"><span class="jauge__pastille">4</span><span class="jauge__libelle">Coordonnées</span></div>
+        </div>
+
+        <!-- Étapes -->
+        <div class="etapes" id="etapes">
+
+          <!-- Étape 1 -->
+          <div class="etape est-active" data-etape="1">
+            <h3 class="etape__titre">Quelle prestation ?</h3>
+            <p class="etape__intro">Sélectionnez le service souhaité. Vous pourrez ajouter une demande particulière à la dernière étape.</p>
+            <div class="choix-services" id="choix-services" role="radiogroup" aria-label="Choix de la prestation"></div>
+          </div>
+
+          <!-- Étape 2 -->
+          <div class="etape" data-etape="2">
+            <h3 class="etape__titre">Avec quel barbier ?</h3>
+            <p class="etape__intro">Chacun a sa spécialité. Sans préférence, nous vous attribuons le premier disponible.</p>
+            <div class="choix-coiffeurs" id="choix-coiffeurs" role="radiogroup" aria-label="Choix du barbier"></div>
+          </div>
+
+          <!-- Étape 3 -->
+          <div class="etape" data-etape="3">
+            <h3 class="etape__titre">Quand vous convient-il ?</h3>
+            <p class="etape__intro">Les créneaux affichés sont ceux réellement libres dans l'agenda du salon.</p>
+
+            <div class="bloc-agenda">
+              <div class="calendrier">
+                <div class="calendrier__entete">
+                  <span class="calendrier__mois" id="cal-mois">—</span>
+                  <div class="calendrier__nav">
+                    <button type="button" id="cal-prec" aria-label="Mois précédent">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+                    <button type="button" id="cal-suiv" aria-label="Mois suivant">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="calendrier__jours" aria-hidden="true">
+                  <span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span>
+                </div>
+                <div class="calendrier__grille" id="cal-grille"></div>
+              </div>
+
+              <div class="creneaux">
+                <p class="creneaux__titre" id="creneaux-titre">Choisissez une date</p>
+                <div class="creneaux__liste" id="creneaux-liste">
+                  <p class="creneaux__vide">Sélectionnez d'abord un jour dans le calendrier.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Étape 4 -->
+          <div class="etape" data-etape="4">
+            <h3 class="etape__titre">Vos coordonnées</h3>
+            <p class="etape__intro">Dernière étape — nous vous envoyons la confirmation et un rappel la veille.</p>
+
+            <form class="champs" id="form-client" novalidate>
+              <div class="champ">
+                <label for="c-prenom">Prénom *</label>
+                <input type="text" id="c-prenom" name="prenom" placeholder="Alexandre" autocomplete="given-name" required>
+                <p class="champ__erreur">Merci d'indiquer votre prénom.</p>
+              </div>
+              <div class="champ">
+                <label for="c-nom">Nom *</label>
+                <input type="text" id="c-nom" name="nom" placeholder="Dubois" autocomplete="family-name" required>
+                <p class="champ__erreur">Merci d'indiquer votre nom.</p>
+              </div>
+              <div class="champ">
+                <label for="c-tel">Téléphone *</label>
+                <input type="tel" id="c-tel" name="tel" placeholder="+41 79 123 45 67" autocomplete="tel" required>
+                <p class="champ__erreur">Numéro invalide (minimum 8 chiffres).</p>
+              </div>
+              <div class="champ">
+                <label for="c-email">E-mail *</label>
+                <input type="email" id="c-email" name="email" placeholder="alexandre@exemple.ch" autocomplete="email" required>
+                <p class="champ__erreur">Adresse e-mail invalide.</p>
+              </div>
+              <div class="champ champ--large">
+                <label for="c-note">Une demande particulière ? (facultatif)</label>
+                <textarea id="c-note" name="note" placeholder="Ex : dégradé bas, barbe courte, je suis un peu pressé…"></textarea>
+              </div>
+              <label class="case-cgu champ--large">
+                <input type="checkbox" id="c-rappel" checked>
+                <span>Je souhaite recevoir un rappel par SMS la veille du rendez-vous et les offres du salon.</span>
+              </label>
+            </form>
+          </div>
+        </div>
+
+        <!-- Confirmation -->
+        <div class="confirmation" id="confirmation">
+          <svg class="sceau" viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="50" r="48"/>
+            <path d="M30 51.5 44 65 71 37"/>
+          </svg>
+          <h3>Rendez-vous confirmé</h3>
+          <p>Merci <b id="conf-prenom">—</b>, votre fauteuil est réservé. Un e-mail de confirmation vient de partir, et nous vous enverrons un rappel la veille.</p>
+
+          <div class="ticket">
+            <div class="ticket__ref"><span>Référence</span><strong id="conf-ref">—</strong></div>
+            <div class="ticket__ligne"><span>Prestation</span><b id="conf-service">—</b></div>
+            <div class="ticket__ligne"><span>Barbier</span><b id="conf-coiffeur">—</b></div>
+            <div class="ticket__ligne"><span>Date</span><b id="conf-date">—</b></div>
+            <div class="ticket__ligne"><span>Heure</span><b id="conf-heure">—</b></div>
+            <div class="ticket__ligne"><span>Durée</span><b id="conf-duree">—</b></div>
+            <div class="ticket__ligne"><span>Total à régler sur place</span><b id="conf-total">—</b></div>
+          </div>
+
+          <div class="confirmation__actions">
+            <button type="button" class="btn btn--or" id="btn-ics">Ajouter à mon agenda</button>
+            <button type="button" class="btn btn--fantome" id="btn-recommencer">Nouvelle réservation</button>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="parcours__pied" id="parcours-pied">
+          <button type="button" class="btn-retour" id="btn-retour" hidden>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            Retour
+          </button>
+          <span id="indice-etape" style="font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--texte-doux)">Étape 1 / 4</span>
+          <button type="button" class="btn btn--or" id="btn-suivant">Continuer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ AVIS ══════════════════ -->
+<section class="section avis" id="avis">
+  <div class="enveloppe">
+    <div class="entete-section entete-section--centre" data-reveal>
+      <p class="surtitre surtitre--centre">Ils sont passés au fauteuil</p>
+      <h2 class="h-l">4,9 / 5 sur 412 avis</h2>
+    </div>
+
+    <div class="grille-avis" data-reveal>
+      <article class="carte-avis">
+        <div class="etoiles" aria-label="5 étoiles sur 5">★★★★★</div>
+        <blockquote>« Le seul salon de Genève où l'on m'a demandé comment je me coiffe le matin avant de sortir les ciseaux. Ça change tout. »</blockquote>
+        <footer><span class="avatar">TL</span><div><cite>Thomas L.</cite><small>Client depuis 4 ans</small></div></footer>
+      </article>
+      <article class="carte-avis">
+        <div class="etoiles" aria-label="5 étoiles sur 5">★★★★★</div>
+        <blockquote>« Rasage au coupe-chou impeccable, serviette chaude, whisky offert. On ressort avec dix ans de moins et une bonne humeur d'acier. »</blockquote>
+        <footer><span class="avatar">MK</span><div><cite>Marc K.</cite><small>Avis Google</small></div></footer>
+      </article>
+      <article class="carte-avis">
+        <div class="etoiles" aria-label="5 étoiles sur 5">★★★★★</div>
+        <blockquote>« Réservation en trente secondes depuis le téléphone, dans le tram. Aucun appel, aucun compte à créer. Enfin. »</blockquote>
+        <footer><span class="avatar">SB</span><div><cite>Sofiane B.</cite><small>Nouveau client</small></div></footer>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer class="pied" id="contact">
+  <div class="enveloppe">
+    <div class="pied__grille">
+      <div data-reveal>
+        <a href="#top" class="logo">
+          <span class="logo__marque">M</span>
+          <span class="logo__texte">
+            <span class="logo__nom">Mont-Blanc</span>
+            <span class="logo__ville">Barbershop · Genève</span>
+          </span>
+        </a>
+        <p class="pied__intro">L'art du barbier depuis 1998. Coupe, barbe et rasage traditionnel, au cœur de Genève.</p>
+        <div class="pastille-statut" id="pastille-statut"><i></i><span id="statut-texte">Vérification des horaires…</span></div>
+        <div class="reseaux">
+          <a href="#" aria-label="Instagram"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M15 3v11a4 4 0 1 1-4-4"/><path d="M15 6a5 5 0 0 0 5 4"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.6A9 9 0 1 1 21 12Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5.6 0 1-.5 1-1l-1.4-.8-1 .8a5 5 0 0 1-2.1-2.1l.8-1L11 9.5c-.5 0-1 .4-1 1"/></svg></a>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <h4>Horaires</h4>
+        <ul id="liste-horaires"></ul>
+      </div>
+
+      <div data-reveal>
+        <h4>Nous trouver</h4>
+        <ul>
+          <li>Rue du Mont-Blanc 12<br>1201 Genève, Suisse</li>
+          <li><a href="tel:+41223100120">+41 22 310 01 20</a></li>
+          <li><a href="mailto:bonjour@barbershop-montblanc.ch">bonjour@barbershop-montblanc.ch</a></li>
+          <li style="color:var(--or)">Tram 15 · Arrêt Cornavin (3 min)</li>
+        </ul>
+      </div>
+
+      <div data-reveal>
+        <h4>Réserver</h4>
+        <p style="margin-bottom:22px">Votre créneau vous attend. Réservation en ligne 24 h/24, même quand le salon est fermé.</p>
+        <a href="#reservation" class="btn btn--or btn--mini">Prendre rendez-vous</a>
+      </div>
+    </div>
+
+    <div class="pied__bas">
+      <p>© <span id="annee">2026</span> Barbershop Mont-Blanc — Tous droits réservés.</p>
+      <nav>
+        <a href="#">Mentions légales</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">CGV</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+  <span id="toast-texte"></span>
+</div>
+
+<script>
+"use strict";
+
+/* ════════════════════════════════════════════════════════════
+   1. DONNÉES — source unique de vérité
+   (le patron n'a qu'à modifier ces tableaux pour tout mettre à jour)
+   ════════════════════════════════════════════════════════════ */
+
+const PRESTATIONS = [
+  { id:"coupe",    nom:"Coupe Signature",    prix:45, duree:45, desc:"Diagnostic, coupe aux ciseaux, dégradé et coiffage.", badge:"Best-seller",
+    icone:'<path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>' },
+  { id:"duo",      nom:"Coupe & Barbe",      prix:70, duree:75, desc:"Le rituel complet : coupe, taille de barbe et serviette chaude.", badge:"Le rituel",
+    icone:'<path d="M12 2v4M5 8h14M6 8c0 7 2.5 12 6 12s6-5 6-12"/>' },
+  { id:"barbe",    nom:"Taille de Barbe",    prix:32, duree:30, desc:"Contours au rasoir, mise en forme et huile nourrissante.",
+    icone:'<path d="M4 6h16M7 6c0 8 2 12 5 12s5-4 5-12"/><path d="M9 3h6"/>' },
+  { id:"rasage",   nom:"Rasage Traditionnel",prix:48, duree:45, desc:"Coupe-chou, mousse chaude, après-rasage apaisant.",
+    icone:'<path d="M14 3 3 14l3 3L17 6z"/><path d="M17 6l4-3-3 4"/><path d="M6 17l-3 4h5"/>' },
+  { id:"soin",     nom:"Soin du Visage",     prix:55, duree:40, desc:"Gommage, masque à l'argile et massage crânien.",
+    icone:'<circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 15a5 5 0 0 0 7 0"/>' },
+  { id:"enfant",   nom:"Coupe Junior",       prix:28, duree:30, desc:"Pour les moins de 12 ans, avec toute la patience nécessaire.",
+    icone:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>' }
+];
+
+const COIFFEURS = [
+  { id:"peu-importe", nom:"Peu importe", role:"Premier disponible", initiales:"?", neutre:true, note:"Le plus de créneaux libres" },
+  { id:"marco",  nom:"Marco",  role:"Maître barbier",     initiales:"MR", note:"★ 4,9 · 18 ans d'expérience" },
+  { id:"elias",  nom:"Elias",  role:"Spécialiste dégradé",initiales:"EK", note:"★ 4,9 · Fades & lignes" },
+  { id:"julien", nom:"Julien", role:"Rasage traditionnel",initiales:"JP", note:"★ 5,0 · Coupe-chou" }
+];
+
+/* Horaires : index 0 = dimanche … 6 = samedi */
+const HORAIRES = [
+  { jour:"Dimanche", ouvert:false, texte:"Fermé" },
+  { jour:"Lundi",    ouvert:true,  debut:10, fin:19, texte:"10h – 19h" },
+  { jour:"Mardi",    ouvert:true,  debut:9,  fin:19, texte:"09h – 19h" },
+  { jour:"Mercredi", ouvert:true,  debut:9,  fin:19, texte:"09h – 19h" },
+  { jour:"Jeudi",    ouvert:true,  debut:9,  fin:20, texte:"09h – 20h" },
+  { jour:"Vendredi", ouvert:true,  debut:9,  fin:20, texte:"09h – 20h" },
+  { jour:"Samedi",   ouvert:true,  debut:8,  fin:18, texte:"08h – 18h" }
+];
+
+const MOIS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+const JOURS_LONGS = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+
+/* ════════════════════════════════════════════════════════════
+   2. UTILITAIRES
+   ════════════════════════════════════════════════════════════ */
+const $  = (s, p = document) => p.querySelector(s);
+const $$ = (s, p = document) => Array.from(p.querySelectorAll(s));
+
+const cleDate = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const memeJour = (a,b) => a && b && cleDate(a) === cleDate(b);
+
+/** Pseudo-aléatoire déterministe : un même jour affiche toujours les mêmes disponibilités. */
+function graine(texte){
+  let h = 2166136261;
+  for (let i = 0; i < texte.length; i++){ h ^= texte.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return () => { h += 0x6D2B79F5; let t = h; t = Math.imul(t ^ t>>>15, t | 1); t ^= t + Math.imul(t ^ t>>>7, t | 61); return ((t ^ t>>>14) >>> 0) / 4294967296; };
+}
+
+function formaterDateLongue(d){
+  return `${JOURS_LONGS[d.getDay()]} ${d.getDate()} ${MOIS[d.getMonth()]}`;
+}
+function formaterDuree(min){
+  const h = Math.floor(min/60), m = min%60;
+  return h ? (m ? `${h} h ${m}` : `${h} h`) : `${m} min`;
+}
+
+let minuteurToast;
+function annoncer(message){
+  const toast = $("#toast");
+  $("#toast-texte").textContent = message;
+  toast.classList.add("est-visible");
+  clearTimeout(minuteurToast);
+  minuteurToast = setTimeout(() => toast.classList.remove("est-visible"), 3600);
+}
+
+/* ════════════════════════════════════════════════════════════
+   3. HEADER & MENU MOBILE
+   ════════════════════════════════════════════════════════════ */
+const entete = $("#entete");
+const majEntete = () => entete.classList.toggle("est-fixe", window.scrollY > 40);
+majEntete();
+window.addEventListener("scroll", majEntete, { passive:true });
+
+const burger = $("#burger");
+burger.addEventListener("click", () => {
+  const ouvert = document.body.classList.toggle("menu-ouvert");
+  burger.setAttribute("aria-expanded", String(ouvert));
+});
+$$("#nav a").forEach(a => a.addEventListener("click", () => {
+  document.body.classList.remove("menu-ouvert");
+  burger.setAttribute("aria-expanded", "false");
+}));
+
+/* ════════════════════════════════════════════════════════════
+   4. RÉVÉLATIONS AU SCROLL
+   ════════════════════════════════════════════════════════════ */
+const observateur = new IntersectionObserver((entrees) => {
+  entrees.forEach((e, i) => {
+    if (!e.isIntersecting) return;
+    setTimeout(() => e.target.classList.add("est-visible"), i * 90);
+    observateur.unobserve(e.target);
+  });
+}, { threshold:.12, rootMargin:"0px 0px -8% 0px" });
+$$("[data-reveal]").forEach(el => observateur.observe(el));
+
+/* ════════════════════════════════════════════════════════════
+   5. RENDU DES SERVICES (section vitrine)
+   ════════════════════════════════════════════════════════════ */
+$("#grille-services").innerHTML = PRESTATIONS.map(p => `
+  <article class="carte-service">
+    ${p.badge ? `<span class="etiquette">${p.badge}</span>` : ""}
+    <div class="carte-service__haut">
+      <span class="carte-service__icone" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${p.icone}</svg>
+      </span>
+      <span class="carte-service__prix">${p.prix}<span style="font-size:1rem"> CHF</span><small>Tarif unique</small></span>
+    </div>
+    <h3>${p.nom}</h3>
+    <p>${p.desc}</p>
+    <div class="carte-service__pied">
+      <span class="duree">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        ${formaterDuree(p.duree)}
+      </span>
+      <button type="button" class="lien-choisir" data-choisir="${p.id}">
+        Choisir
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </article>
+`).join("");
+
+/* ════════════════════════════════════════════════════════════
+   6. MOTEUR DE RÉSERVATION
+   ════════════════════════════════════════════════════════════ */
+const etat = {
+  etape: 1,
+  service: null,
+  coiffeur: null,
+  date: null,      // objet Date
+  heure: null,     // "14:30"
+  client: {}
+};
+
+const TOTAL_ETAPES = 4;
+const etapes       = $$(".etape");
+const btnSuivant   = $("#btn-suivant");
+const btnRetour    = $("#btn-retour");
+const indiceEtape  = $("#indice-etape");
+const parcoursPied = $("#parcours-pied");
+
+/* ---------- 6.1 Étape 1 : services ---------- */
+$("#choix-services").innerHTML = PRESTATIONS.map(p => `
+  <button type="button" class="case-choix" role="radio" aria-checked="false" data-service="${p.id}">
+    <span class="case-choix__coche" aria-hidden="true">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+    </span>
+    <span class="case-choix__nom">${p.nom}</span>
+    <span class="case-choix__desc">${p.desc}</span>
+    <span class="case-choix__meta">
+      <span class="case-choix__prix">${p.prix} CHF</span>
+      <span class="case-choix__duree">${formaterDuree(p.duree)}</span>
+    </span>
+  </button>
+`).join("");
+
+function choisirService(id, silencieux){
+  etat.service = PRESTATIONS.find(p => p.id === id) || null;
+  $$("[data-service]").forEach(b => {
+    const actif = b.dataset.service === id;
+    b.classList.toggle("est-choisi", actif);
+    b.setAttribute("aria-checked", String(actif));
+  });
+  /* La durée du service conditionne les créneaux : on les régénère. */
+  etat.heure = null;
+  if (etat.date) rendreCreneaux(etat.date);
+  majRecap();
+  if (!silencieux) annoncer(`${etat.service.nom} sélectionné — ${etat.service.prix} CHF`);
+}
+
+$("#choix-services").addEventListener("click", e => {
+  const btn = e.target.closest("[data-service]");
+  if (btn) choisirService(btn.dataset.service);
+});
+
+/* ---------- 6.2 Étape 2 : coiffeurs ---------- */
+$("#choix-coiffeurs").innerHTML = COIFFEURS.map(c => `
+  <button type="button" class="case-choix carte-coiffeur" role="radio" aria-checked="false" data-coiffeur="${c.id}">
+    <span class="case-choix__coche" aria-hidden="true">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+    </span>
+    <!-- ► PHOTO ÉQUIPE : remplacez le monogramme par <img src="photos/${c.id}.jpg" alt="${c.nom}"> -->
+    <span class="avatar ${c.neutre ? "avatar--neutre" : ""}" aria-hidden="true">${c.initiales}</span>
+    <span class="carte-coiffeur__nom">${c.nom}</span>
+    <span class="carte-coiffeur__role">${c.role}</span>
+    <span class="carte-coiffeur__note">${c.note}</span>
+  </button>
+`).join("");
+
+$("#choix-coiffeurs").addEventListener("click", e => {
+  const btn = e.target.closest("[data-coiffeur]");
+  if (!btn) return;
+  etat.coiffeur = COIFFEURS.find(c => c.id === btn.dataset.coiffeur);
+  $$("[data-coiffeur]").forEach(b => {
+    const actif = b.dataset.coiffeur === btn.dataset.coiffeur;
+    b.classList.toggle("est-choisi", actif);
+    b.setAttribute("aria-checked", String(actif));
+  });
+  /* L'agenda dépend du barbier : on réinitialise le créneau choisi. */
+  etat.heure = null;
+  if (etat.date) rendreCreneaux(etat.date);
+  majRecap();
+});
+
+/* ---------- 6.3 Étape 3 : calendrier ---------- */
+const aujourdhui = new Date(); aujourdhui.setHours(0,0,0,0);
+let moisAffiche = new Date(aujourdhui.getFullYear(), aujourdhui.getMonth(), 1);
+
+function estFerme(d){ return !HORAIRES[d.getDay()].ouvert; }
+
+function rendreCalendrier(){
+  $("#cal-mois").textContent = `${MOIS[moisAffiche.getMonth()]} ${moisAffiche.getFullYear()}`;
+
+  const premier = new Date(moisAffiche.getFullYear(), moisAffiche.getMonth(), 1);
+  const nbJours = new Date(moisAffiche.getFullYear(), moisAffiche.getMonth()+1, 0).getDate();
+  const decalage = (premier.getDay() + 6) % 7;              // semaine commençant lundi
+  const limite = new Date(aujourdhui); limite.setDate(limite.getDate() + 60); // réservable à 60 jours
+
+  let html = "";
+  for (let i = 0; i < decalage; i++) html += `<span class="jour est-vide"></span>`;
+
+  for (let j = 1; j <= nbJours; j++){
+    const d = new Date(moisAffiche.getFullYear(), moisAffiche.getMonth(), j);
+    const indispo = d < aujourdhui || d > limite || estFerme(d);
+    const classes = [
+      "jour",
+      memeJour(d, aujourdhui) ? "est-aujourdhui" : "",
+      memeJour(d, etat.date)  ? "est-choisi"     : ""
+    ].filter(Boolean).join(" ");
+    html += `<button type="button" class="${classes}" data-jour="${cleDate(d)}" ${indispo ? "disabled" : ""}
+              aria-label="${formaterDateLongue(d)}${indispo ? " — indisponible" : ""}">${j}</button>`;
+  }
+  $("#cal-grille").innerHTML = html;
+
+  const debutMois = new Date(moisAffiche.getFullYear(), moisAffiche.getMonth(), 1);
+  $("#cal-prec").disabled = debutMois <= new Date(aujourdhui.getFullYear(), aujourdhui.getMonth(), 1);
+  $("#cal-suiv").disabled = debutMois > new Date(limite.getFullYear(), limite.getMonth(), 1);
+}
+
+$("#cal-prec").addEventListener("click", () => { moisAffiche.setMonth(moisAffiche.getMonth()-1); rendreCalendrier(); });
+$("#cal-suiv").addEventListener("click", () => { moisAffiche.setMonth(moisAffiche.getMonth()+1); rendreCalendrier(); });
+
+$("#cal-grille").addEventListener("click", e => {
+  const btn = e.target.closest("[data-jour]");
+  if (!btn || btn.disabled) return;
+  const [a,m,j] = btn.dataset.jour.split("-").map(Number);
+  etat.date = new Date(a, m-1, j);
+  etat.heure = null;
+  rendreCalendrier();
+  rendreCreneaux(etat.date);
+  majRecap();
+});
+
+/** Génère les créneaux du jour : déterministes, dépendants du barbier et de la durée du service. */
+function rendreCreneaux(d){
+  const conf = HORAIRES[d.getDay()];
+  const liste = $("#creneaux-liste");
+  $("#creneaux-titre").textContent = `Créneaux du ${formaterDateLongue(d)}`;
+
+  if (!conf.ouvert){
+    liste.innerHTML = `<p class="creneaux__vide">Le salon est fermé ce jour-là.</p>`;
+    return;
+  }
+
+  const rnd = graine(cleDate(d) + (etat.coiffeur ? etat.coiffeur.id : "tous"));
+  const maintenant = new Date();
+  const duree = etat.service ? etat.service.duree : 45;
+  const creneaux = [];
+
+  for (let min = conf.debut*60; min + duree <= conf.fin*60; min += 30){
+    const h = String(Math.floor(min/60)).padStart(2,"0");
+    const m = String(min%60).padStart(2,"0");
+    const heure = `${h}:${m}`;
+
+    /* Un salon réel n'est jamais vide : ~40 % des créneaux sont déjà pris.
+       « Peu importe » ouvre davantage de disponibilités (3 barbiers). */
+    const tauxPris = etat.coiffeur && etat.coiffeur.id === "peu-importe" ? .18 : .42;
+    let libre = rnd() > tauxPris;
+
+    /* On ne propose jamais un créneau déjà passé. */
+    if (memeJour(d, maintenant) && (maintenant.getHours()*60 + maintenant.getMinutes() + 45) > min) libre = false;
+
+    creneaux.push({ heure, libre });
+  }
+
+  if (!creneaux.some(c => c.libre)){
+    liste.innerHTML = `<p class="creneaux__vide">Plus aucun créneau libre ce jour-là. Essayez le lendemain ou choisissez « Peu importe » comme barbier.</p>`;
+    return;
+  }
+
+  liste.innerHTML = creneaux.map(c => `
+    <button type="button" class="creneau ${c.heure === etat.heure ? "est-choisi" : ""}" data-heure="${c.heure}" ${c.libre ? "" : "disabled"}>
+      ${c.heure.replace(":","h")}
+    </button>`).join("");
+}
+
+$("#creneaux-liste").addEventListener("click", e => {
+  const btn = e.target.closest("[data-heure]");
+  if (!btn || btn.disabled) return;
+  etat.heure = btn.dataset.heure;
+  $$("[data-heure]").forEach(b => b.classList.toggle("est-choisi", b === btn));
+  majRecap();
+});
+
+rendreCalendrier();
+
+/* ---------- 6.4 Récapitulatif live ---------- */
+function majRecap(){
+  const set = (cle, valeur, ligne) => {
+    $(`[data-recap="${cle}"]`).textContent = valeur || "À définir";
+    if (ligne) $(ligne).classList.toggle("est-rempli", Boolean(valeur));
+  };
+
+  set("service",  etat.service  ? etat.service.nom  : null, "#recap-service");
+  set("coiffeur", etat.coiffeur ? etat.coiffeur.nom : null, "#recap-coiffeur");
+  set("duree",    etat.service  ? formaterDuree(etat.service.duree) : null, "#recap-duree");
+
+  let dateTxt = null;
+  if (etat.date) dateTxt = formaterDateLongue(etat.date) + (etat.heure ? ` · ${etat.heure.replace(":","h")}` : "");
+  set("date", dateTxt, "#recap-date");
+
+  $('[data-recap="total"]').textContent = etat.service ? `${etat.service.prix} CHF` : "—";
+}
+
+/* ---------- 6.5 Navigation entre les étapes ---------- */
+function allerA(nouvelle, direction){
+  const sortante = $(`.etape[data-etape="${etat.etape}"]`);
+  const entrante = $(`.etape[data-etape="${nouvelle}"]`);
+
+  sortante.classList.remove("est-active","entre-droite","entre-gauche");
+  entrante.classList.remove("entre-droite","entre-gauche");
+  void entrante.offsetWidth;                        // relance l'animation
+  entrante.classList.add("est-active", direction > 0 ? "entre-droite" : "entre-gauche");
+
+  etat.etape = nouvelle;
+  majJauge();
+
+  /* Le module reste visible même sur petit écran. */
+  const module = $(".module");
+  if (module.getBoundingClientRect().top < 0) module.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+function majJauge(){
+  $$(".jauge__etape").forEach(el => {
+    const n = Number(el.dataset.jauge);
+    el.classList.toggle("est-active", n === etat.etape);
+    el.classList.toggle("est-faite",  n <  etat.etape);
+  });
+  indiceEtape.textContent = `Étape ${etat.etape} / ${TOTAL_ETAPES}`;
+  btnRetour.hidden = etat.etape === 1;
+  btnSuivant.textContent = etat.etape === TOTAL_ETAPES ? "Confirmer mon rendez-vous" : "Continuer";
+}
+
+function validerEtape(n){
+  if (n === 1 && !etat.service){  annoncer("Choisissez d'abord une prestation."); return false; }
+  if (n === 2 && !etat.coiffeur){ annoncer("Indiquez un barbier — ou « Peu importe »."); return false; }
+  if (n === 3){
+    if (!etat.date){  annoncer("Sélectionnez une date dans le calendrier."); return false; }
+    if (!etat.heure){ annoncer("Sélectionnez une heure de rendez-vous.");    return false; }
+  }
+  if (n === 4) return validerFormulaire();
+  return true;
+}
+
+function validerFormulaire(){
+  const regles = [
+    { id:"#c-prenom", test:v => v.trim().length >= 2 },
+    { id:"#c-nom",    test:v => v.trim().length >= 2 },
+    { id:"#c-tel",    test:v => (v.replace(/\D/g,"").length >= 8) },
+    { id:"#c-email",  test:v => /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v.trim()) }
+  ];
+  let ok = true, premierFautif = null;
+
+  regles.forEach(r => {
+    const champ = $(r.id);
+    const valide = r.test(champ.value);
+    champ.closest(".champ").classList.toggle("est-invalide", !valide);
+    if (!valide){ ok = false; premierFautif = premierFautif || champ; }
+  });
+
+  if (!ok){
+    annoncer("Merci de compléter les champs signalés.");
+    premierFautif.focus();
+  }
+  return ok;
+}
+
+/* Nettoyage de l'erreur dès que le client corrige */
+$$("#form-client input, #form-client textarea").forEach(champ => {
+  champ.addEventListener("input", () => champ.closest(".champ")?.classList.remove("est-invalide"));
+});
+
+btnSuivant.addEventListener("click", () => {
+  if (!validerEtape(etat.etape)) return;
+  if (etat.etape < TOTAL_ETAPES) allerA(etat.etape + 1, 1);
+  else confirmer();
+});
+
+btnRetour.addEventListener("click", () => {
+  if (etat.etape > 1) allerA(etat.etape - 1, -1);
+});
+
+/* ---------- 6.6 Confirmation ---------- */
+/* Entrée clavier dans le formulaire = validation, jamais un rechargement de page. */
+$("#form-client").addEventListener("submit", e => {
+  e.preventDefault();
+  btnSuivant.click();
+});
+
+function confirmer(){
+  etat.client = {
+    prenom: $("#c-prenom").value.trim(),
+    nom:    $("#c-nom").value.trim(),
+    tel:    $("#c-tel").value.trim(),
+    email:  $("#c-email").value.trim(),
+    note:   $("#c-note").value.trim()
+  };
+
+  /* Simulation d'envoi — c'est ici que se brancherait l'agenda du salon. */
+  btnSuivant.disabled = true;
+  btnSuivant.textContent = "Envoi en cours…";
+
+  setTimeout(() => {
+    const ref = "MB-" + String(etat.date.getDate()).padStart(2,"0")
+                      + String(etat.date.getMonth()+1).padStart(2,"0") + "-"
+                      + etat.heure.replace(":","")
+                      + "-" + etat.client.prenom.slice(0,1).toUpperCase() + etat.client.nom.slice(0,1).toUpperCase();
+
+    $("#conf-prenom").textContent   = etat.client.prenom;
+    $("#conf-ref").textContent      = ref;
+    $("#conf-service").textContent  = etat.service.nom;
+    $("#conf-coiffeur").textContent = etat.coiffeur.id === "peu-importe" ? "Premier disponible" : `${etat.coiffeur.nom} — ${etat.coiffeur.role}`;
+    $("#conf-date").textContent     = formaterDateLongue(etat.date);
+    $("#conf-heure").textContent    = etat.heure.replace(":","h");
+    $("#conf-duree").textContent    = formaterDuree(etat.service.duree);
+    $("#conf-total").textContent    = `${etat.service.prix} CHF`;
+
+    $("#etapes").style.display = "none";
+    $("#jauge").style.display  = "none";
+    parcoursPied.style.display = "none";
+    $("#confirmation").classList.add("est-active");
+
+    $$(".jauge__etape").forEach(el => el.classList.add("est-faite"));
+    annoncer("Rendez-vous confirmé — un e-mail vous a été envoyé.");
+    $(".module").scrollIntoView({ behavior:"smooth", block:"center" });
+
+    btnSuivant.disabled = false;
+    btnSuivant.textContent = "Confirmer mon rendez-vous";
+  }, 950);
+}
+
+/* Export .ics — le client ajoute le RDV à son agenda en un clic */
+$("#btn-ics").addEventListener("click", () => {
+  const [h,m] = etat.heure.split(":").map(Number);
+  const debut = new Date(etat.date); debut.setHours(h, m, 0, 0);
+  const fin   = new Date(debut.getTime() + etat.service.duree * 60000);
+  const fmt = d => d.getFullYear()
+    + String(d.getMonth()+1).padStart(2,"0")
+    + String(d.getDate()).padStart(2,"0") + "T"
+    + String(d.getHours()).padStart(2,"0")
+    + String(d.getMinutes()).padStart(2,"0") + "00";
+
+  const ics = [
+    "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Barbershop Mont-Blanc//FR","BEGIN:VEVENT",
+    `DTSTART:${fmt(debut)}`,
+    `DTEND:${fmt(fin)}`,
+    `SUMMARY:${etat.service.nom} — Barbershop Mont-Blanc`,
+    "LOCATION:Rue du Mont-Blanc 12\\, 1201 Genève",
+    `DESCRIPTION:Barbier : ${etat.coiffeur.nom} — ${etat.service.prix} CHF`,
+    "END:VEVENT","END:VCALENDAR"
+  ].join("\r\n");
+
+  const lien = document.createElement("a");
+  lien.href = URL.createObjectURL(new Blob([ics], { type:"text/calendar" }));
+  lien.download = "rendez-vous-mont-blanc.ics";
+  lien.click();
+  URL.revokeObjectURL(lien.href);
+  annoncer("Rendez-vous ajouté à votre agenda.");
+});
+
+/* Nouvelle réservation */
+$("#btn-recommencer").addEventListener("click", () => {
+  etat.service = etat.coiffeur = etat.date = etat.heure = null;
+  etat.etape = 1;
+
+  $$(".case-choix").forEach(b => { b.classList.remove("est-choisi"); b.setAttribute("aria-checked","false"); });
+  $("#form-client").reset();
+  $$(".champ").forEach(c => c.classList.remove("est-invalide"));
+  $("#creneaux-titre").textContent = "Choisissez une date";
+  $("#creneaux-liste").innerHTML = `<p class="creneaux__vide">Sélectionnez d'abord un jour dans le calendrier.</p>`;
+
+  $("#confirmation").classList.remove("est-active");
+  $("#etapes").style.display = "";
+  $("#jauge").style.display  = "";
+  parcoursPied.style.display = "";
+
+  etapes.forEach(e => e.classList.remove("est-active","entre-droite","entre-gauche"));
+  $('.etape[data-etape="1"]').classList.add("est-active");
+
+  rendreCalendrier();
+  majRecap();
+  majJauge();
+});
+
+/* ---------- 6.7 Raccourci depuis les cartes « Choisir » ---------- */
+document.addEventListener("click", e => {
+  const btn = e.target.closest("[data-choisir]");
+  if (!btn) return;
+  choisirService(btn.dataset.choisir, true);
+
+  $("#reservation").scrollIntoView({ behavior:"smooth", block:"start" });
+  /* On enchaîne directement sur l'étape suivante : moins de clics pour le client. */
+  setTimeout(() => {
+    if ($("#confirmation").classList.contains("est-active")) $("#btn-recommencer").click();
+    if (etat.etape !== 2) allerA(2, 1);
+    annoncer(`${etat.service.nom} sélectionné — choisissez votre barbier.`);
+  }, 620);
+});
+
+majJauge();
+majRecap();
+
+/* ════════════════════════════════════════════════════════════
+   7. FOOTER : horaires + statut ouvert/fermé en temps réel
+   ════════════════════════════════════════════════════════════ */
+const ordreSemaine = [1,2,3,4,5,6,0];
+$("#liste-horaires").innerHTML = ordreSemaine.map(i => {
+  const h = HORAIRES[i];
+  const actif = new Date().getDay() === i;
+  return `<li class="horaire ${h.ouvert ? "" : "est-ferme"}" ${actif ? 'style="color:var(--or)"' : ""}>
+            <span>${h.jour}</span><b ${actif ? 'style="color:var(--or)"' : ""}>${h.texte}</b>
+          </li>`;
+}).join("");
+
+(function statut(){
+  const maintenant = new Date();
+  const conf = HORAIRES[maintenant.getDay()];
+  const heure = maintenant.getHours() + maintenant.getMinutes()/60;
+  const ouvert = conf.ouvert && heure >= conf.debut && heure < conf.fin;
+
+  $("#pastille-statut").classList.toggle("est-ferme", !ouvert);
+  $("#statut-texte").textContent = ouvert
+    ? `Ouvert maintenant — jusqu'à ${conf.fin}h`
+    : "Fermé — réservation possible 24 h/24";
+})();
+
+$("#annee").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
