@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'atelier du Ciseau</title>
+<meta name="description" content="L'atelier du Ciseau — barbier & coiffeur à Vich (La Côte). Coupes de précision, barbe sculptée, rituels serviette chaude. Réservez votre instant.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='24' font-size='24'%3E✂%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HairSalon","name":"L'atelier du Ciseau","address":{"@type":"PostalAddress","streetAddress":"Route de Gland 1","postalCode":"1267","addressLocality":"Vich","addressCountry":"CH"},"telephone":"+41223648899","priceRange":"CHF 32–110"}
+</script>
+<style>
+/* ============ TOKENS — Héritage Artisan ============ */
+:root{
+  --paper:#F4EFE5;
+  --paper-2:#ECE4D3;
+  --paper-3:#E3D8C2;
+  --ink:#1C1710;
+  --ink-soft:#4A4234;
+  --ink-40:rgba(28,23,16,.4);
+  --ink-12:rgba(28,23,16,.12);
+  --ink-06:rgba(28,23,16,.06);
+  --brass:#A9762F;
+  --brass-2:#C89B5A;
+  --brass-soft:rgba(169,118,47,.14);
+  --cream-txt:#F7F2E8;
+  --ease:cubic-bezier(.32,.72,0,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --disp:'Fraunces',Georgia,serif;
+  --body:'Archivo','Helvetica Neue',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --r-xl:2rem;
+  --r-in:calc(2rem - .45rem);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--brass);color:var(--cream-txt)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:4px}
+section{scroll-margin-top:96px}
+
+/* grain papier */
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");}
+
+/* ============ PRÉLOADER — le rideau se coupe ============ */
+.loader{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:var(--ink);transition:opacity .7s var(--ease),visibility .7s}
+.loader.done{opacity:0;visibility:hidden}
+.loader-inner{text-align:center;color:var(--cream-txt)}
+.loader-line{width:150px;height:1px;margin:18px auto 0;background:rgba(247,242,232,.25);position:relative;overflow:hidden}
+.loader-line::after{content:"";position:absolute;inset:0;background:var(--brass-2);transform:translateX(-100%);animation:cut 1.1s var(--ease) forwards .15s}
+@keyframes cut{to{transform:translateX(0)}}
+.loader-mark{font-family:var(--disp);font-style:italic;font-size:1.5rem;letter-spacing:.02em}
+.loader-sub{font-family:var(--mono);font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;margin-top:10px;color:rgba(247,242,232,.55)}
+
+/* ============ PROGRESSION CISEAUX ============ */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:70;pointer-events:none}
+.progress-bar{height:100%;width:0;background:repeating-linear-gradient(90deg,var(--brass) 0 6px,transparent 6px 11px)}
+.progress-scissor{position:absolute;top:-9px;left:0;width:20px;height:20px;transform:translateX(-4px);color:var(--brass)}
+
+/* ============ NAV — îlot flottant ============ */
+.nav{position:fixed;top:1.4rem;left:50%;transform:translateX(-50%);z-index:80;display:flex;align-items:center;gap:.4rem;
+  padding:.5rem .5rem .5rem 1.2rem;border-radius:999px;
+  background:rgba(244,239,229,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--ink-12);box-shadow:0 18px 40px -22px rgba(28,23,16,.35);
+  transition:transform .7s var(--ease),box-shadow .7s var(--ease);white-space:nowrap}
+.nav-logo{font-family:var(--disp);font-weight:600;font-style:italic;font-size:1.02rem;margin-right:.7rem;display:flex;align-items:center;gap:.5rem}
+.nav-logo svg{width:17px;height:17px;color:var(--brass)}
+.nav-links{display:flex;gap:.1rem}
+.nav-links a{font-size:.82rem;font-weight:500;padding:.5rem .85rem;border-radius:999px;transition:background .45s var(--ease),color .45s var(--ease)}
+.nav-links a:hover{background:var(--ink-06)}
+.nav-cta{display:inline-flex;align-items:center;gap:.6rem;background:var(--ink);color:var(--cream-txt);
+  border-radius:999px;padding:.55rem .55rem .55rem 1.1rem;font-size:.82rem;font-weight:600;margin-left:.5rem;
+  transition:transform .5s var(--ease),background .5s var(--ease)}
+.nav-cta:active{transform:scale(.97)}
+.nav-cta .dot{width:26px;height:26px;border-radius:50%;background:var(--brass);display:flex;align-items:center;justify-content:center;transition:transform .5s var(--ease)}
+.nav-cta .dot svg{width:12px;height:12px}
+.nav-cta:hover .dot{transform:translate(2px,-1px) scale(1.08)}
+.burger{display:none;width:38px;height:38px;border-radius:50%;position:relative;background:var(--ink-06)}
+.burger span{position:absolute;left:11px;right:11px;height:1.6px;background:var(--ink);transition:transform .5s var(--ease),top .5s var(--ease)}
+.burger span:nth-child(1){top:15px}
+.burger span:nth-child(2){top:21px}
+.burger.open span:nth-child(1){top:18px;transform:rotate(45deg)}
+.burger.open span:nth-child(2){top:18px;transform:rotate(-45deg)}
+.mobile-menu{position:fixed;inset:0;z-index:75;background:rgba(28,23,16,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;
+  opacity:0;visibility:hidden;transition:opacity .6s var(--ease),visibility .6s}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mobile-menu a{font-family:var(--disp);font-size:2rem;color:var(--cream-txt);opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.mobile-menu.open a{opacity:1;transform:translateY(0)}
+.mobile-menu a:nth-child(1){transition-delay:.08s}.mobile-menu a:nth-child(2){transition-delay:.14s}
+.mobile-menu a:nth-child(3){transition-delay:.2s}.mobile-menu a:nth-child(4){transition-delay:.26s}
+.mobile-menu a:nth-child(5){transition-delay:.32s}.mobile-menu a:nth-child(6){transition-delay:.38s}
+
+/* ============ REVEALS ============ */
+.rv{opacity:0;transform:translateY(38px);filter:blur(7px);transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1s var(--ease)}
+.rv.in{opacity:1;transform:translateY(0);filter:blur(0)}
+.rv-d1{transition-delay:.12s}.rv-d2{transition-delay:.24s}.rv-d3{transition-delay:.36s}.rv-d4{transition-delay:.48s}
+
+/* ============ COMMUNS ============ */
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.2rem,4vw,2.5rem)}
+.eyebrow{display:inline-flex;align-items:center;gap:.55rem;border:1px solid var(--ink-12);border-radius:999px;
+  padding:.35rem .95rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);background:rgba(255,255,255,.35)}
+.eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--brass);flex:none}
+.h2{font-family:var(--disp);font-weight:400;font-size:clamp(2.1rem,4.6vw,3.4rem);line-height:1.08;letter-spacing:-.015em;text-wrap:balance;margin:1.1rem 0 .9rem}
+.h2 em{font-style:italic;color:var(--brass)}
+.lead{color:var(--ink-soft);max-width:56ch;font-size:1.02rem}
+.cutline{border:none;border-top:1.5px dashed var(--ink-40);position:relative;margin:0}
+.cutline::after{content:"✂";position:absolute;left:clamp(1rem,8vw,5rem);top:-.75em;font-size:1rem;color:var(--brass);background:var(--paper);padding:0 .5rem;transform:rotate(180deg)}
+.btn{display:inline-flex;align-items:center;gap:.8rem;background:var(--ink);color:var(--cream-txt);border-radius:999px;
+  padding:.8rem .8rem .8rem 1.5rem;font-weight:600;font-size:.95rem;
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease);box-shadow:0 20px 34px -18px rgba(28,23,16,.5)}
+.btn:active{transform:scale(.97)}
+.btn:hover{transform:translateY(-2px)}
+.btn .dot{width:34px;height:34px;border-radius:50%;background:var(--brass);display:flex;align-items:center;justify-content:center;transition:transform .5s var(--ease)}
+.btn .dot svg{width:14px;height:14px}
+.btn:hover .dot{transform:translate(2px,-2px) scale(1.07)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.55rem;padding:.8rem 1.4rem;border-radius:999px;border:1px solid var(--ink-12);
+  font-weight:600;font-size:.95rem;background:rgba(255,255,255,.35);transition:background .5s var(--ease),transform .5s var(--ease)}
+.btn-ghost:hover{background:rgba(255,255,255,.7);transform:translateY(-2px)}
+
+/* ============ HERO ============ */
+.hero{position:relative;padding:clamp(8rem,14vh,10.5rem) 0 clamp(3rem,6vw,5rem)}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}
+.hero h1{font-family:var(--disp);font-weight:350;font-size:clamp(2.9rem,6.6vw,5.3rem);line-height:1.02;letter-spacing:-.02em;text-wrap:balance;margin:1.4rem 0 1.3rem}
+.hero h1 em{font-style:italic;font-weight:450;color:var(--brass)}
+.hero-sub{color:var(--ink-soft);font-size:1.06rem;max-width:46ch;margin-bottom:2.2rem}
+.hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap;align-items:center}
+.hero-stats{display:flex;gap:clamp(1.4rem,3.5vw,3rem);margin-top:3rem;padding-top:1.6rem;border-top:1.5px dashed var(--ink-40);flex-wrap:wrap}
+.stat b{font-family:var(--disp);font-weight:500;font-size:1.7rem;display:flex;align-items:baseline;gap:.2rem}
+.stat b .star{color:var(--brass);font-size:1.05rem}
+.stat span{font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+/* carte visuelle double-bezel */
+.shell{background:var(--ink-06);border:1px solid var(--ink-12);border-radius:var(--r-xl);padding:.45rem;box-shadow:0 40px 70px -45px rgba(28,23,16,.55)}
+.shell-in{border-radius:var(--r-in);overflow:hidden;position:relative;box-shadow:inset 0 1px 1px rgba(255,255,255,.35)}
+.hero-visual{position:relative;transform:rotate(1.6deg);transition:transform .9s var(--ease)}
+.hero-visual:hover{transform:rotate(.4deg) translateY(-4px)}
+.ph{position:relative;width:100%;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ph-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.ph-art svg{width:62%;height:62%;color:var(--ink);opacity:.85}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s var(--ease)}
+.ph img.loaded{opacity:1}
+.ph-1{background:linear-gradient(160deg,var(--paper-2),var(--paper-3) 55%,#D8C8A8)}
+.ph-tag{position:absolute;left:1rem;bottom:1rem;z-index:2;font-family:var(--mono);font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;
+  background:rgba(244,239,229,.85);backdrop-filter:blur(8px);padding:.45rem .8rem;border-radius:999px;border:1px solid var(--ink-12)}
+.hero-plate{position:absolute;right:-14px;top:-16px;z-index:3;background:var(--ink);color:var(--cream-txt);border-radius:1.1rem;
+  padding:.8rem 1.05rem;transform:rotate(4deg);box-shadow:0 24px 40px -20px rgba(28,23,16,.6)}
+.hero-plate b{font-family:var(--disp);font-style:italic;font-weight:500;font-size:1rem;display:block}
+.hero-plate span{font-family:var(--mono);font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--brass-2)}
+
+/* ============ MARQUEE ============ */
+.marquee{overflow:hidden;border-top:1px solid var(--ink-12);border-bottom:1px solid var(--ink-12);padding:1rem 0;background:rgba(255,255,255,.3)}
+.marquee-track{display:flex;gap:2.6rem;width:max-content;animation:mq 30s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track span{font-family:var(--disp);font-style:italic;font-size:1.15rem;color:var(--ink-soft);display:flex;align-items:center;gap:2.6rem;white-space:nowrap}
+.marquee-track span::after{content:"✂";font-style:normal;font-size:.85rem;color:var(--brass)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============ SECTIONS ============ */
+.sect{padding:clamp(4.5rem,9vw,7.5rem) 0}
+.sect-head{max-width:60ch}
+.sect-head.center{margin:0 auto;text-align:center}
+.sect-head.center .lead{margin:0 auto}
+
+/* ============ SERVICES ============ */
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem;margin-top:2.8rem}
+.piece{position:relative;border:1.5px dashed var(--ink-40);border-radius:1.4rem;padding:1.5rem 1.6rem;background:rgba(255,255,255,.32);
+  transition:transform .6s var(--ease),background .6s var(--ease),border-color .6s var(--ease)}
+.piece:hover{transform:translateY(-5px);background:rgba(255,255,255,.75);border-color:var(--brass)}
+.piece-no{font-family:var(--mono);font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--brass)}
+.piece-row{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-top:.5rem}
+.piece h3{font-family:var(--disp);font-weight:500;font-size:1.35rem;letter-spacing:-.01em}
+.piece .price{font-family:var(--disp);font-style:italic;font-weight:500;font-size:1.25rem;color:var(--brass);white-space:nowrap}
+.piece .dots{flex:1;border-bottom:1.5px dotted var(--ink-40);transform:translateY(-4px);min-width:24px}
+.piece p{color:var(--ink-soft);font-size:.9rem;margin-top:.45rem;max-width:42ch}
+.piece .dur{display:inline-block;margin-top:.8rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  border:1px solid var(--ink-12);border-radius:999px;padding:.25rem .7rem;color:var(--ink-soft)}
+.menu-note{margin-top:1.6rem;font-size:.85rem;color:var(--ink-soft);display:flex;align-items:center;gap:.6rem}
+.menu-note svg{width:15px;height:15px;color:var(--brass);flex:none}
+
+/* ============ RÉSERVATION ============ */
+.booking{background:var(--ink);color:var(--cream-txt);border-radius:clamp(1.6rem,3vw,2.6rem);overflow:hidden;position:relative}
+.booking::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
+.booking-inner{padding:clamp(2.2rem,5vw,4rem);position:relative}
+.booking .eyebrow{border-color:rgba(247,242,232,.25);color:rgba(247,242,232,.75);background:rgba(247,242,232,.06)}
+.booking .h2{color:var(--cream-txt)}
+.booking .lead{color:rgba(247,242,232,.65)}
+.steps{display:flex;gap:.5rem;margin:2.4rem 0 1.8rem;flex-wrap:wrap}
+.step-pill{display:flex;align-items:center;gap:.6rem;border:1px solid rgba(247,242,232,.2);border-radius:999px;padding:.45rem 1rem .45rem .5rem;
+  font-size:.8rem;color:rgba(247,242,232,.55);transition:border-color .5s var(--ease),color .5s var(--ease)}
+.step-pill b{width:26px;height:26px;border-radius:50%;background:rgba(247,242,232,.08);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.68rem;font-weight:500;transition:background .5s var(--ease),color .5s var(--ease)}
+.step-pill.on{border-color:var(--brass-2);color:var(--cream-txt)}
+.step-pill.on b{background:var(--brass);color:var(--cream-txt)}
+.step-pill.done b{background:var(--brass-2);color:var(--ink)}
+.bk-panel{display:none}
+.bk-panel.on{display:block;animation:panel .6s var(--ease)}
+@keyframes panel{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.bk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:.8rem}
+.bk-card{border:1px solid rgba(247,242,232,.16);border-radius:1.1rem;padding:1.05rem 1.15rem;text-align:left;color:var(--cream-txt);
+  background:rgba(247,242,232,.04);transition:border-color .45s var(--ease),background .45s var(--ease),transform .45s var(--ease)}
+.bk-card:hover{transform:translateY(-3px);background:rgba(247,242,232,.09)}
+.bk-card.sel{border-color:var(--brass-2);background:rgba(169,118,47,.18);box-shadow:inset 0 0 0 1px var(--brass-2)}
+.bk-card .n{font-family:var(--disp);font-size:1.05rem;font-weight:500}
+.bk-card .m{display:flex;justify-content:space-between;margin-top:.4rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;color:rgba(247,242,232,.55)}
+.bk-card .m i{font-style:normal;color:var(--brass-2)}
+.bk-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(140deg,var(--brass),#7A5522);display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp);font-style:italic;font-size:1rem;color:var(--cream-txt);margin-bottom:.7rem}
+.bk-card .role{font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(247,242,232,.5);margin-top:.25rem}
+.days{display:flex;gap:.55rem;overflow-x:auto;padding-bottom:.6rem;scrollbar-width:thin}
+.day{flex:none;width:74px;border:1px solid rgba(247,242,232,.16);border-radius:1rem;padding:.7rem 0;text-align:center;color:var(--cream-txt);
+  background:rgba(247,242,232,.04);transition:border-color .4s var(--ease),background .4s var(--ease)}
+.day:hover{background:rgba(247,242,232,.1)}
+.day.sel{border-color:var(--brass-2);background:rgba(169,118,47,.2)}
+.day .dw{font-family:var(--mono);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,242,232,.5)}
+.day .dn{font-family:var(--disp);font-size:1.25rem;font-weight:500;margin:.1rem 0}
+.day .dm{font-size:.62rem;color:rgba(247,242,232,.5)}
+.hours-grid{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.2rem}
+.slot{border:1px solid rgba(247,242,232,.16);border-radius:999px;padding:.5rem 1.05rem;font-family:var(--mono);font-size:.72rem;color:var(--cream-txt);
+  background:rgba(247,242,232,.04);transition:border-color .4s var(--ease),background .4s var(--ease)}
+.slot:hover{background:rgba(247,242,232,.1)}
+.slot.sel{border-color:var(--brass-2);background:var(--brass);color:var(--cream-txt)}
+.bk-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.8rem;gap:1rem;flex-wrap:wrap}
+.bk-back{font-size:.85rem;color:rgba(247,242,232,.55);display:inline-flex;align-items:center;gap:.4rem;transition:color .4s}
+.bk-back:hover{color:var(--cream-txt)}
+.btn-brass{display:inline-flex;align-items:center;gap:.7rem;background:var(--brass);color:var(--cream-txt);border-radius:999px;
+  padding:.75rem .75rem .75rem 1.4rem;font-weight:600;font-size:.92rem;transition:transform .5s var(--ease),filter .5s}
+.btn-brass:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn-brass:active{transform:scale(.97)}
+.btn-brass .dot{width:30px;height:30px;border-radius:50%;background:rgba(28,23,16,.28);display:flex;align-items:center;justify-content:center}
+.btn-brass .dot svg{width:12px;height:12px}
+.btn-brass[disabled]{opacity:.35;pointer-events:none}
+/* ticket */
+.ticket{max-width:430px;margin:0 auto;background:var(--paper);color:var(--ink);border-radius:1.3rem;overflow:hidden;
+  animation:panel .7s var(--ease);box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
+.ticket-top{padding:1.7rem 1.8rem 1.2rem;text-align:center}
+.ticket-top .tk-mark{font-family:var(--disp);font-style:italic;font-size:1.25rem}
+.ticket-top .tk-sub{font-family:var(--mono);font-size:.55rem;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-soft);margin-top:.3rem}
+.ticket-mid{padding:0 1.8rem 1.4rem}
+.tk-row{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px dotted var(--ink-40);font-size:.88rem}
+.tk-row span{color:var(--ink-soft)}
+.tk-row b{font-weight:600;text-align:right}
+.ticket-cut{position:relative;border-top:2px dashed var(--ink-40);margin:0 1rem}
+.ticket-cut::before,.ticket-cut::after{content:"";position:absolute;top:-9px;width:18px;height:18px;border-radius:50%;background:var(--ink)}
+.ticket-cut::before{left:-19px}
+.ticket-cut::after{right:-19px}
+.ticket-foot{padding:1.2rem 1.8rem 1.6rem;text-align:center}
+.ticket-foot .conf{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--brass)}
+.ticket-foot p{font-size:.78rem;color:var(--ink-soft);margin-top:.7rem}
+.ticket-actions{margin-top:1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+.tk-btn{border:1px solid var(--ink-12);border-radius:999px;padding:.5rem 1.1rem;font-size:.8rem;font-weight:600;transition:background .4s}
+.tk-btn:hover{background:var(--ink-06)}
+
+/* ============ ÉQUIPE ============ */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.8rem}
+.artisan .ph{aspect-ratio:3/4}
+.ph-2{background:linear-gradient(165deg,#E8DFCC,var(--paper-3))}
+.artisan-info{padding:1.2rem .4rem 0}
+.artisan-info h3{font-family:var(--disp);font-weight:500;font-size:1.3rem}
+.artisan-info .role{font-family:var(--mono);font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--brass);margin:.25rem 0 .5rem}
+.artisan-info p{font-size:.87rem;color:var(--ink-soft)}
+.artisan-info button{margin-top:.8rem;font-size:.82rem;font-weight:600;display:inline-flex;align-items:center;gap:.45rem;color:var(--ink);
+  border-bottom:1.5px solid var(--brass);padding-bottom:2px;border-radius:0;transition:gap .4s var(--ease)}
+.artisan-info button:hover{gap:.75rem}
+.artisan .shell{transition:transform .7s var(--ease)}
+.artisan:nth-child(2) .shell{transform:rotate(-1.2deg)}
+.artisan:nth-child(3) .shell{transform:rotate(1.4deg)}
+.artisan:hover .shell{transform:rotate(0) translateY(-6px)}
+.mono-portrait{font-family:var(--disp);font-style:italic;font-size:4.2rem;color:var(--ink);opacity:.75}
+
+/* ============ AVIS ============ */
+.reviews{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-2) 100%)}
+.carousel{position:relative;margin-top:2.6rem;overflow:hidden}
+.car-track{display:flex;transition:transform .8s var(--ease)}
+.review{flex:0 0 100%;padding:.3rem}
+.review-card{background:rgba(255,255,255,.65);border:1px solid var(--ink-12);border-radius:1.6rem;padding:clamp(1.6rem,4vw,2.6rem);
+  max-width:720px;margin:0 auto;text-align:center;box-shadow:0 30px 55px -40px rgba(28,23,16,.4)}
+.stars{color:var(--brass);letter-spacing:.2em;font-size:1.05rem}
+.review-card blockquote{font-family:var(--disp);font-weight:400;font-size:clamp(1.15rem,2.4vw,1.55rem);line-height:1.4;margin:1.1rem auto 1.3rem;max-width:34ch;text-wrap:balance}
+.review-card blockquote em{font-style:italic;color:var(--brass)}
+.review-who{font-family:var(--mono);font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-soft)}
+.car-nav{display:flex;justify-content:center;align-items:center;gap:1.2rem;margin-top:1.6rem}
+.car-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--ink-12);display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.5);transition:background .4s,transform .4s var(--ease)}
+.car-btn:hover{background:#fff;transform:translateY(-2px)}
+.car-btn svg{width:15px;height:15px}
+.car-dots{display:flex;gap:.45rem}
+.car-dot{width:7px;height:7px;border-radius:50%;background:var(--ink-40);transition:background .4s,transform .4s}
+.car-dot.on{background:var(--brass);transform:scale(1.3)}
+.reviews-note{text-align:center;margin-top:1.4rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-40)}
+
+/* ============ GALERIE ============ */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:1rem;margin-top:2.8rem}
+.tile{position:relative;border-radius:1.4rem;overflow:hidden;border:1px solid var(--ink-12);
+  transition:transform .7s var(--ease),box-shadow .7s var(--ease)}
+.tile:hover{transform:translateY(-5px) scale(1.012);box-shadow:0 30px 50px -30px rgba(28,23,16,.5)}
+.tile .ph{position:absolute;inset:0;aspect-ratio:auto;height:100%}
+.tile-label{position:absolute;left:.9rem;bottom:.9rem;z-index:2;font-family:var(--mono);font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;
+  background:rgba(244,239,229,.85);backdrop-filter:blur(6px);padding:.35rem .7rem;border-radius:999px;border:1px solid var(--ink-12)}
+.t-a{grid-column:span 2;grid-row:span 2}
+.t-b{grid-column:span 2}
+.t-c{grid-row:span 2}
+.ph-g1{background:linear-gradient(150deg,#E9DFC9,#D9C7A2)}
+.ph-g2{background:linear-gradient(150deg,var(--paper-2),#DCCDAE)}
+.ph-g3{background:linear-gradient(160deg,#EFE7D6,#D8C5A0)}
+.ph-g4{background:linear-gradient(140deg,#E5DAC3,#CBB694)}
+.tile .ph-art svg{width:46%;height:46%}
+
+/* ============ CONTACT ============ */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.8rem}
+.card{background:rgba(255,255,255,.5);border:1px solid var(--ink-12);border-radius:1.6rem;padding:clamp(1.5rem,3.5vw,2.2rem)}
+.card h3{font-family:var(--disp);font-weight:500;font-size:1.35rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:.6rem}
+.card h3 svg{width:18px;height:18px;color:var(--brass)}
+.hrs{width:100%;border-collapse:collapse;font-size:.92rem}
+.hrs td{padding:.55rem 0;border-bottom:1px dotted var(--ink-40)}
+.hrs tr:last-child td{border-bottom:none}
+.hrs td:last-child{text-align:right;font-weight:500}
+.hrs tr.today td{color:var(--brass);font-weight:600}
+.hrs .closed{color:var(--ink-40);font-weight:400}
+.today-tag{font-family:var(--mono);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--brass);border-radius:999px;padding:.15rem .5rem;margin-left:.5rem;vertical-align:1px}
+.addr{font-size:.95rem;line-height:1.8;color:var(--ink-soft)}
+.addr b{color:var(--ink);font-weight:600}
+.contact-links{display:flex;flex-direction:column;gap:.7rem;margin-top:1.3rem}
+.c-link{display:flex;align-items:center;gap:.8rem;padding:.85rem 1rem;border:1px solid var(--ink-12);border-radius:1rem;font-weight:500;font-size:.92rem;
+  background:rgba(255,255,255,.4);transition:background .4s,transform .4s var(--ease)}
+.c-link:hover{background:#fff;transform:translateX(4px)}
+.c-link svg{width:17px;height:17px;color:var(--brass);flex:none}
+.c-link span{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;color:var(--ink-40);margin-left:auto;text-transform:uppercase}
+.map-card{grid-column:span 2;position:relative;overflow:hidden;border-radius:1.6rem;border:1px solid var(--ink-12);min-height:300px;background:#E7DEC9}
+.map-art{position:absolute;inset:0}
+.map-overlay{position:absolute;left:clamp(1.2rem,3vw,2rem);bottom:clamp(1.2rem,3vw,2rem);background:rgba(244,239,229,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--ink-12);border-radius:1.3rem;padding:1.3rem 1.5rem;max-width:330px;box-shadow:0 24px 45px -25px rgba(28,23,16,.5)}
+.map-overlay b{font-family:var(--disp);font-size:1.1rem;font-weight:500;display:block;margin-bottom:.2rem}
+.map-overlay p{font-size:.85rem;color:var(--ink-soft);margin-bottom:.9rem}
+
+/* ============ FOOTER ============ */
+footer{background:var(--ink);color:var(--cream-txt);margin-top:clamp(3rem,7vw,5rem)}
+.foot-inner{padding:clamp(3rem,6vw,4.5rem) 0 2rem}
+.foot-grid{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;align-items:flex-start}
+.foot-mark{font-family:var(--disp);font-style:italic;font-size:1.6rem}
+.foot-mark small{display:block;font-family:var(--mono);font-style:normal;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--brass-2);margin-top:.5rem}
+.foot-nav{display:flex;gap:1.6rem;flex-wrap:wrap}
+.foot-nav a{font-size:.85rem;color:rgba(247,242,232,.65);transition:color .4s}
+.foot-nav a:hover{color:var(--cream-txt)}
+.foot-base{margin-top:2.5rem;padding-top:1.4rem;border-top:1px dashed rgba(247,242,232,.2);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  font-size:.75rem;color:rgba(247,242,232,.4)}
+
+/* ============ BADGE DÉMO + TOAST ============ */
+.demo-pill{position:fixed;left:1.1rem;bottom:1.1rem;z-index:85;display:flex;align-items:center;gap:.5rem;
+  background:rgba(28,23,16,.85);color:var(--cream-txt);backdrop-filter:blur(10px);border:1px solid rgba(247,242,232,.15);
+  border-radius:999px;padding:.45rem .95rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase}
+.demo-pill i{width:6px;height:6px;border-radius:50%;background:var(--brass-2);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.toast{position:fixed;left:50%;bottom:1.4rem;transform:translate(-50%,120%);z-index:90;background:var(--ink);color:var(--cream-txt);
+  border:1px solid rgba(247,242,232,.15);border-radius:999px;padding:.75rem 1.4rem;font-size:.85rem;white-space:nowrap;
+  transition:transform .6s var(--ease-spring);box-shadow:0 20px 40px -15px rgba(0,0,0,.5)}
+.toast.show{transform:translate(-50%,0)}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:960px){
+  .menu-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px}
+  .t-c{grid-row:span 1}
+}
+@media(max-width:860px){
+  .nav{left:1rem;right:1rem;transform:none;justify-content:space-between;padding:.5rem .6rem .5rem 1.1rem}
+  .nav-links,.nav-cta{display:none}
+  .burger{display:block}
+  .hero-grid{grid-template-columns:1fr;gap:3rem}
+  .hero-visual{transform:rotate(0);max-width:430px}
+  .contact-grid{grid-template-columns:1fr}
+  .map-card{grid-column:span 1}
+}
+@media(max-width:640px){
+  .team-grid{grid-template-columns:1fr}
+  .bento{grid-template-columns:1fr;grid-auto-rows:210px}
+  .t-a,.t-b{grid-column:span 1;grid-row:span 1}
+  .hero-plate{right:0;top:-20px}
+  .steps{gap:.4rem}
+  .step-pill{padding:.35rem .8rem .35rem .4rem;font-size:.7rem}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  .rv{opacity:1;transform:none;filter:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Préloader -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <div class="loader-mark">L'atelier du Ciseau</div>
+    <div class="loader-line"></div>
+    <div class="loader-sub">Vich · La Côte</div>
+  </div>
+</div>
+
+<!-- Progression scroll -->
+<div class="progress" aria-hidden="true">
+  <div class="progress-bar" id="progressBar"></div>
+  <svg class="progress-scissor" id="progressScissor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+    <circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M8.2 7.5 20 17M8.2 16.5 20 7"/>
+  </svg>
+</div>
+
+<!-- Nav îlot -->
+<nav class="nav" id="nav" aria-label="Navigation principale">
+  <a class="nav-logo" href="#top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M8.2 7.5 20 17M8.2 16.5 20 7"/>
+    </svg>
+    L'atelier du Ciseau
+  </a>
+  <div class="nav-links">
+    <a href="#prestations">Prestations</a>
+    <a href="#equipe">L'équipe</a>
+    <a href="#avis">Avis</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="#reserver">
+    Réserver
+    <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
+  </a>
+  <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#prestations">Prestations</a>
+  <a href="#reserver">Réserver</a>
+  <a href="#equipe">L'équipe</a>
+  <a href="#avis">Avis</a>
+  <a href="#galerie">Galerie</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow rv"><i></i>Barbier &amp; coiffeur — Vich, La Côte</span>
+        <h1 class="rv rv-d1">Ici, la coupe est <em>un métier.</em></h1>
+        <p class="hero-sub rv rv-d2">À cinq minutes de Gland, un atelier où chaque coupe est taillée sur mesure — au ciseau, au rasoir, à l'œil. Vous repartez avec la coupe juste. Ni plus, ni moins.</p>
+        <div class="hero-ctas rv rv-d3">
+          <a class="btn magnetic" href="#reserver">Réserver mon créneau
+            <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="btn-ghost" href="#prestations">Voir le menu de l'atelier</a>
+        </div>
+        <div class="hero-stats rv rv-d4">
+          <div class="stat"><b><span data-count="4.9" data-dec="1">0</span><span class="star">★</span></b><span>Note moyenne</span></div>
+          <div class="stat"><b><span data-count="127">0</span></b><span>Avis clients</span></div>
+          <div class="stat"><b><span data-count="9">0</span> ans</b><span>De savoir-faire</span></div>
+        </div>
+      </div>
+      <div class="hero-visual rv rv-d2">
+        <div class="hero-plate"><span>Pièce unique</span><b>Coupe № 4 812</b></div>
+        <div class="shell">
+          <div class="shell-in">
+            <div class="ph ph-1">
+              <div class="ph-art" aria-hidden="true">
+                <svg viewBox="0 0 200 260" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <!-- fauteuil de barbier stylisé -->
+                  <rect x="55" y="40" width="90" height="70" rx="16"/>
+                  <path d="M55 120h90M70 110v40h60v-40M85 150v30h30v-30"/>
+                  <path d="M100 180v34M72 226h56M100 214l-20 12M100 214l20 12"/>
+                  <circle cx="100" cy="70" r="12"/>
+                  <path d="M40 70h10M150 70h10"/>
+                </svg>
+              </div>
+              <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=900&q=75&auto=format&fit=crop" alt="Coupe au ciseau à L'atelier du Ciseau" loading="eager">
+              <span class="ph-tag">L'atelier · Route de Gland 1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Marquee -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>Coupe de précision</span><span>Barbe sculptée</span><span>Rituel serviette chaude</span><span>Sur rendez-vous &amp; sans attente</span><span>Vich — La Côte</span>
+  </div>
+</div>
+
+<!-- ============ PRESTATIONS ============ -->
+<section class="sect" id="prestations">
+  <div class="wrap">
+    <div class="sect-head">
+      <span class="eyebrow rv"><i></i>Prestations &amp; tarifs</span>
+      <h2 class="h2 rv rv-d1">Le menu de <em>l'atelier</em></h2>
+      <p class="lead rv rv-d2">Des pièces taillées avec le même soin qu'un costume sur mesure. Prix nets, sans surprise — le café est offert.</p>
+    </div>
+    <div class="menu-grid">
+      <article class="piece rv"><div class="piece-no">Pièce № 01 — Coupes</div>
+        <div class="piece-row"><h3>Coupe Signature</h3><span class="dots"></span><span class="price">CHF 58</span></div>
+        <p>Diagnostic, coupe ciseaux ou tondeuse, coiffage. La coupe pensée pour votre visage, pas pour la mode du mois.</p>
+        <span class="dur">45 min</span></article>
+      <article class="piece rv rv-d1"><div class="piece-no">Pièce № 02 — Coupes</div>
+        <div class="piece-row"><h3>Coupe &amp; Barbe</h3><span class="dots"></span><span class="price">CHF 82</span></div>
+        <p>Le duo complet : coupe signature et barbe redessinée au rasoir. L'allure entière, en une seule séance.</p>
+        <span class="dur">1 h 15</span></article>
+      <article class="piece rv"><div class="piece-no">Pièce № 03 — Barbe</div>
+        <div class="piece-row"><h3>Taille de barbe</h3><span class="dots"></span><span class="price">CHF 38</span></div>
+        <p>Structure, contours au rasoir, huile de finition. Une barbe nette qui tient toute la semaine.</p>
+        <span class="dur">30 min</span></article>
+      <article class="piece rv rv-d1"><div class="piece-no">Pièce № 04 — Rituel</div>
+        <div class="piece-row"><h3>Rasage traditionnel</h3><span class="dots"></span><span class="price">CHF 55</span></div>
+        <p>Serviette chaude, blaireau, coupe-chou, baume apaisant. Trente minutes hors du temps — notre rituel d'atelier.</p>
+        <span class="dur">40 min</span></article>
+      <article class="piece rv"><div class="piece-no">Pièce № 05 — Dames</div>
+        <div class="piece-row"><h3>Coupe &amp; brushing</h3><span class="dots"></span><span class="price">CHF 78</span></div>
+        <p>Coupe au ciseau, brushing souple ou lisse. Le geste précis de l'atelier, version féminine.</p>
+        <span class="dur">1 h</span></article>
+      <article class="piece rv rv-d1"><div class="piece-no">Pièce № 06 — Juniors</div>
+        <div class="piece-row"><h3>Coupe Junior <small style="font-size:.7em;color:var(--ink-soft)">(-12 ans)</small></h3><span class="dots"></span><span class="price">CHF 32</span></div>
+        <p>Patience et précision pour les petits. Mercredi après-midi : le duo parent-enfant à CHF 79.</p>
+        <span class="dur">30 min</span></article>
+    </div>
+    <p class="menu-note rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>Étudiants &amp; AVS : −15 % du mardi au jeudi. Couleur et soins sur devis au 022 364 88 99.</p>
+  </div>
+</section>
+
+<!-- ============ RÉSERVATION ============ -->
+<section class="sect" id="reserver" style="padding-top:0">
+  <div class="wrap">
+    <div class="booking rv">
+      <div class="booking-inner">
+        <span class="eyebrow"><i></i>Réservation en ligne</span>
+        <h2 class="h2">Votre instant, <em>votre fauteuil.</em></h2>
+        <p class="lead">Trois choix, trente secondes. Votre créneau vous attend — sans appel, sans attente.</p>
+
+        <div class="steps" aria-hidden="true">
+          <div class="step-pill on" data-step-pill="1"><b>1</b> Prestation</div>
+          <div class="step-pill" data-step-pill="2"><b>2</b> Artisan</div>
+          <div class="step-pill" data-step-pill="3"><b>3</b> Date &amp; heure</div>
+        </div>
+
+        <!-- Étape 1 -->
+        <div class="bk-panel on" data-step="1">
+          <div class="bk-grid" id="svcGrid"></div>
+          <div class="bk-nav"><span></span>
+            <button class="btn-brass" id="toStep2" disabled>Choisir mon artisan
+              <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></button>
+          </div>
+        </div>
+
+        <!-- Étape 2 -->
+        <div class="bk-panel" data-step="2">
+          <div class="bk-grid" id="barberGrid"></div>
+          <div class="bk-nav">
+            <button class="bk-back" data-back="1">← Prestation</button>
+            <button class="btn-brass" id="toStep3" disabled>Choisir la date
+              <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></button>
+          </div>
+        </div>
+
+        <!-- Étape 3 -->
+        <div class="bk-panel" data-step="3">
+          <div class="days" id="dayStrip"></div>
+          <div class="hours-grid" id="slotGrid"></div>
+          <div class="bk-nav">
+            <button class="bk-back" data-back="2">← Artisan</button>
+            <button class="btn-brass" id="toConfirm" disabled>Confirmer
+              <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12l5 5L20 7"/></svg></span></button>
+          </div>
+        </div>
+
+        <!-- Confirmation -->
+        <div class="bk-panel" data-step="4">
+          <div class="ticket">
+            <div class="ticket-top">
+              <div class="tk-mark">L'atelier du Ciseau</div>
+              <div class="tk-sub">Ticket d'atelier</div>
+            </div>
+            <div class="ticket-mid" id="ticketRows"></div>
+            <div class="ticket-cut" aria-hidden="true"></div>
+            <div class="ticket-foot">
+              <span class="conf">✂ &nbsp;Créneau réservé</span>
+              <p>Démonstration — sur le site final, la confirmation part par SMS et le rendez-vous rejoint votre agenda (Planity, Fresha ou votre outil).</p>
+              <div class="ticket-actions">
+                <button class="tk-btn" id="bkRestart">Nouvelle réservation</button>
+                <a class="tk-btn" href="tel:+41223648899">Appeler l'atelier</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ÉQUIPE ============ -->
+<section class="sect" id="equipe" style="padding-top:0">
+  <div class="wrap">
+    <div class="sect-head">
+      <span class="eyebrow rv"><i></i>L'équipe</span>
+      <h2 class="h2 rv rv-d1">Les mains de <em>l'atelier</em></h2>
+      <p class="lead rv rv-d2">Trois artisans, trois signatures — un même niveau d'exigence. Choisissez le vôtre, il vous connaîtra par votre prénom dès la deuxième visite.</p>
+    </div>
+    <div class="team-grid">
+      <article class="artisan rv">
+        <div class="shell"><div class="shell-in"><div class="ph ph-2">
+          <div class="ph-art"><span class="mono-portrait">M.</span></div>
+          <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=700&q=75&auto=format&fit=crop" alt="Marc, maître barbier" loading="lazy">
+        </div></div></div>
+        <div class="artisan-info">
+          <h3>Marc Delaunay</h3><div class="role">Fondateur · Maître barbier</div>
+          <p>Quinze ans de ciseau, formé à Lyon. Le dégradé américain n'a plus de secret pour lui.</p>
+          <button data-pick-barber="marc">Réserver avec Marc →</button>
+        </div>
+      </article>
+      <article class="artisan rv rv-d1">
+        <div class="shell"><div class="shell-in"><div class="ph ph-2">
+          <div class="ph-art"><span class="mono-portrait">L.</span></div>
+          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=700&q=75&auto=format&fit=crop" alt="Léa, coloriste et coiffeuse" loading="lazy">
+        </div></div></div>
+        <div class="artisan-info">
+          <h3>Léa Fontaine</h3><div class="role">Coupe dames · Coloriste</div>
+          <p>L'œil couleur de l'atelier. Balayages naturels et coupes qui repoussent bien.</p>
+          <button data-pick-barber="lea">Réserver avec Léa →</button>
+        </div>
+      </article>
+      <article class="artisan rv rv-d2">
+        <div class="shell"><div class="shell-in"><div class="ph ph-2">
+          <div class="ph-art"><span class="mono-portrait">D.</span></div>
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=700&q=75&auto=format&fit=crop" alt="Diego, barbier" loading="lazy">
+        </div></div></div>
+        <div class="artisan-info">
+          <h3>Diego Alves</h3><div class="role">Barbe &amp; rasage traditionnel</div>
+          <p>Le spécialiste du coupe-chou et des barbes sculptées. Rituel serviette chaude : c'est lui.</p>
+          <button data-pick-barber="diego">Réserver avec Diego →</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<hr class="cutline" aria-hidden="true">
+
+<!-- ============ AVIS ============ -->
+<section class="sect reviews" id="avis">
+  <div class="wrap">
+    <div class="sect-head center">
+      <span class="eyebrow rv"><i></i>Ils sont repartis coiffés</span>
+      <h2 class="h2 rv rv-d1">La preuve par <em>les clients</em></h2>
+    </div>
+    <div class="carousel rv rv-d2" id="carousel">
+      <div class="car-track" id="carTrack">
+        <div class="review"><div class="review-card">
+          <div class="stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <blockquote>« Enfin un salon où on t'écoute avant de sortir la tondeuse. Marc a compris ma coupe en <em>deux minutes</em>. J'y retourne les yeux fermés. »</blockquote>
+          <div class="review-who">Julien M. — Gland</div>
+        </div></div>
+        <div class="review"><div class="review-card">
+          <div class="stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <blockquote>« Le rasage serviette chaude de Diego, c'est <em>30 minutes de vacances</em>. Précision incroyable, ambiance atelier magnifique. »</blockquote>
+          <div class="review-who">Stéphane R. — Nyon</div>
+        </div></div>
+        <div class="review"><div class="review-card">
+          <div class="stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <blockquote>« Léa a rattrapé une couleur ratée ailleurs. Résultat naturel, conseils honnêtes, <em>zéro pression</em>. Mon salon pour de bon. »</blockquote>
+          <div class="review-who">Camille B. — Vich</div>
+        </div></div>
+        <div class="review"><div class="review-card">
+          <div class="stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <blockquote>« J'amène mes deux fils le mercredi. Patients avec les petits, ponctuels avec tout le monde. <em>On se sent attendus.</em> »</blockquote>
+          <div class="review-who">Nicolas P. — Begnins</div>
+        </div></div>
+        <div class="review"><div class="review-card">
+          <div class="stars" aria-label="4,5 étoiles sur 5">★★★★☆</div>
+          <blockquote>« Pris à l'heure, coupé au millimètre, reparti en 40 minutes chrono avec <em>la meilleure coupe de l'année</em>. »</blockquote>
+          <div class="review-who">Thomas G. — Rolle</div>
+        </div></div>
+      </div>
+      <div class="car-nav">
+        <button class="car-btn" id="carPrev" aria-label="Avis précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H6M11 6l-6 6 6 6"/></svg></button>
+        <div class="car-dots" id="carDots"></div>
+        <button class="car-btn" id="carNext" aria-label="Avis suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <p class="reviews-note">Exemples d'avis — remplacés par vos vrais avis Google sur le site final</p>
+  </div>
+</section>
+
+<!-- ============ GALERIE ============ -->
+<section class="sect" id="galerie">
+  <div class="wrap">
+    <div class="sect-head">
+      <span class="eyebrow rv"><i></i>Galerie</span>
+      <h2 class="h2 rv rv-d1">Le travail <em>parle</em></h2>
+      <p class="lead rv rv-d2">Dégradés, barbes, transformations : un aperçu de ce qui sort de l'atelier. Vos photos remplaceront ces visuels d'illustration.</p>
+    </div>
+    <div class="bento">
+      <div class="tile t-a rv"><div class="ph ph-g1">
+        <div class="ph-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="70" cy="70" r="14"/><circle cx="70" cy="130" r="14"/><path d="M82 78 170 140M82 122 170 60M170 140l8 6M170 60l8-6"/></svg></div>
+        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1100&q=75&auto=format&fit=crop" alt="Fauteuil et miroir de l'atelier" loading="lazy">
+        <span class="tile-label">L'atelier</span></div></div>
+      <div class="tile t-b rv rv-d1"><div class="ph ph-g2">
+        <div class="ph-art" aria-hidden="true"><svg viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M30 90V50l25-20 25 20v40M120 90V40h50v50M20 90h170M135 55h20M135 68h20"/></svg></div>
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=900&q=75&auto=format&fit=crop" alt="Taille de barbe au rasoir" loading="lazy">
+        <span class="tile-label">Barbe sculptée</span></div></div>
+      <div class="tile t-c rv rv-d2"><div class="ph ph-g3">
+        <div class="ph-art" aria-hidden="true"><svg viewBox="0 0 120 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M60 30v120M60 30c-14 0-22 10-22 22M60 30c14 0 22 10 22 22M42 170h36M60 150v20"/><circle cx="60" cy="98" r="26"/></svg></div>
+        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=700&q=75&auto=format&fit=crop" alt="Outils du barbier" loading="lazy">
+        <span class="tile-label">Les outils</span></div></div>
+      <div class="tile rv"><div class="ph ph-g2">
+        <div class="ph-art" aria-hidden="true"><svg viewBox="0 0 140 140" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="70" cy="55" r="22"/><path d="M40 120c0-18 13-30 30-30s30 12 30 30"/></svg></div>
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=700&q=75&auto=format&fit=crop" alt="Coupe dégradée en cours" loading="lazy">
+        <span class="tile-label">Dégradé signature</span></div></div>
+      <div class="tile rv rv-d1"><div class="ph ph-g3">
+        <div class="ph-art" aria-hidden="true"><svg viewBox="0 0 140 140" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="30" y="25" width="80" height="90" rx="10"/><path d="M30 60h80M55 25v-8M85 25v-8"/></svg></div>
+        <img src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?w=700&q=75&auto=format&fit=crop" alt="Devanture du salon à Vich" loading="lazy">
+        <span class="tile-label">La devanture</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="sect" id="contact" style="padding-top:0">
+  <div class="wrap">
+    <div class="sect-head">
+      <span class="eyebrow rv"><i></i>Contact &amp; accès</span>
+      <h2 class="h2 rv rv-d1">Passez la <em>porte</em></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="card rv">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Horaires</h3>
+        <table class="hrs" id="hoursTable">
+          <tr data-day="2"><td>Mardi</td><td>9 h – 18 h 30</td></tr>
+          <tr data-day="3"><td>Mercredi</td><td>9 h – 18 h 30</td></tr>
+          <tr data-day="4"><td>Jeudi</td><td>9 h – 19 h 30</td></tr>
+          <tr data-day="5"><td>Vendredi</td><td>9 h – 18 h 30</td></tr>
+          <tr data-day="6"><td>Samedi</td><td>8 h 30 – 16 h</td></tr>
+          <tr data-day="0"><td>Dimanche – Lundi</td><td class="closed">Fermé</td></tr>
+        </table>
+      </div>
+      <div class="card rv rv-d1">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>L'adresse</h3>
+        <p class="addr"><b>L'atelier du Ciseau</b><br>Route de Gland 1<br>1267 Vich — Vaud<br>Parking gratuit devant l'atelier</p>
+        <div class="contact-links">
+          <a class="c-link" href="tel:+41223648899"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>022 364 88 99<span>Appeler</span></a>
+          <a class="c-link demo-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></svg>@latelierduciseau<span>Instagram</span></a>
+          <a class="c-link demo-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 6v10a3.5 3.5 0 1 1-3-3.5M9 6c.5 3 2.5 5 6 5.5M9 6h3c.5 2 2 3.5 4 4"/></svg>@atelierduciseau<span>TikTok</span></a>
+        </div>
+      </div>
+      <div class="map-card rv rv-d2">
+        <div class="map-art" aria-hidden="true">
+          <svg width="100%" height="100%" viewBox="0 0 800 340" preserveAspectRatio="xMidYMid slice" fill="none">
+            <rect width="800" height="340" fill="#E7DEC9"/>
+            <path d="M-20 200 C150 180 300 220 480 190 S760 150 820 170" stroke="#D5C7A6" stroke-width="26" stroke-linecap="round"/>
+            <path d="M-20 200 C150 180 300 220 480 190 S760 150 820 170" stroke="#F0E9D8" stroke-width="3" stroke-dasharray="14 12"/>
+            <path d="M420 -20 C400 80 430 180 410 360" stroke="#D5C7A6" stroke-width="18"/>
+            <path d="M100 340 C160 260 260 250 330 200" stroke="#DCCFAE" stroke-width="12"/>
+            <circle cx="180" cy="120" r="26" fill="#D9D2B8"/><circle cx="620" cy="250" r="34" fill="#D9D2B8"/><circle cx="700" cy="90" r="20" fill="#D9D2B8"/>
+            <g transform="translate(430,150)">
+              <circle r="26" fill="#A9762F" opacity=".18"><animate attributeName="r" values="20;34;20" dur="3s" repeatCount="indefinite"/></circle>
+              <path d="M0 14c-9-8-14-15-14-22a14 14 0 0 1 28 0c0 7-5 14-14 22Z" fill="#A9762F"/>
+              <circle cy="-8" r="4.5" fill="#F4EFE5"/>
+            </g>
+            <text x="452" y="132" font-family="IBM Plex Mono,monospace" font-size="11" letter-spacing="2" fill="#4A4234">VICH</text>
+            <text x="70" y="228" font-family="IBM Plex Mono,monospace" font-size="10" letter-spacing="2" fill="#8B8064">ROUTE DE GLAND</text>
+          </svg>
+        </div>
+        <div class="map-overlay">
+          <b>On se trouve facilement</b>
+          <p>Sur la route de Gland, à l'entrée de Vich. Sortie autoroute Gland à 3 minutes.</p>
+          <a class="btn-brass" href="https://www.google.com/maps/search/?api=1&query=L%27atelier+du+Ciseau+Route+de+Gland+1+1267+Vich" target="_blank" rel="noopener">Itinéraire
+            <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-grid">
+      <div class="foot-mark">L'atelier du Ciseau<small>Barbier &amp; coiffeur — Vich</small></div>
+      <nav class="foot-nav" aria-label="Navigation pied de page">
+        <a href="#prestations">Prestations</a>
+        <a href="#reserver">Réserver</a>
+        <a href="#equipe">L'équipe</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 L'atelier du Ciseau — Route de Gland 1, 1267 Vich</span>
+      <span>Maquette de démonstration — photos d'illustration</span>
+    </div>
+  </div>
+</footer>
+
+<div class="demo-pill" role="note"><i></i>Démo · proposition de site</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+"use strict";
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---- Préloader ---- */
+var loader = document.getElementById('loader');
+window.addEventListener('load', function(){ setTimeout(function(){ loader.classList.add('done'); }, reduce?0:1200); });
+setTimeout(function(){ loader.classList.add('done'); }, 2600); // filet de sécurité
+
+/* ---- Progression ciseaux ---- */
+var pBar = document.getElementById('progressBar'), pSc = document.getElementById('progressScissor');
+var ticking = false;
+window.addEventListener('scroll', function(){
+  if (ticking) return; ticking = true;
+  requestAnimationFrame(function(){
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+    pBar.style.width = (p*100)+'%';
+    pSc.style.left = (p*100)+'%';
+    ticking = false;
+  });
+}, {passive:true});
+
+/* ---- Nav mobile ---- */
+var burger = document.getElementById('burger'), mm = document.getElementById('mobileMenu');
+burger.addEventListener('click', function(){
+  var open = mm.classList.toggle('open');
+  burger.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+mm.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){
+  mm.classList.remove('open'); burger.classList.remove('open'); document.body.style.overflow='';
+});});
+
+/* ---- Reveals ---- */
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+/* ---- Compteurs ---- */
+var cio = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(!e.isIntersecting) return;
+    var el = e.target, target = parseFloat(el.dataset.count), dec = parseInt(el.dataset.dec||'0',10);
+    var t0 = null;
+    function tick(ts){
+      if(!t0) t0 = ts;
+      var k = Math.min((ts-t0)/1400, 1);
+      k = 1 - Math.pow(1-k, 3);
+      el.textContent = (target*k).toFixed(dec).replace('.',',');
+      if(k<1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    cio.unobserve(el);
+  });
+},{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(function(el){ cio.observe(el); });
+
+/* ---- Marquee : duplication ---- */
+var mt = document.getElementById('marqueeTrack');
+mt.innerHTML += mt.innerHTML;
+
+/* ---- Images progressives ---- */
+document.querySelectorAll('.ph img').forEach(function(img){
+  if (img.complete && img.naturalWidth > 0) { img.classList.add('loaded'); return; }
+  img.addEventListener('load', function(){ img.classList.add('loaded'); });
+  img.addEventListener('error', function(){ img.remove(); });
+});
+
+/* ---- Toast ---- */
+var toast = document.getElementById('toast'), toastT;
+function showToast(msg){
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ toast.classList.remove('show'); }, 3200);
+}
+document.querySelectorAll('.demo-link').forEach(function(a){
+  a.addEventListener('click', function(ev){ ev.preventDefault(); showToast('Démo — ce lien pointera vers vos réseaux sociaux.'); });
+});
+
+/* ---- Horaires : aujourd'hui ---- */
+(function(){
+  var d = new Date().getDay(); // 0=dim
+  var row = document.querySelector('#hoursTable tr[data-day="'+d+'"]') ||
+            (d===1 ? document.querySelector('#hoursTable tr[data-day="0"]') : null);
+  if(row){
+    row.classList.add('today');
+    var tag = document.createElement('span');
+    tag.className = 'today-tag'; tag.textContent = "aujourd'hui";
+    row.cells[0].appendChild(tag);
+  }
+})();
+
+/* ============ RÉSERVATION ============ */
+var SERVICES = [
+  {id:'sig',  n:'Coupe Signature',     d:'45 min',  p:'CHF 58'},
+  {id:'cb',   n:'Coupe & Barbe',       d:'1 h 15',  p:'CHF 82'},
+  {id:'barbe',n:'Taille de barbe',     d:'30 min',  p:'CHF 38'},
+  {id:'ras',  n:'Rasage traditionnel', d:'40 min',  p:'CHF 55'},
+  {id:'dame', n:'Coupe & brushing',    d:'1 h',     p:'CHF 78'},
+  {id:'jr',   n:'Coupe Junior',        d:'30 min',  p:'CHF 32'}
+];
+var BARBERS = [
+  {id:'marc', n:'Marc Delaunay', r:'Maître barbier'},
+  {id:'lea',  n:'Léa Fontaine',  r:'Coupe dames · couleur'},
+  {id:'diego',n:'Diego Alves',   r:'Barbe & rasage'},
+  {id:'any',  n:'Sans préférence', r:'Premier artisan libre'}
+];
+var SLOTS = ['09:00','09:45','10:30','11:15','13:30','14:15','15:00','15:45','16:30','17:15'];
+var state = {svc:null, barber:null, day:null, slot:null};
+
+function goStep(n){
+  document.querySelectorAll('.bk-panel').forEach(function(p){ p.classList.toggle('on', p.dataset.step==String(n)); });
+  document.querySelectorAll('[data-step-pill]').forEach(function(p){
+    var k = parseInt(p.dataset.stepPill,10);
+    p.classList.toggle('on', k===n);
+    p.classList.toggle('done', k<n);
+  });
+  if(n<4){
+    var bk = document.getElementById('reserver');
+    if (bk.getBoundingClientRect().top < -50) bk.scrollIntoView({behavior: reduce?'auto':'smooth'});
+  }
+}
+
+/* Étape 1 : services */
+var svcGrid = document.getElementById('svcGrid');
+SERVICES.forEach(function(s){
+  var b = document.createElement('button');
+  b.className = 'bk-card'; b.type='button';
+  b.innerHTML = '<div class="n">'+s.n+'</div><div class="m"><span>'+s.d+'</span><i>'+s.p+'</i></div>';
+  b.addEventListener('click', function(){
+    state.svc = s;
+    svcGrid.querySelectorAll('.bk-card').forEach(function(c){ c.classList.remove('sel'); });
+    b.classList.add('sel');
+    document.getElementById('toStep2').disabled = false;
+  });
+  svcGrid.appendChild(b);
+});
+
+/* Étape 2 : artisans */
+var barberGrid = document.getElementById('barberGrid');
+BARBERS.forEach(function(p){
+  var b = document.createElement('button');
+  b.className = 'bk-card'; b.type='button'; b.dataset.barber = p.id;
+  var ini = p.id==='any' ? '✂' : p.n.split(' ').map(function(w){return w[0];}).join('');
+  b.innerHTML = '<div class="bk-avatar">'+ini+'</div><div class="n">'+p.n+'</div><div class="role">'+p.r+'</div>';
+  b.addEventListener('click', function(){ selectBarber(p, b); });
+  barberGrid.appendChild(b);
+});
+function selectBarber(p, el){
+  state.barber = p;
+  barberGrid.querySelectorAll('.bk-card').forEach(function(c){ c.classList.remove('sel'); });
+  el.classList.add('sel');
+  document.getElementById('toStep3').disabled = false;
+}
+
+/* Étape 3 : jours + heures */
+var dayStrip = document.getElementById('dayStrip');
+var DW = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+var MO = ['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
+var d = new Date(), added = 0;
+while(added < 12){
+  d.setDate(d.getDate()+1);
+  var dow = d.getDay();
+  if(dow===0 || dow===1) continue; // fermé dim + lun
+  (function(dd){
+    var b = document.createElement('button');
+    b.className='day'; b.type='button';
+    b.innerHTML = '<div class="dw">'+DW[dd.getDay()]+'</div><div class="dn">'+dd.getDate()+'</div><div class="dm">'+MO[dd.getMonth()]+'</div>';
+    b.addEventListener('click', function(){
+      state.day = DW[dd.getDay()]+' '+dd.getDate()+' '+MO[dd.getMonth()];
+      dayStrip.querySelectorAll('.day').forEach(function(c){ c.classList.remove('sel'); });
+      b.classList.add('sel');
+      checkStep3();
+    });
+    dayStrip.appendChild(b);
+  })(new Date(d));
+  added++;
+}
+var slotGrid = document.getElementById('slotGrid');
+SLOTS.forEach(function(s, i){
+  var b = document.createElement('button');
+  b.className='slot'; b.type='button'; b.textContent = s;
+  b.addEventListener('click', function(){
+    state.slot = s;
+    slotGrid.querySelectorAll('.slot').forEach(function(c){ c.classList.remove('sel'); });
+    b.classList.add('sel');
+    checkStep3();
+  });
+  slotGrid.appendChild(b);
+});
+function checkStep3(){ document.getElementById('toConfirm').disabled = !(state.day && state.slot); }
+
+/* Navigation */
+document.getElementById('toStep2').addEventListener('click', function(){ goStep(2); });
+document.getElementById('toStep3').addEventListener('click', function(){ goStep(3); });
+document.querySelectorAll('.bk-back').forEach(function(b){
+  b.addEventListener('click', function(){ goStep(parseInt(b.dataset.back,10)); });
+});
+document.getElementById('toConfirm').addEventListener('click', function(){
+  var rows = document.getElementById('ticketRows');
+  rows.innerHTML =
+    '<div class="tk-row"><span>Prestation</span><b>'+state.svc.n+'</b></div>'+
+    '<div class="tk-row"><span>Artisan</span><b>'+state.barber.n+'</b></div>'+
+    '<div class="tk-row"><span>Date</span><b>'+state.day+'</b></div>'+
+    '<div class="tk-row"><span>Heure</span><b>'+state.slot+'</b></div>'+
+    '<div class="tk-row"><span>Durée · Prix</span><b>'+state.svc.d+' · '+state.svc.p+'</b></div>';
+  goStep(4);
+});
+document.getElementById('bkRestart').addEventListener('click', function(){
+  state = {svc:null,barber:null,day:null,slot:null};
+  document.querySelectorAll('.bk-card.sel,.day.sel,.slot.sel').forEach(function(c){ c.classList.remove('sel'); });
+  document.getElementById('toStep2').disabled = true;
+  document.getElementById('toStep3').disabled = true;
+  document.getElementById('toConfirm').disabled = true;
+  goStep(1);
+});
+
+/* Boutons "Réserver avec X" de l'équipe */
+document.querySelectorAll('[data-pick-barber]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var id = btn.dataset.pickBarber;
+    var card = barberGrid.querySelector('[data-barber="'+id+'"]');
+    var p = BARBERS.find(function(x){ return x.id===id; });
+    if(card && p) selectBarber(p, card);
+    if(!state.svc) goStep(1); else goStep(2);
+    document.getElementById('reserver').scrollIntoView({behavior: reduce?'auto':'smooth'});
+  });
+});
+
+/* ============ CARROUSEL AVIS ============ */
+var track = document.getElementById('carTrack');
+var slides = track.children.length;
+var dots = document.getElementById('carDots');
+var idx = 0, timer;
+for(var i=0;i<slides;i++){
+  var dot = document.createElement('button');
+  dot.className = 'car-dot'+(i===0?' on':''); dot.setAttribute('aria-label','Avis '+(i+1));
+  (function(k){ dot.addEventListener('click', function(){ show(k, true); }); })(i);
+  dots.appendChild(dot);
+}
+function show(k, manual){
+  idx = (k+slides)%slides;
+  track.style.transform = 'translateX(-'+(idx*100)+'%)';
+  dots.querySelectorAll('.car-dot').forEach(function(dd,j){ dd.classList.toggle('on', j===idx); });
+  if(manual) restart();
+}
+function restart(){ clearInterval(timer); if(!reduce) timer = setInterval(function(){ show(idx+1); }, 5200); }
+document.getElementById('carPrev').addEventListener('click', function(){ show(idx-1, true); });
+document.getElementById('carNext').addEventListener('click', function(){ show(idx+1, true); });
+document.getElementById('carousel').addEventListener('mouseenter', function(){ clearInterval(timer); });
+document.getElementById('carousel').addEventListener('mouseleave', restart);
+restart();
+})();
+</script>
+</body>
+</html>

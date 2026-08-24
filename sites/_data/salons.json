@@ -1,0 +1,448 @@
+{
+  "region": "La Côte, Vaud, Suisse",
+  "note": "Sites de démonstration destinés à la prospection. Chaque site porte un badge discret 'Démo' et les avis sont des exemples d'illustration à remplacer par les vrais avis Google du salon.",
+  "salons": [
+    {
+      "slug": "atelier-du-ciseau",
+      "name": "L'atelier du Ciseau",
+      "address": "Route de Gland 1",
+      "npa": "1267",
+      "city": "Vich",
+      "phone": "022 364 88 99",
+      "positioning": "Atelier artisan mixte — coupe précise, esprit maison, clientèle village + pendulaires Gland/Nyon",
+      "theme": {
+        "nom": "Héritage Artisan",
+        "ambiance": "Atelier de maître, papier crème, encre profonde, laiton brossé, grain de papier, editorial luxury",
+        "palette": { "fond": "#F6F1E8", "encre": "#191510", "accent": "#B07C3E", "secondaire": "#5E4E38" },
+        "fonts": { "display": "Fraunces", "texte": "Archivo" },
+        "motif": "Ciseaux en ligne fine, filets typographiques, numérotation d'atelier (No 01…)",
+        "layout": "Editorial split + bento asymétrique, marges généreuses, reveals au scroll"
+      }
+    },
+    {
+      "slug": "febi-coiffure",
+      "name": "Febi Coiffure",
+      "address": "Rue du Jura 5",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "022 364 04 47",
+      "positioning": "Salon féminin/mixte chaleureux de quartier, couleur et brushing",
+      "theme": {
+        "nom": "Blush Éditorial",
+        "ambiance": "Ivoire rosé, terracotta, cacao — douceur haut de gamme, lumière du matin",
+        "palette": { "fond": "#FAF4F0", "encre": "#2E1F1A", "accent": "#C4674A", "secondaire": "#E5C3B3" },
+        "fonts": { "display": "Prata", "texte": "Manrope" },
+        "motif": "Arches douces, formes organiques, souligné calligraphique",
+        "layout": "Hero à arche centrale, sections aérées, cartes arrondies XXL"
+      }
+    },
+    {
+      "slug": "g-style-coiffure",
+      "name": "G'Style Coiffure",
+      "address": "Rue du Jura 12",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "022 364 50 90",
+      "positioning": "Salon mixte urbain, coupes tendance, clientèle jeune",
+      "theme": {
+        "nom": "Street Chic",
+        "ambiance": "Anthracite profond, lime électrique, énergie urbaine maîtrisée",
+        "palette": { "fond": "#101014", "encre": "#F4F4EF", "accent": "#C8F135", "secondaire": "#2A2A31" },
+        "fonts": { "display": "Syne", "texte": "Space Grotesk" },
+        "motif": "Apostrophe géante du G', marquee défilant, hachures diagonales fines",
+        "layout": "Dark mode, typo massive, marquee horizontal, hover magnétiques"
+      }
+    },
+    {
+      "slug": "infini-coiffure",
+      "name": "Infini Coiffure",
+      "address": "Grand-Rue 39",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "079 800 94 71",
+      "positioning": "Salon moderne épuré, précision et minimalisme",
+      "theme": {
+        "nom": "Minimal Infini",
+        "ambiance": "Blanc galerie, noir encre, bleu Klein en touche unique — minimalisme radical chic",
+        "palette": { "fond": "#FCFCFA", "encre": "#121212", "accent": "#2438E8", "secondaire": "#E4E4DE" },
+        "fonts": { "display": "Bricolage Grotesque", "texte": "Instrument Sans" },
+        "motif": "Symbole infini ∞ en trait fin animé, lignes horizontales, compteurs",
+        "layout": "Grille suisse stricte, immenses blancs tournants, micro-détails précis"
+      }
+    },
+    {
+      "slug": "le-barbier-du-leman",
+      "name": "Le Barbier du Léman",
+      "address": "Rue du Collège 6",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "022 364 33 44",
+      "positioning": "Barbershop homme premium, rasage traditionnel, référence lac Léman",
+      "theme": {
+        "nom": "Riviera Héritage",
+        "ambiance": "Bleu nuit marine, écume, or vieilli — élégance nautique lémanique, club privé",
+        "palette": { "fond": "#0C1B2A", "encre": "#EFEAE0", "accent": "#C9A35C", "secondaire": "#1C3349" },
+        "fonts": { "display": "Marcellus", "texte": "Archivo" },
+        "motif": "Vagues en filets gravés, blaireau & rasoir en ligne fine, boussole",
+        "layout": "Dark premium, sections pleine largeur, séparateurs gravés, or en filet"
+      }
+    },
+    {
+      "slug": "andrea-coiffure",
+      "name": "Andrea Coiffure",
+      "address": "Rue de la Combe 9",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "022 303 48 98",
+      "positioning": "Salon féminin classique, soins naturels et couleur végétale",
+      "theme": {
+        "nom": "Douceur Sauge",
+        "ambiance": "Sauge, crème, charbon doux — botanique, naturel, apaisant",
+        "palette": { "fond": "#F7F5EF", "encre": "#23261F", "accent": "#7E8C74", "secondaire": "#D8DECC" },
+        "fonts": { "display": "Cormorant Garamond", "texte": "Outfit" },
+        "motif": "Feuillages en ligne fine, formes de galets, textures lin",
+        "layout": "Rythme lent, images en galets arrondis, transitions très douces"
+      }
+    },
+    {
+      "slug": "original-coiffure-mixte",
+      "name": "Original Coiffure Mixte",
+      "address": "Rue du Perron 8",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "022 364 49 49",
+      "positioning": "Salon familial mixte, toutes générations",
+      "theme": {
+        "nom": "Pop Rétro 70s",
+        "ambiance": "Crème chaude, orange brûlé, bleu pétrole, moutarde — rétro chic optimiste",
+        "palette": { "fond": "#FFF6E9", "encre": "#1E3A3D", "accent": "#E2703A", "secondaire": "#E9B44C" },
+        "fonts": { "display": "DM Serif Display", "texte": "Sora" },
+        "motif": "Arcs-en-ciel géométriques 70s, soleils rayonnants, badges circulaires",
+        "layout": "Bento coloré, badges rotatifs, stickers, hover ludiques"
+      }
+    },
+    {
+      "slug": "barbershop-mont-blanc",
+      "name": "Barbershop Mont Blanc",
+      "address": "Avenue du Mont Blanc 18",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "022 364 11 22",
+      "positioning": "Barbershop masculin haut de gamme, dégradés & barbe sculptée",
+      "theme": {
+        "nom": "Alpin Noir & Or",
+        "ambiance": "Noir OLED, or champagne, marbre — luxe alpin, monogramme MB",
+        "palette": { "fond": "#0A0A0B", "encre": "#F2EDE4", "accent": "#D4AF6A", "secondaire": "#17171A" },
+        "fonts": { "display": "Playfair Display", "texte": "Archivo" },
+        "motif": "Silhouette du Mont-Blanc en trait doré, monogramme MB, filets or",
+        "layout": "Dark luxe, symétrie majestueuse, or en hairlines, reveals lents"
+      }
+    },
+    {
+      "slug": "corinne-coiffure-co",
+      "name": "Corinne Coiffure & Co",
+      "address": "Chem. de Panlièvre 16",
+      "npa": "1266",
+      "city": "Duillier",
+      "phone": "022 361 77 88",
+      "positioning": "Salon de village convivial, clientèle fidèle, ambiance maison",
+      "theme": {
+        "nom": "Campagne Chic",
+        "ambiance": "Lin, vieux rose, olive — maison de campagne raffinée, chaleur artisanale",
+        "palette": { "fond": "#F4EEE4", "encre": "#3A342B", "accent": "#C98A7D", "secondaire": "#8A9270" },
+        "fonts": { "display": "Gilda Display", "texte": "Mulish" },
+        "motif": "Brins de lavande/blé en ligne, cadres festonnés discrets, étiquettes",
+        "layout": "Chaleureux et posé, cartes à coins doux, textures papier"
+      }
+    },
+    {
+      "slug": "instant-coiffure",
+      "name": "Instant Coiffure",
+      "address": "Rue de Malagny 14",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "022 364 55 66",
+      "positioning": "Salon moderne efficace — beauté express sans compromis",
+      "theme": {
+        "nom": "Capsule Temps",
+        "ambiance": "Gris perle, iris violet, noir doux — précision horlogère suisse, instant suspendu",
+        "palette": { "fond": "#EFEFED", "encre": "#1B1A1F", "accent": "#6E5AE0", "secondaire": "#CFCFDA" },
+        "fonts": { "display": "Familjen Grotesk", "texte": "Jost" },
+        "motif": "Cadrans et aiguilles minimalistes, cercles concentriques, chrono RDV express",
+        "layout": "Grille précise, compteur de créneaux du jour, animations cadencées"
+      }
+    },
+    {
+      "slug": "antonello-marchetti",
+      "name": "Antonello Marchetti",
+      "address": "Rte de Cité-Ouest 2",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "022 364 24 72",
+      "positioning": "Barbier-coiffeur éponyme, savoir-faire italien, rasage à l'ancienne",
+      "theme": {
+        "nom": "Sprezzatura Italiana",
+        "ambiance": "Crème vénitien, vert bouteille, carmin discret — barberia italienne 1958, élégance nonchalante",
+        "palette": { "fond": "#F5EFE6", "encre": "#143D2E", "accent": "#A33B2E", "secondaire": "#C9B48A" },
+        "fonts": { "display": "Italiana", "texte": "Karla" },
+        "motif": "Monogramme AM, filets doubles à l'italienne, tampon 'Dal 1998'",
+        "layout": "Éditorial classique, colonnes élégantes, italiques manuscrites en accents"
+      }
+    },
+    {
+      "slug": "papa-et-moi",
+      "name": "Papa et Moi",
+      "address": "Route de Cité-Ouest 3",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "022 364 77 88",
+      "positioning": "Concept unique père & enfant — la coupe qui se partage",
+      "theme": {
+        "nom": "Duo Complice",
+        "ambiance": "Papier chaud, bleu canard, jaune soleil — tendre, ludique, généreux",
+        "palette": { "fond": "#FDF8F2", "encre": "#22333B", "accent": "#1D6A96", "secondaire": "#F2B33D" },
+        "fonts": { "display": "Bricolage Grotesque", "texte": "Quicksand" },
+        "motif": "Deux fauteuils côte à côte, grande + petite silhouette, formes rondes bulle",
+        "layout": "Duo partout (offres duo, prix duo), cartes jumelées, animations rebond doux"
+      }
+    },
+    {
+      "slug": "evasion-coiffure",
+      "name": "Evasion Coiffure",
+      "address": "La Lignière 5",
+      "npa": "1196",
+      "city": "Gland",
+      "phone": "022 999 64 86",
+      "positioning": "Coiffure bien-être au cœur du parc de La Lignière — parenthèse ressourçante",
+      "theme": {
+        "nom": "Spa Évasion",
+        "ambiance": "Sable, eucalyptus, terre cuite douce — spa, respiration, nature",
+        "palette": { "fond": "#F2EDE6", "encre": "#33392F", "accent": "#7C9885", "secondaire": "#C99C7E" },
+        "fonts": { "display": "Cormorant Garamond", "texte": "Jost" },
+        "motif": "Ondulations d'eau, feuilles d'eucalyptus, dégradés brumeux",
+        "layout": "Très aéré, parallaxe douce, sections qui respirent, rituels bien-être"
+      }
+    },
+    {
+      "slug": "fiona-coiffure",
+      "name": "Fiona Coiffure Sàrl",
+      "address": "Grand Rue 18",
+      "npa": "1183",
+      "city": "Bursins",
+      "phone": "021 824 11 22",
+      "positioning": "Salon élégant au cœur du vignoble de La Côte",
+      "theme": {
+        "nom": "Vigne & Soie",
+        "ambiance": "Bordeaux profond, blush, doré rosé — élégance vigneronne, soie et raisin",
+        "palette": { "fond": "#F9F2F0", "encre": "#4A1E28", "accent": "#8E3B4E", "secondaire": "#D9A688" },
+        "fonts": { "display": "Prata", "texte": "Nunito Sans" },
+        "motif": "Sarments et grappes en ligne fine, ondulations soyeuses, terrasses de Lavaux stylisées",
+        "layout": "Editorial raffiné, grandes italiques, dégradés bordeaux en voile"
+      }
+    },
+    {
+      "slug": "hair-creation",
+      "name": "Hair Creation",
+      "address": "Route de Signy 37",
+      "npa": "1260",
+      "city": "Nyon",
+      "phone": "022 361 22 33",
+      "positioning": "Studio créatif coloriste — balayages, colorations d'exception",
+      "theme": {
+        "nom": "Galerie Colorimétrie",
+        "ambiance": "Blanc galerie d'art, touches holographiques rose→bleu→pêche, noir précis",
+        "palette": { "fond": "#FAFAF8", "encre": "#141414", "accent": "#E86FA4", "secondaire": "#7BB8E8" },
+        "fonts": { "display": "Unbounded", "texte": "Manrope" },
+        "motif": "Nuanciers et pantones de mèches, dégradés irisés, cadres galerie",
+        "layout": "Galerie d'art, œuvres = coiffures, hover révélant la 'fiche couleur'"
+      }
+    },
+    {
+      "slug": "studio-r",
+      "name": "Studio R",
+      "address": "Route de Saint-Cergue 39",
+      "npa": "1260",
+      "city": "Nyon",
+      "phone": "022 361 45 67",
+      "positioning": "Studio rétro-moderne, esprit vinyle et coupes signature",
+      "theme": {
+        "nom": "Rétro Studio",
+        "ambiance": "Crème, expresso, ambre — studio d'enregistrement 70s, vinyles et velours",
+        "palette": { "fond": "#F8F0E3", "encre": "#3B2A20", "accent": "#D97B29", "secondaire": "#8C5A3C" },
+        "fonts": { "display": "Syne", "texte": "Archivo" },
+        "motif": "R monogramme disque vinyle, arcs concentriques, VU-mètres",
+        "layout": "Arcs et demi-cercles, grande rotation lente du vinyle R, tracklist = tarifs"
+      }
+    },
+    {
+      "slug": "blackbeard-nyon",
+      "name": "BlackBeard Nyon",
+      "address": "Rue Jules Gachet 9",
+      "npa": "1260",
+      "city": "Nyon",
+      "phone": "022 361 00 01",
+      "positioning": "Barbershop old-school assumé — barbe, dégradés, tatouages, rock",
+      "theme": {
+        "nom": "Encre & Carmin",
+        "ambiance": "Noir charbon, rouge carmin, ivoire os — old school tattoo, drapeaux pirates, rock'n'roll",
+        "palette": { "fond": "#0B0B0D", "encre": "#EDE6D6", "accent": "#C1272D", "secondaire": "#3A3A40" },
+        "fonts": { "display": "Anton", "texte": "Archivo" },
+        "motif": "Blason BlackBeard, rasoirs croisés, éclairs, bordures type flash tattoo",
+        "layout": "Contrastes durs, badges gravés, marquee rugueux, boutons imposants"
+      }
+    },
+    {
+      "slug": "marilou-coiffure",
+      "name": "Marilou Coiffure",
+      "address": "Rue Saint-Jean 17",
+      "npa": "1260",
+      "city": "Nyon",
+      "phone": "022 361 55 66",
+      "positioning": "Salon féminin cosy au cœur de Nyon, boudoir moderne",
+      "theme": {
+        "nom": "Boudoir Moderne",
+        "ambiance": "Poudre, prune, doré discret — boudoir parisien contemporain, intime et lumineux",
+        "palette": { "fond": "#F6E8E4", "encre": "#452B38", "accent": "#6E3B4F", "secondaire": "#D9B08C" },
+        "fonts": { "display": "DM Serif Text", "texte": "Karla" },
+        "motif": "Miroirs ovales, rubans, initiale M calligraphiée",
+        "layout": "Cadres ovales, textures velours, transitions feutrées"
+      }
+    },
+    {
+      "slug": "artmonia-coiffure",
+      "name": "Artmonia Coiffure",
+      "address": "Rue de la Colombière 7",
+      "npa": "1260",
+      "city": "Nyon",
+      "phone": "022 361 89 10",
+      "positioning": "L'art et l'harmonie du cheveu — salon esthète",
+      "theme": {
+        "nom": "Art Déco Émeraude",
+        "ambiance": "Noir profond, champagne, émeraude — Gatsby contemporain, géométrie art déco",
+        "palette": { "fond": "#141216", "encre": "#EAD9B0", "accent": "#1E5748", "secondaire": "#B08D57" },
+        "fonts": { "display": "Poiret One", "texte": "Jost" },
+        "motif": "Éventails art déco, chevrons dorés, cadres géométriques",
+        "layout": "Symétrie déco, encadrements dorés, reveals en éventail"
+      }
+    },
+    {
+      "slug": "au-local-coiffure",
+      "name": "Au Local Coiffure",
+      "address": "Chemin Falconnier 23",
+      "npa": "1260",
+      "city": "Nyon",
+      "phone": "022 362 12 34",
+      "positioning": "Le salon de quartier néo-artisan — authentique, sans chichi, ultra soigné",
+      "theme": {
+        "nom": "Néo-Atelier Brut",
+        "ambiance": "Béton clair, encre, cuivre orangé — atelier industriel doux, bois brut et métal",
+        "palette": { "fond": "#ECEAE6", "encre": "#1B1B1B", "accent": "#C75B39", "secondaire": "#9A968E" },
+        "fonts": { "display": "Space Grotesk", "texte": "IBM Plex Mono" },
+        "motif": "Étiquettes techniques (LOC-01), grilles apparentes, scotch et tampons",
+        "layout": "Grille technique visible, fiches produit, esthétique blueprint chaleureuse"
+      }
+    },
+    {
+      "slug": "atelier-intermede",
+      "name": "L'Atelier Intermède",
+      "address": "Avenue de la Gare 17-19",
+      "npa": "1180",
+      "city": "Rolle",
+      "phone": "021 825 55 66",
+      "positioning": "L'intermède beauté au centre de Rolle — la pause qui transforme",
+      "theme": {
+        "nom": "Scène & Lumière",
+        "ambiance": "Aubergine profond, or lumière, ivoire — théâtre intimiste, projecteurs, entracte précieux",
+        "palette": { "fond": "#2B1B33", "encre": "#F2EAD9", "accent": "#E3B04B", "secondaire": "#4A3356" },
+        "fonts": { "display": "Spectral", "texte": "Work Sans" },
+        "motif": "Rideaux stylisés, halos de projecteur, numéros d'acte (Acte I, II…)",
+        "layout": "Sections = actes, halos lumineux au hover, rideau d'ouverture au chargement"
+      }
+    },
+    {
+      "slug": "vision-coiffure",
+      "name": "Vision Coiffure",
+      "address": "Place de l'Industrie 1",
+      "npa": "1180",
+      "city": "Rolle",
+      "phone": "021 825 11 22",
+      "positioning": "Salon avant-gardiste — précision optique, coupes architecturées",
+      "theme": {
+        "nom": "Optique Précision",
+        "ambiance": "Blanc froid, noir, bleu acier, reflets chrome — laboratoire du style, lignes laser",
+        "palette": { "fond": "#F7F8FA", "encre": "#101216", "accent": "#4C6FFF", "secondaire": "#C8CEDC" },
+        "fonts": { "display": "Sora", "texte": "Space Grotesk" },
+        "motif": "Réticules et lignes de visée fines, dégradés chrome, règles graduées",
+        "layout": "Précision millimétrée, curseur custom, lignes qui se dessinent au scroll"
+      }
+    },
+    {
+      "slug": "the-sixteen-barbershop",
+      "name": "The Sixteen Barbershop",
+      "address": "Chem. du Closel 11a",
+      "npa": "1180",
+      "city": "Rolle",
+      "phone": "021 825 33 44",
+      "positioning": "Barbershop streetwear nouvelle génération — le spot des moins de 30 ans",
+      "theme": {
+        "nom": "Néon Sixteen",
+        "ambiance": "Noir nuit, violet néon, cyan électrique, chrome — nightlife, TikTok-ready, glow",
+        "palette": { "fond": "#0D0D10", "encre": "#F2F2F5", "accent": "#8B5CF6", "secondaire": "#22D3EE" },
+        "fonts": { "display": "Archivo Black", "texte": "Space Grotesk" },
+        "motif": "Immense '16' glitché en néon, halos glow, stickers holographiques",
+        "layout": "Typo écrasante, glow néon, marquee, cartes glassmorphism sombres"
+      }
+    },
+    {
+      "slug": "leon-coiffure",
+      "name": "Leon Coiffure Sàrl",
+      "address": "Route de la Vallée 19",
+      "npa": "1180",
+      "city": "Rolle",
+      "phone": "079 961 11 99",
+      "positioning": "Maison de coiffure classique — l'assurance d'un travail noble",
+      "theme": {
+        "nom": "Lion Héritage",
+        "ambiance": "Ivoire, fauve doré, brun profond — blason, noblesse discrète, classicisme chaleureux",
+        "palette": { "fond": "#F5F1E8", "encre": "#26201A", "accent": "#C08A3E", "secondaire": "#6B5233" },
+        "fonts": { "display": "Libre Caslon Text", "texte": "Outfit" },
+        "motif": "Lion héraldique en trait fin, écussons, filets doubles classiques",
+        "layout": "Classicisme équilibré, lettrines, cadres à filets, rythme noble"
+      }
+    },
+    {
+      "slug": "trendy-beard-barber-shop",
+      "name": "Trendy Beard Barber Shop",
+      "address": "Av. de la Gottaz 28",
+      "npa": "1110",
+      "city": "Morges",
+      "phone": "021 801 12 34",
+      "positioning": "Barbershop americana — barbe reine, hot towel, vieille école bien exécutée",
+      "theme": {
+        "nom": "Americana Vintage",
+        "ambiance": "Bleu marine, rouge brique, crème — barber pole, Route 66 chic, cuir et laiton",
+        "palette": { "fond": "#F3EAD8", "encre": "#1F3A5F", "accent": "#B33A3A", "secondaire": "#C9A227" },
+        "fonts": { "display": "Libre Baskerville", "texte": "Oswald" },
+        "motif": "Barber pole animé, badges circulaires 'EST.', moustaches et rasoirs gravés",
+        "layout": "Badges et bannières vintage, séparateurs gravés, diagonales barber pole"
+      }
+    },
+    {
+      "slug": "iz-yu-barber-shop",
+      "name": "Iz&Yu Barber Shop Morges",
+      "address": "Av. de Lonay 19",
+      "npa": "1110",
+      "city": "Morges",
+      "phone": "076 740 55 07",
+      "positioning": "Duo de barbiers nouvelle vague — deux styles, une précision",
+      "theme": {
+        "nom": "Duo Contraste",
+        "ambiance": "Split noir/blanc assumé, dégradé sunset corail→violet en énergie — moderne, jeune, réseaux sociaux",
+        "palette": { "fond": "#F5F4F2", "encre": "#131316", "accent": "#FF6A4D", "secondaire": "#8A4DFF" },
+        "fonts": { "display": "Gabarito", "texte": "Instrument Sans" },
+        "motif": "Esperluette & géante, split-screen Iz|Yu, dégradés sunset",
+        "layout": "Split-screen signature (moitié sombre/moitié claire), bascule au hover, duo partout"
+      }
+    }
+  ]
+}
