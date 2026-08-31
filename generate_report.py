@@ -8,6 +8,9 @@ from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable, PageBreak
 
 REPORTS_DIR = Path("/tmp")
+MODEL_CHEF = "claude-opus-4-5"      # analyste chef: rapport complet
+MODEL_VOTANT = "claude-sonnet-4-5"  # contre-votes technique et macro
+SIGNAUX = ("ACHETER", "VENDRE", "ATTENDRE")
 GREEN = colors.HexColor("#00d68f")
 RED = colors.HexColor("#ff4d6d")
 GOLD = colors.HexColor("#f0b429")
@@ -24,6 +27,25 @@ def st(name, **kw):
 def p(text, **kw):
     name = f"s{abs(hash(str(text)+str(kw)))%999999}"
     return Paragraph(str(text) if text else "", st(name, **kw))
+
+def ask_json(client, model, prompt, max_tokens=8000, retries=2):
+    """Appelle le modele avec recherche web et parse le JSON, avec retries si invalide."""
+    last_err = None
+    for attempt in range(retries + 1):
+        try:
+            response = client.messages.create(
+                model=model,
+                max_tokens=max_tokens,
+                tools=[{"type": "web_search_20250305", "name": "web_search"}],
+                messages=[{"role": "user", "content": prompt}],
+            )
+            text = "".join(b.text for b in response.content if hasattr(b, "text"))
+            text = text.replace("```json", "").replace("```", "").strip()
+            return json.loads(text[text.find("{"):text.rfind("}") + 1])
+        except (json.JSONDecodeError, ValueError, IndexError) as e:
+            last_err = e
+            print(f"Reponse JSON invalide (essai {attempt+1}/{retries+1}): {e}")
+    raise last_err
 
 def fetch(api_key):
     today = datetime.now().strftime("%A %d %B %Y")
@@ -63,18 +85,122 @@ Fais une recherche web complete et fiable. Reponds UNIQUEMENT en JSON valide:
   "conseil_100chf": "plan detaille pour trader avec 100 CHF aujourd hui",
   "marches_eviter": ["marche a eviter avec raison"]
 }}
-Remplace TOUTES les valeurs par les vraies donnees du marche avec tes recherches web."""
+Remplace TOUTES les valeurs par les vraies donnees du marche avec tes recherches web.
+IMPORTANT pour les signaux: ACHETER ou VENDRE seulement si le setup est net (catalyseur + niveau technique + R/R >= 1:1.5), sinon ATTENDRE.
+Le score_fiabilite doit refleter honnetement l incertitude: 8-10 = setup rare et evident, 6-7 = correct, <=5 = douteux."""
 
-    response = client.messages.create(
-        model="claude-opus-4-5",
-        max_tokens=8000,
-        tools=[{"type": "web_search_20250305", "name": "web_search"}],
-        messages=[{"role": "user", "content": prompt}],
-    )
-    text = "".join(b.text for b in response.content if hasattr(b, "text"))
-    text = text.replace("```json","").replace("```","").strip()
-    data = json.loads(text[text.find("{"):text.rfind("}")+1])
+    data = ask_json(client, MODEL_CHEF, prompt)
     print(f"Sentiment: {data.get('sentiment_global')}")
+    return client, data
+
+def get_votes(client, instruments, role, focus):
+    """Demande a un analyste independant de voter sur chaque instrument. Retourne {nom: (signal, score)}."""
+    lignes = "\n".join(
+        f"- {i.get('nom')}: prix {i.get('prix')} ({i.get('variation_jour')}), proposition du chef: "
+        f"{i.get('signal')} (entree {i.get('entree')}, SL {i.get('sl')}, TP {i.get('tp')}), catalyseur: {i.get('catalyseur')}"
+        for i in instruments
+    )
+    prompt = f"""Tu es {role}. Un analyste chef propose ces trades aujourd hui ({datetime.now().strftime('%A %d %B %Y')}):
+{lignes}
+
+Ton role: contre-expertise INDEPENDANTE axee sur {focus}. Verifie rapidement avec la recherche web.
+Tu n es pas oblige d etre d accord avec le chef — un desaccord justifie est precieux.
+Pour chaque instrument, vote ACHETER, VENDRE ou ATTENDRE avec un score de confiance 1-10.
+Reponds UNIQUEMENT en JSON valide:
+{{"votes":[{{"nom":"nom exact de l instrument","signal":"ACHETER|VENDRE|ATTENDRE","score":7,"commentaire":"une phrase"}}]}}"""
+    result = ask_json(client, MODEL_VOTANT, prompt, max_tokens=3000)
+    votes = {}
+    for v in result.get("votes", []):
+        sig = str(v.get("signal", "")).upper().strip()
+        if sig in SIGNAUX:
+            try: score = max(1, min(10, int(v.get("score", 5))))
+            except (TypeError, ValueError): score = 5
+            votes[str(v.get("nom", "")).upper().strip()] = (sig, score)
+    return votes
+
+def check_levels(inst):
+    """Verifie la coherence entree/SL/TP et recalcule le R/R reel. Retourne un avertissement ou None."""
+    try:
+        e, sl, tp = float(inst.get("entree")), float(inst.get("sl")), float(inst.get("tp"))
+    except (TypeError, ValueError):
+        return None
+    sig = inst.get("signal")
+    if sig == "ACHETER" and not (sl < e < tp):
+        return "niveaux incoherents pour un achat (attendu SL < entree < TP)"
+    if sig == "VENDRE" and not (tp < e < sl):
+        return "niveaux incoherents pour une vente (attendu TP < entree < SL)"
+    risque, gain = abs(e - sl), abs(tp - e)
+    if risque > 0:
+        rr = gain / risque
+        inst["rr"] = f"1:{rr:.1f}"
+        if sig in ("ACHETER", "VENDRE") and rr < 1.2:
+            return f"R/R reel trop faible ({inst['rr']})"
+    return None
+
+def consensus(votes):
+    """votes: liste de (source, signal, score). Retourne (signal, score, conviction, detail)."""
+    counts = {}
+    for _, sig, _ in votes:
+        counts[sig] = counts.get(sig, 0) + 1
+    final = max(counts, key=counts.get)
+    if counts[final] < 2 and len(votes) >= 2:
+        final = "ATTENDRE"
+    pour = [sc for _, sig, sc in votes if sig == final]
+    contre = len(votes) - len(pour)
+    oppose = {"ACHETER": "VENDRE", "VENDRE": "ACHETER"}.get(final)
+    a_oppose = any(sig == oppose for _, sig, _ in votes)
+    score = max(1, min(10, round(sum(pour) / len(pour)) - contre)) if pour else 4
+    if final == "ATTENDRE": conviction = "FAIBLE"
+    elif contre == 0 and len(votes) >= 3: conviction = "FORTE"
+    elif a_oppose: conviction, score = "FAIBLE", min(score, 5)
+    else: conviction = "MOYENNE"
+    detail = " | ".join(f"{src}: {sig} {sc}/10" for src, sig, sc in votes)
+    return final, score, conviction, f"{len(pour)}/{len(votes)} {final} — {detail}"
+
+def apply_committee(client, data):
+    """Fait voter le comite (chef + technique + macro) et applique le consensus a chaque instrument."""
+    instruments = data.get("instruments_favoris", []) + data.get("opportunites_autres_marches", [])
+    if not instruments:
+        return data
+    votes_tech, votes_macro = {}, {}
+    try:
+        print("Vote de l analyste technique...")
+        votes_tech = get_votes(client, instruments, "un analyste technique senior (price action, supports/resistances, momentum)",
+                               "la technique: structure du graphique, niveaux, momentum, qualite du R/R")
+    except Exception as e:
+        print(f"Vote technique indisponible: {e}")
+    try:
+        print("Vote de l analyste macro...")
+        votes_macro = get_votes(client, instruments, "un analyste macro et gestion du risque (banques centrales, calendrier eco, sentiment)",
+                                "le contexte macro: actualites, calendrier economique, risques d evenements, correlations")
+    except Exception as e:
+        print(f"Vote macro indisponible: {e}")
+
+    for inst in instruments:
+        nom = str(inst.get("nom", "")).upper().strip()
+        try: score_chef = max(1, min(10, int(inst.get("score_fiabilite", 5))))
+        except (TypeError, ValueError): score_chef = 5
+        sig_chef = str(inst.get("signal", "ATTENDRE")).upper().strip()
+        votes = [("Chef", sig_chef if sig_chef in SIGNAUX else "ATTENDRE", score_chef)]
+        if nom in votes_tech: votes.append(("Technique",) + votes_tech[nom])
+        if nom in votes_macro: votes.append(("Macro",) + votes_macro[nom])
+        final, score, conviction, detail = consensus(votes)
+        inst["signal"], inst["score_fiabilite"], inst["conviction"], inst["votes"] = final, score, conviction, detail
+        alerte = check_levels(inst)
+        if alerte:
+            inst["signal"], inst["conviction"] = "ATTENDRE", "FAIBLE"
+            inst["score_fiabilite"] = min(int(inst.get("score_fiabilite", 5)), 4)
+            inst["votes"] += f" | ALERTE: {alerte}"
+        print(f"  {inst.get('nom')}: {inst['signal']} {inst['score_fiabilite']}/10 ({conviction})")
+
+    # Annoter le top 3 si le consensus contredit la direction proposee
+    finaux = {str(i.get("nom", "")).upper().strip(): i for i in instruments}
+    for op in data.get("top3_opportunites_du_jour", []):
+        inst = finaux.get(str(op.get("instrument", "")).upper().strip())
+        if inst:
+            attendu = "ACHETER" if str(op.get("direction", "")).upper().startswith("LONG") else "VENDRE"
+            if inst["signal"] != attendu:
+                op["raison"] = f"{op.get('raison','')} [ATTENTION: le comite vote {inst['signal']} ({inst['conviction']})]"
     return data
 
 def score_color(score):
@@ -92,7 +218,7 @@ def build(data):
 
     # HEADER
     story.append(p("SOZO TRADE — Rapport Quotidien des Marches", fontSize=16, textColor=GREEN, fontName="Helvetica-Bold"))
-    story.append(p(f"{data.get('date','')} a {data.get('heure','')} CET | Capital.com", fontSize=9, textColor=MUTED))
+    story.append(p(f"{data.get('date','')} a {data.get('heure','')} CET | Capital.com | Signaux valides par un comite de 3 analystes (Chef, Technique, Macro)", fontSize=9, textColor=MUTED))
     story.append(HRFlowable(width="100%", thickness=2, color=GREEN))
     story.append(Spacer(1,4*mm))
 
@@ -185,6 +311,8 @@ def build(data):
         t3.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#050a10")),("ROWPADDING",(0,0),(-1,-1),7)]))
         story.append(t3)
 
+        if inst.get("votes"):
+            story.append(p(f"Vote du comite: {inst['votes']}", fontSize=8, textColor=BLUE, leading=12))
         story.append(p(f"Catalyseur: {inst.get('catalyseur','')} — {inst.get('analyse','')}", fontSize=9, textColor=LIGHT, leading=14))
 
     # AUTRES MARCHES
@@ -215,6 +343,8 @@ def build(data):
             t2.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#070b10")),("ROWPADDING",(0,0),(-1,-1),8)]))
             story.append(t2)
 
+            if inst.get("votes"):
+                story.append(p(f"Vote du comite: {inst['votes']}", fontSize=8, textColor=BLUE, leading=12))
             story.append(p(f"Catalyseur: {inst.get('catalyseur','')} | Horizon: {inst.get('horizon','')} — {inst.get('analyse','')}", fontSize=9, textColor=LIGHT, leading=14))
 
     # INTRADAY
@@ -267,7 +397,8 @@ def main():
     api_key = os.environ.get("ANTHROPIC_API_KEY","")
     if not api_key:
         api_key = input("Cle API: ").strip()
-    data = fetch(api_key)
+    client, data = fetch(api_key)
+    data = apply_committee(client, data)
     pdf_path = build(data)
     print(f"Rapport OK: {pdf_path}")
 
