@@ -9,7 +9,7 @@ on:
 jobs:
   generate-report:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -21,12 +21,18 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install anthropic reportlab
+        pip install anthropic reportlab httpx
 
     - name: Generate report
       env:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       run: python generate_report.py
+
+    - name: Send report to Telegram
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: python send_daily_to_telegram.py
 
     - name: Send email with PDF
       uses: dawidd6/action-send-mail@v3
