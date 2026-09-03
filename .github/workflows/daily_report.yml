@@ -2,8 +2,7 @@ name: Sozo Trade Daily Report
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # 7h CET (6h UTC)
-    - cron: '0 6 * * 0'  # Dimanche aussi
+    - cron: '0 6 * * *'  # 7h CET (6h UTC), tous les jours dimanche inclus
   workflow_dispatch:      # Permet de lancer manuellement
 
 jobs:
@@ -29,6 +28,7 @@ jobs:
       run: python generate_report.py
 
     - name: Send report to Telegram
+      continue-on-error: true  # un echec Telegram ne doit pas bloquer l'email
       env:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

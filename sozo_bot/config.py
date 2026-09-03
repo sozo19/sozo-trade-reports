@@ -18,12 +18,15 @@ ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 # Seuls ces chat_ids peuvent utiliser les commandes sensibles (wallet, trades, rapports).
 AUTHORIZED_CHAT_IDS = _parse_chat_ids(os.environ.get("AUTHORIZED_CHAT_IDS", ""))
 
-# Manifest TON Connect : doit etre une URL publique (le wallet la lit pour afficher
-# le nom de l'application au moment de la connexion).
-MANIFEST_URL = os.environ.get(
-    "TONCONNECT_MANIFEST_URL",
-    "https://raw.githubusercontent.com/sozo19/sozo-trade-reports/main/tonconnect-manifest.json",
-)
+# Dans un groupe (chat_id negatif), l'allowlist de chat ne suffit pas : tout membre
+# pourrait trader. Ces user_ids sont alors exiges en plus (vide = groupes refuses).
+AUTHORIZED_USER_IDS = _parse_chat_ids(os.environ.get("AUTHORIZED_USER_IDS", ""))
+
+# Manifest TON Connect : DOIT etre une URL publiquement accessible (c'est le wallet,
+# pas le bot, qui la telecharge au moment de la connexion). Pas de defaut : ce repo
+# est prive, donc son URL raw.githubusercontent.com renverrait 404 au wallet.
+# Voir le README pour heberger tonconnect-manifest.json (gist public, GitHub Pages...).
+MANIFEST_URL = os.environ.get("TONCONNECT_MANIFEST_URL", "")
 
 TONCENTER_API_KEY = os.environ.get("TONCENTER_API_KEY", "")
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-5")

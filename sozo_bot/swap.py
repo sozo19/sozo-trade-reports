@@ -55,6 +55,12 @@ async def simulate(offer_address: str, ask_address: str, units: int) -> dict:
 
 async def get_quote(direction: str, amount: float) -> dict:
     """Devis lisible pour un montant donne, avant confirmation."""
+    if config.IS_TESTNET:
+        raise RuntimeError(
+            "Les swaps STON.fi ne sont pas disponibles en testnet (TON_TESTNET=1) : "
+            "l'API STON.fi et le jetton USDT configures sont mainnet uniquement. "
+            "Le testnet sert seulement a tester la connexion du wallet."
+        )
     if direction == TON_TO_USDT:
         offer, ask = pton_address(), config.USDT_MASTER
         units = to_units(amount, config.TON_DECIMALS)
@@ -100,9 +106,15 @@ def make_tonconnect_tx(to: Address, value: int, body, ttl_seconds: int = 300) ->
     }
 
 
-async def build_swap_tx(direction: str, amount: float, user_address: str) -> tuple[dict, dict]:
-    """Prepare la transaction de swap. Retourne (transaction TON Connect, devis)."""
-    quote = await get_quote(direction, amount)
+async def build_swap_tx(direction: str, amount: float, user_address: str,
+                        quote: dict | None = None) -> tuple[dict, dict]:
+    """Prepare la transaction de swap. Retourne (transaction TON Connect, devis).
+
+    Si `quote` est fourni (celui montre a l'utilisateur), il est reutilise tel quel :
+    le min_ask_amount signe est alors exactement celui affiche.
+    """
+    if quote is None:
+        quote = await get_quote(direction, amount)
     if quote["min_ask_units"] <= 0:
         raise RuntimeError("Le devis STON.fi n'a pas renvoye de montant minimum — swap annule.")
 

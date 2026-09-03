@@ -5,6 +5,7 @@ toi qui les confirmes dans ton wallet Telegram.
 """
 import json
 import logging
+import os
 
 import httpx
 from pytoniq_core import Address
@@ -23,7 +24,10 @@ class FileStorage(IStorage):
 
     def __init__(self, chat_id: int):
         self._path = config.SESSIONS_DIR / f"{chat_id}.json"
-        self._path.parent.mkdir(parents=True, exist_ok=True)
+        # La session contient la cle privee du canal TON Connect : lecture pour
+        # le proprietaire uniquement (0700 sur le repertoire, 0600 sur le fichier).
+        self._path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+        os.chmod(self._path.parent, 0o700)
 
     def _read(self) -> dict:
         try:
@@ -32,7 +36,9 @@ class FileStorage(IStorage):
             return {}
 
     def _write(self, data: dict) -> None:
-        self._path.write_text(json.dumps(data))
+        fd = os.open(self._path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        with os.fdopen(fd, "w") as fh:
+            fh.write(json.dumps(data))
 
     async def set_item(self, key: str, value: str):
         data = self._read()

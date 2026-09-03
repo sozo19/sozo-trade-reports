@@ -38,6 +38,31 @@ def test_file_storage(tmp_path, monkeypatch):
     assert (tmp_path / "42.json").exists()
 
 
+def test_file_storage_permissions(tmp_path, monkeypatch):
+    from sozo_bot import config, wallet
+    sessions = tmp_path / "sessions"
+    monkeypatch.setattr(config, "SESSIONS_DIR", sessions)
+
+    async def scenario():
+        storage = wallet.FileStorage(chat_id=7)
+        await storage.set_item("connection", "secret")
+
+    asyncio.run(scenario())
+    # La session contient une cle privee : proprietaire uniquement
+    assert (sessions.stat().st_mode & 0o777) == 0o700
+    assert ((sessions / "7.json").stat().st_mode & 0o777) == 0o600
+
+
+def test_get_quote_refuses_testnet(monkeypatch):
+    from sozo_bot import config, swap
+    monkeypatch.setattr(config, "IS_TESTNET", True)
+    try:
+        asyncio.run(swap.get_quote(swap.TON_TO_USDT, 1.0))
+        raise AssertionError("get_quote aurait du refuser le testnet")
+    except RuntimeError as e:
+        assert "testnet" in str(e)
+
+
 def test_make_tonconnect_tx():
     from sozo_bot import swap
     to = Address("EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs")

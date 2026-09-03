@@ -53,19 +53,34 @@ python bot.py
 
 Au premier `/start`, le bot t'affiche ton `chat_id` : mets-le dans `AUTHORIZED_CHAT_IDS`
 et relance le bot. Sans ça, toutes les commandes sensibles restent bloquées.
+(Si tu utilises le bot dans un **groupe**, ajoute aussi les `user_ids` autorisés
+dans `AUTHORIZED_USER_IDS` — sinon le bot refuse les groupes.)
 
-> ℹ️ `/connecter` lit le manifest TON Connect à l'URL `TONCONNECT_MANIFEST_URL`
-> (par défaut le fichier `tonconnect-manifest.json` de la branche `main` de ce repo).
-> Il faut donc que ce fichier soit mergé sur `main` — sinon, surcharge la variable
-> avec une URL publique équivalente.
+### 2 bis. Héberger le manifest TON Connect (obligatoire pour `/connecter`)
+
+Au moment de la connexion, c'est **ton wallet** (pas le bot) qui télécharge le
+manifest pour afficher le nom de l'application. Il doit donc être sur une URL
+**publiquement accessible** — et ce repo est privé, donc son URL GitHub "raw"
+ne fonctionne pas. Le plus simple :
+
+1. Va sur [gist.github.com](https://gist.github.com), crée un gist **public**
+   nommé `tonconnect-manifest.json` avec le contenu du fichier
+   [tonconnect-manifest.json](tonconnect-manifest.json) de ce repo.
+2. Clique sur « Raw » et copie l'URL obtenue.
+3. Mets cette URL dans `TONCONNECT_MANIFEST_URL` (fichier `.env`).
+
+(GitHub Pages ou n'importe quel hébergement statique fonctionne aussi.)
 
 Le bot doit tourner en continu pour répondre : un petit serveur (VPS à 3-5 €/mois,
 Raspberry Pi, ou un hébergeur comme Railway/Render) suffit. Sur un serveur, lance-le
 par exemple avec `nohup python bot.py &` ou un service systemd.
 
-### 3. (Optionnel) S'entraîner sans argent réel
+### 3. (Optionnel) Tester la connexion en testnet
 
-Mets `TON_TESTNET=1` dans `.env` pour utiliser le testnet TON.
+`TON_TESTNET=1` permet de tester la **liaison du wallet** et la lecture des soldes
+sur le testnet TON. Les swaps sont volontairement refusés en testnet (STON.fi n'y a
+pas de paire TON/USDT équivalente) : pour t'entraîner sans risque, reste en mainnet
+avec de tout petits montants.
 
 ### 4. Le rapport quotidien (GitHub Actions)
 
@@ -79,7 +94,8 @@ envoie le PDF par email **et sur Telegram** si tu ajoutes ces secrets au repo
 | `TELEGRAM_BOT_TOKEN` | Le token de ton bot |
 | `TELEGRAM_CHAT_ID` | Ton chat_id (affiché par `/start`) |
 
-Sans les secrets Telegram, l'étape est simplement ignorée (l'email continue de partir).
+Sans les secrets Telegram, l'étape est simplement ignorée — et même si l'envoi
+Telegram échoue, l'email part quand même (`continue-on-error`).
 
 ## Variables d'environnement
 
@@ -89,9 +105,12 @@ Voir [.env.example](.env.example) pour la liste complète et les valeurs par dé
 
 - Le bot ne détient **aucune clé privée** : tout passe par TON Connect, chaque
   transaction est validée dans ton wallet.
-- `AUTHORIZED_CHAT_IDS` empêche n'importe qui d'utiliser ton bot (et ta clé API).
-- Les sessions TON Connect sont stockées dans `.tc_sessions/` (exclu de git).
-- Plafonds par swap + slippage maximal configurables.
+- `AUTHORIZED_CHAT_IDS` empêche n'importe qui d'utiliser ton bot (et ta clé API) ;
+  en groupe, `AUTHORIZED_USER_IDS` est exigé en plus (par utilisateur).
+- Les sessions TON Connect sont stockées dans `.tc_sessions/` (exclu de git,
+  permissions 0600 — lisibles par ton compte uniquement).
+- Plafonds par swap + slippage maximal configurables, devis valable 90 s :
+  le minimum garanti signé est exactement celui affiché.
 
 ## Avertissement
 
