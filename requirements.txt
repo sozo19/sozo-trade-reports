@@ -1,0 +1,7 @@
+anthropic>=0.40
+reportlab>=4.0
+python-telegram-bot>=21.0
+pytonconnect>=0.4.0
+tonutils==0.5.8
+pytoniq-core>=0.1.36
+httpx>=0.27
