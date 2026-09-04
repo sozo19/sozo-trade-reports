@@ -40,6 +40,18 @@ Garde-fous intégrés : liste blanche de `chat_id`, plafond par swap (`MAX_SWAP_
 
 ### 2. Configurer et lancer
 
+Le plus simple (Linux/macOS) — le script pose les questions et fait tout :
+
+```bash
+git clone https://github.com/sozo19/sozo-trade-reports.git
+cd sozo-trade-reports
+bash install.sh     # installation + configuration guidée (.env)
+bash start.sh       # démarre le bot
+```
+
+<details>
+<summary>Ou manuellement (Windows, ou si tu préfères)</summary>
+
 ```bash
 git clone https://github.com/sozo19/sozo-trade-reports.git
 cd sozo-trade-reports
@@ -50,6 +62,7 @@ cp .env.example .env        # puis remplis .env
 export $(grep -v '^#' .env | xargs)
 python bot.py
 ```
+</details>
 
 Au premier `/start`, le bot t'affiche ton `chat_id` : mets-le dans `AUTHORIZED_CHAT_IDS`
 et relance le bot. Sans ça, toutes les commandes sensibles restent bloquées.
