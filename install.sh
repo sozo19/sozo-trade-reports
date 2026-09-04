@@ -36,9 +36,9 @@ if [ -f .env ]; then
 else
     echo "Configuration — les valeurs sont enregistrées dans le fichier .env, qui reste sur cette machine."
     echo
-    read -r -p "1/3 Token du bot Telegram (donné par @BotFather) : " BOT_TOKEN
-    read -r -p "2/3 Clé API Anthropic (sk-ant-…) : " ANTHROPIC_KEY
-    read -r -p "3/3 URL publique du manifest TON Connect (voir README, étape 2) : " MANIFEST_URL
+    read -r -p "1/2 Token du bot Telegram (donné par @BotFather) : " BOT_TOKEN
+    read -r -p "2/2 Clé API Anthropic (sk-ant-…) : " ANTHROPIC_KEY
+    MANIFEST_URL="https://sozo19.github.io/tonconnect-manifest.json"
     umask 077
     cat > .env <<EOF
 TELEGRAM_BOT_TOKEN=$BOT_TOKEN
