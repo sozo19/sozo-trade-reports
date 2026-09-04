@@ -23,10 +23,12 @@ AUTHORIZED_CHAT_IDS = _parse_chat_ids(os.environ.get("AUTHORIZED_CHAT_IDS", ""))
 AUTHORIZED_USER_IDS = _parse_chat_ids(os.environ.get("AUTHORIZED_USER_IDS", ""))
 
 # Manifest TON Connect : DOIT etre une URL publiquement accessible (c'est le wallet,
-# pas le bot, qui la telecharge au moment de la connexion). Pas de defaut : ce repo
-# est prive, donc son URL raw.githubusercontent.com renverrait 404 au wallet.
-# Voir le README pour heberger tonconnect-manifest.json (gist public, GitHub Pages...).
-MANIFEST_URL = os.environ.get("TONCONNECT_MANIFEST_URL", "")
+# pas le bot, qui la telecharge au moment de la connexion). Le defaut est heberge
+# sur le site GitHub Pages public de l'utilisateur (repo sozo19/sozo19.github.io).
+MANIFEST_URL = os.environ.get(
+    "TONCONNECT_MANIFEST_URL",
+    "https://sozo19.github.io/tonconnect-manifest.json",
+)
 
 TONCENTER_API_KEY = os.environ.get("TONCENTER_API_KEY", "")
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-5")

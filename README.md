@@ -69,20 +69,14 @@ et relance le bot. Sans ça, toutes les commandes sensibles restent bloquées.
 (Si tu utilises le bot dans un **groupe**, ajoute aussi les `user_ids` autorisés
 dans `AUTHORIZED_USER_IDS` — sinon le bot refuse les groupes.)
 
-### 2 bis. Héberger le manifest TON Connect (obligatoire pour `/connecter`)
+### 2 bis. Le manifest TON Connect (déjà en place ✅)
 
 Au moment de la connexion, c'est **ton wallet** (pas le bot) qui télécharge le
-manifest pour afficher le nom de l'application. Il doit donc être sur une URL
-**publiquement accessible** — et ce repo est privé, donc son URL GitHub "raw"
-ne fonctionne pas. Le plus simple :
-
-1. Va sur [gist.github.com](https://gist.github.com), crée un gist **public**
-   nommé `tonconnect-manifest.json` avec le contenu du fichier
-   [tonconnect-manifest.json](tonconnect-manifest.json) de ce repo.
-2. Clique sur « Raw » et copie l'URL obtenue.
-3. Mets cette URL dans `TONCONNECT_MANIFEST_URL` (fichier `.env`).
-
-(GitHub Pages ou n'importe quel hébergement statique fonctionne aussi.)
+manifest pour afficher le nom de l'application. Il est déjà hébergé publiquement
+sur le site GitHub Pages du compte :
+<https://sozo19.github.io/tonconnect-manifest.json> — c'est la valeur par défaut
+du bot, il n'y a **rien à faire**. (Pour utiliser un autre hébergement, surcharge
+`TONCONNECT_MANIFEST_URL` dans `.env`.)
 
 Le bot doit tourner en continu pour répondre : un petit serveur (VPS à 3-5 €/mois,
 Raspberry Pi, ou un hébergeur comme Railway/Render) suffit. Sur un serveur, lance-le
