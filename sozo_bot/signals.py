@@ -35,13 +35,27 @@ Reponds UNIQUEMENT en JSON valide, sans texte autour :
 Remplace toutes les valeurs par les vraies donnees actuelles issues de ta recherche web."""
 
 
+# Modeles anterieurs a la generation 4.6 : seule l'ancienne variante de l'outil
+# de recherche web est acceptee ; les modeles recents exigent la variante 20260209.
+_LEGACY_WEBSEARCH_MODELS = (
+    "claude-opus-4-5", "claude-sonnet-4-5", "claude-haiku",
+    "claude-3", "claude-opus-4-1", "claude-sonnet-4-2",
+)
+
+
+def _web_search_tool() -> dict:
+    if config.CLAUDE_MODEL.startswith(_LEGACY_WEBSEARCH_MODELS):
+        return {"type": "web_search_20250305", "name": "web_search"}
+    return {"type": "web_search_20260209", "name": "web_search"}
+
+
 def fetch_signal() -> dict:
     """Interroge Claude pour un signal TON/USDT. Leve une exception si le JSON est invalide."""
     client = anthropic.Anthropic(api_key=config.ANTHROPIC_API_KEY)
     response = client.messages.create(
         model=config.CLAUDE_MODEL,
-        max_tokens=2000,
-        tools=[{"type": "web_search_20250305", "name": "web_search"}],
+        max_tokens=8000,
+        tools=[_web_search_tool()],
         messages=[{"role": "user", "content": SIGNAL_PROMPT}],
     )
     text = "".join(b.text for b in response.content if hasattr(b, "text"))

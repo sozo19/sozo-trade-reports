@@ -31,7 +31,7 @@ MANIFEST_URL = os.environ.get(
 )
 
 TONCENTER_API_KEY = os.environ.get("TONCENTER_API_KEY", "")
-CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-5")
+CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-opus-5")
 
 # Garde-fous : montant maximum par swap.
 MAX_SWAP_TON = float(os.environ.get("MAX_SWAP_TON", "25"))
