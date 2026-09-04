@@ -198,6 +198,24 @@ async def cmd_prix(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
 
 
+def _api_error_hint(exc: Exception) -> str:
+    """Explication lisible d'un echec d'appel a l'API Anthropic (sans secrets)."""
+    name = type(exc).__name__
+    if "Authentication" in name:
+        return "Clé API Anthropic invalide — vérifie ANTHROPIC_API_KEY dans .env."
+    if "PermissionDenied" in name:
+        return "La clé API n'a pas les permissions nécessaires."
+    if "RateLimit" in name:
+        return "Limite de débit atteinte — réessaie dans une minute."
+    if "NotFound" in name:
+        return "Modèle introuvable — vérifie CLAUDE_MODEL dans .env."
+    if "BadRequest" in name:
+        return f"Requête refusée par l'API (crédits épuisés ? modèle ?) : {str(exc)[:150]}"
+    if "Connection" in name or "Timeout" in name:
+        return "Problème réseau vers l'API Anthropic — réessaie."
+    return f"{name} : {str(exc)[:150]}"
+
+
 def _parse_amount(args: list[str]) -> float | None:
     if not args:
         return None
@@ -386,9 +404,11 @@ async def cmd_signal(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
     waiting = await update.effective_message.reply_text("🧠 Analyse du marché TON en cours…")
     try:
         data = await asyncio.to_thread(signals.fetch_signal)
-    except Exception:
+    except Exception as e:
         logger.exception("Generation du signal impossible")
-        return await waiting.edit_text("❌ Impossible de générer le signal. Réessaie plus tard.")
+        return await waiting.edit_text(
+            f"❌ Impossible de générer le signal.\n{_api_error_hint(e)}"
+        )
 
     buttons = []
     sig = data.get("signal")
@@ -421,9 +441,11 @@ async def cmd_rapport(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     try:
         data = await asyncio.to_thread(generate_report.fetch, config.ANTHROPIC_API_KEY)
         pdf_path = await asyncio.to_thread(generate_report.build, data)
-    except Exception:
+    except Exception as e:
         logger.exception("Generation du rapport impossible")
-        return await waiting.edit_text("❌ Impossible de générer le rapport. Réessaie plus tard.")
+        return await waiting.edit_text(
+            f"❌ Impossible de générer le rapport.\n{_api_error_hint(e)}"
+        )
     with open(pdf_path, "rb") as fh:
         await update.effective_message.reply_document(
             fh, caption="📊 Sozo Trade — rapport du jour"
